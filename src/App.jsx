@@ -40,8 +40,8 @@ export default function App() {
 	// 2. vytvor kategoriu pre supplaiera 
 	// 3. https://fecko.org/productdelivery/Product/create/1
 	// /options ->  
-	const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
-	console.log('categoryPost', categoryPost)
+	// const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
+	// console.log('categoryPost', categoryPost)
 	
 	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/1", {}).response;
 	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
