@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export const useFetch = (url, options) => {
 	const [response, setResponse] = React.useState(null);

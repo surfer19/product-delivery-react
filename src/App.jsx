@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Introduction } from './components/introduction/Introduction'
+import { Introduction } from './components/introduction/Introduction';
 import { useFetch } from "./hooks/useFetch";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Spinner from 'react-bootstrap/Spinner';
@@ -11,10 +11,9 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link
-  } from "react-router-dom";
+} from "react-router-dom";
 
-export const MyContext = React.createContext({});
+export const GlobalContext = React.createContext({});
 
 export default function App() {
 	// const options = {
@@ -27,28 +26,51 @@ export default function App() {
 	// }
 	
 	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/1", {}).response;
-	if (!responseSupplier) {
+	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
+	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
+	
+	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
+	// console.log('GROUPED!', supplierProductsGroupedByCategory);
+	if (!responseSupplier || !productCategories || !supplierProducts) {
 	  return <Spinner animation="border" />
 	}
-	console.log('res', responseSupplier)
+
 	const state = {
 		supplier: {
 			...responseSupplier.record
-		}
+		},
+		categoryProductList: supplierProductsGroupedByCategory
 	}
 
 	return (
 		<div className="App">
 			<Router>
-				<MyContext.Provider value={state}>
+				<GlobalContext.Provider value={state}>
 					<Switch>
 						<Route path="/supplier-offer" children={<OfferList />} />
 						<Route path="/customer-form" children={<CustomerForm />} />
 						<Route path="/goodbye" children={<Goodbye />} />
 						<Route path="/" children={<Introduction/>} />
 					</Switch>
-				</MyContext.Provider>
+				</GlobalContext.Provider>
 			</Router>
 		</div>
 	);
+}
+
+const groupSupplierProductsByCategory = (productCategories, supplierProducts) => {
+	if (!productCategories || !supplierProducts) return [];
+	return productCategories.records.map(productCategory => {
+		const productCategoryProducts = supplierProducts.products.map(product => {
+			if(product.SupplierID === productCategory.ProductCategoryID) {
+				return product
+			}
+			return null;
+		}).filter(value => value)
+		const mergedProductCategoryWithProducts = {
+			...productCategory,
+			listProducts: productCategoryProducts
+		}
+		return mergedProductCategoryWithProducts;
+	})
 }

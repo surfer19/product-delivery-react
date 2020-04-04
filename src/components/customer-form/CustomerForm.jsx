@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 export function CustomerForm() {
 	return (
 		<div>
-			<button>
-				<Link to="/goodbye">goodbyee</Link>
-			</button>
+			<Link to="/goodbye">
+				<button>
+					Potvrdit Udaje
+				</button>
+			</Link>
 		</div>
 	)
 }
