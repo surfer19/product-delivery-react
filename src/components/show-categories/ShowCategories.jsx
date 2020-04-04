@@ -1,9 +1,11 @@
 import React from 'react';
+import { useFetch } from "../../hooks/useFetch";
 import { GlobalContext } from "../../App";
 import { Link } from "react-router-dom";
-import { SupplierCategory } from "../supplier-category/SupplierCategory";
+// import { SupplierCategory } from "../supplier-category/SupplierCategory";
 import { isEmpty } from 'ramda';
 import { Row, Col, Button } from 'react-bootstrap';
+import { render } from '@testing-library/react';
 
 export function ShowCategories() {
     // function test(){
@@ -15,7 +17,28 @@ export function ShowCategories() {
 
     //     return categories;
     // }
-	return ( 
+    function handleDelete(e){
+        // e.preventDefault();
+        console.log(e.target.dataset.id)
+    }
+
+    let formData = new FormData();
+	formData.append('Name', 'Johnyy');
+
+	const options = {
+		method: 'POST',
+		body: formData,
+		// headers: { 
+			// 'content-type': 'application/json', 
+			// 'Access-Control-Allow-Origin': "*"
+		// }
+    }
+    
+    const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
+	console.log('categoryPostt', categoryPost)
+
+
+    return ( 
         <div>
             <h4 style={{marginTop: '20px', textAlign: 'left'}}>Zoznam kategorii</h4>
             <GlobalContext.Consumer>
@@ -31,7 +54,7 @@ export function ShowCategories() {
                                             </Col>
                                             <Col xs={6} md={5} style={{textAlign: 'right'}}>
                                                 <Button variant="primary" size="sm">Pridat polozku do kategorie</Button>{' '}
-                                                <Button variant="danger" size="sm">X</Button>
+                                                <Button variant="danger" size="sm" data-id={categoryProducts.ProductCategoryID} onClick={handleDelete}>X</Button>
                                             </Col>
                                         </Row>
                                         <ul style={{listStyle: 'none',paddingLeft: '0px'}}>
@@ -47,7 +70,8 @@ export function ShowCategories() {
             {/* {test()} */}
         </div>
 
-	)
+    );
+    
 }
 
 const renderCategoryProducts = (categoryProducts) => {
