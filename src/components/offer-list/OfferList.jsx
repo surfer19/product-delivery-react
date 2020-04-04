@@ -3,43 +3,12 @@ import { Link } from "react-router-dom";
 import { GlobalContext } from "../../App";
 import { isEmpty } from 'ramda';
 
-export function OfferList() {
-	const arr = [
-		{
-			category: 'Pondelok 7.4.2020',
-			listProducts: [
-				{
-					Name: 'Spiz',
-					Price: '4.20€',
-					Description: ' alergeny blabla',
-				},
-				{
-					Name: 'halusky',
-					Price: '4.44€',
-					Description: ' alergeny blabla',
-				}
-			]
-		},
-		{
-			category: 'Utorok 8.4.2020',
-			listProducts: [
-				{
-					Name: 'Spiz 2',
-					Price: '4.30€',
-					Description: 'NEJAKE alergeniky blabla',
-				}
-			]
-		}
-	]
-	
-	console.log('arr', arr)
-	
+export function OfferList() {	
 	return (
-		<div>
-			<p>VYBER Z PONUKY</p>
-			<GlobalContext.Consumer>
+		<GlobalContext.Consumer>
 			{state => (
 				<>
+					<p>VYBER Z PONUKY</p>
 					<ul>
 						{state.categoryProductList.map(categoryProducts => {
 							return (
@@ -59,8 +28,7 @@ export function OfferList() {
 					</Link>
 				</>
 			)}
-			</GlobalContext.Consumer>
-		</div>
+		</GlobalContext.Consumer>
 	)
 }
 
@@ -74,6 +42,6 @@ const renderCategoryProducts = (categoryProducts) => {
 			<span>-</span>
 			<button>+</button>
 			<button>-</button>
-		</li>	
+		</li>
 	))
 }

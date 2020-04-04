@@ -13,7 +13,10 @@ import {
 	Route,
 } from "react-router-dom";
 
-export const GlobalContext = React.createContext({});
+export const GlobalContext = React.createContext({
+	addItemToBasket: (id) => {},
+	removeItemToBasket: () => {}
+});
 
 export default function App() {
 	// const options = {
