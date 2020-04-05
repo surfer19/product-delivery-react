@@ -82,6 +82,15 @@ body, html {
 	margin-bottom: 6px;
 }
 
+.deliverytoaddress {
+	display: none;
+	margin-bottom: 24px;
+}
+
+.deliverytoaddress.active {
+	display: block;
+}
+
 .choosedeliverybtn-subtitle {
 	font-size: 12px;
 }

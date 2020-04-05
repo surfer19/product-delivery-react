@@ -132,6 +132,12 @@ export function CustomerForm(props) {
 						e.preventDefault()
 						onSubmit()
 					}}>	
+					<div class={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
+						<p class="catname">Doručovacie informácie</p>
+						<input class="input" placeholder="Meno" {...name} required />
+						<input class="input" placeholder="Priezvisko" {...lastName} required />
+					</div>
+
 					<p class="catname">Kontakte informácie</p>
 					<input class="input" placeholder="Meno" {...name} required />
 					<input class="input" placeholder="Priezvisko" {...lastName} required />
