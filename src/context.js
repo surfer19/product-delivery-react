@@ -6,7 +6,9 @@ export const ContactContext = createContext();
 const initialState = {
   count: 0,
   basket: [],
-  totalPrice: 0
+  totalPrice: 0,
+  contacts: {},
+  deliveryType: 'NA_PREDAJNI'
 };
 
 const reducer = (state, action) => {
@@ -32,6 +34,18 @@ const reducer = (state, action) => {
 				totalPrice: state.basket.map(item => item.Price)
 					.reduce((prev, next) => parseFloat(prev) + parseFloat(next)),
 			}
+		case "SEND_PERSONAL_FORM":
+			return {
+				...state,
+				...action.payload,
+			};
+		
+		case "UPDATE_DELIVERY": 
+			return {
+				...state,
+				deliveryType: action.payload
+			};
+
     default:
       throw new Error();
   }
