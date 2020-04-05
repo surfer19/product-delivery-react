@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFetch } from "../../hooks/useFetch";
-// import { GlobalContext } from "../../App";
-// import { Link } from "react-router-dom";
+import { GlobalContext } from "../../App";
+import { Link } from "react-router-dom";
 import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { ShowCategories } from "../show-categories/ShowCategories";
 import { render } from '@testing-library/react';
+import { test } from 'ramda';
 
 export function Admin() {
+	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
+    const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
+
+
+	// console.log({
+	// 	categoryProductList: productCategories
+	// })
+	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
+	const [state, stateUpdate] = useState();
+	useEffect(() => {
+		stateUpdate( {
+			categoryProductList: supplierProductsGroupedByCategory
+		} );
+	},[state]);
+	
+    // const state = {
+	// 	categoryProductList: supplierProductsGroupedByCategory
+	// }
+
+	// console.log(statee)
+	// console.log('jd',state)
+
+
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
@@ -33,7 +57,9 @@ export function Admin() {
         .then(response => response.json())
         .then(data => {
 			console.log(data);
-
+			// stateUpdate(data);
+			let hovno = supplierProductsGroupedByCategory(data, supplierProducts)
+			state = {}
 			handleClose();
 		});
 		
@@ -41,21 +67,6 @@ export function Admin() {
 		event.preventDefault();
 	}
 
-
-
-	
-
-
-	// function handleAddCat(e){
-    //     // e.preventDefault();
-	// 	console.log(e.target);
-	// 	// formData.append('Name', 'Johnyyyy');
-    // }
-
-	
-    
-    // const prodCategory = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
-	// console.log('categoryPostt', prodCategory)
 
 
 	return (
@@ -75,7 +86,8 @@ export function Admin() {
 				</Col>
 			</Row>
 
-			<ShowCategories />
+			<h4 style={{marginTop: '20px', textAlign: 'left'}}>Zoznam kategorii</h4>
+			<ShowCategories {...state} />
 
 			{/* MODAL NA PRIDANIE KATEGORIE */}
 			<Modal show={show} onHide={handleClose}>
@@ -100,3 +112,22 @@ export function Admin() {
 		
 	)
 }
+
+
+const groupSupplierProductsByCategory = (productCategories, supplierProducts) => {
+	if (!productCategories || !supplierProducts) return [];
+	return productCategories.records.map(productCategory => {
+		const productCategoryProducts = supplierProducts.products.map(product => {
+			if(product.SupplierID === productCategory.ProductCategoryID) {
+				return product
+			}
+			return null;
+		}).filter(value => value)
+		const mergedProductCategoryWithProducts = {
+			...productCategory,
+			listProducts: productCategoryProducts
+		}
+		return mergedProductCategoryWithProducts;
+	})
+}
+

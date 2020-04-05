@@ -32,6 +32,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 
 export function OfferList() {	
 	const [state, dispatch] = useContext(ContactContext);
+	console.log('ddd')
 	console.log('state', state)
 	
 	const renderCategoryProducts = (categoryProducts) => {
