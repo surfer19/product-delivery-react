@@ -7,7 +7,7 @@ const initialState = {
   count: 0,
   basket: [],
   totalPrice: 0,
-  contacts: {},
+  personalData: {},
   deliveryType: 'NA_PREDAJNI'
 };
 
@@ -37,7 +37,7 @@ const reducer = (state, action) => {
 		case "SEND_PERSONAL_FORM":
 			return {
 				...state,
-				...action.payload,
+				personalData: {...action.payload},
 			};
 		
 		case "UPDATE_DELIVERY": 
