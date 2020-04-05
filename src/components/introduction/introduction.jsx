@@ -12,7 +12,7 @@ export function Introduction() {
 					<div class="cover" style={{backgroundImage: "url("+cover+")"}}></div>
 					
 					
-					<div style={{position: 'relative'}}>
+					<div class="wrapper" style={{position: 'relative'}}>
 						<div class="roundedlogo" style={{backgroundImage: "url("+logo+")"}}></div>
 						<h2>{state.supplier.Name}</h2>
 						<p class="subtitle">{state.supplier.type}</p>
