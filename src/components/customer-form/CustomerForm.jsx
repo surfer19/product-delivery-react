@@ -2,33 +2,81 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
+import { useFetch } from "../../hooks/useFetch";
 
 export function CustomerForm() {
 	const [state, dispatch] = useContext(ContactContext);
 	const name = useFormInput("");
+	const lastName = useFormInput("");
 	const email = useFormInput("");
 	const tel = useFormInput("");
 	const message = useFormInput("");
 
 	console.log('state', state)
-	const onSubmit = () => {
-	  dispatch({
-		type: "SEND_PERSONAL_FORM",
-		payload: { 
-			id: 1,
-			name: name.value,
-			email: email.value,
-			tel: tel.value,
-			message: message.value,
-		}
-	  });
-	};
 	
-	const onSubmitDeliveryTypeChange = (deliveryType) => {
+	async function onSubmitDeliveryTypeChange (deliveryType) {
 		dispatch({
 			type: "UPDATE_DELIVERY",
 			payload: deliveryType
 		});
+		console.log('state', state);
+	}
+
+	// 	// const fetchData = async () => {
+	// 	// try {
+	// 	const res = await fetch('https://fecko.org/productdelivery/Order/create', options);
+	// 	// const json = await res;
+	// 	console.log('res', res)
+	// 	// } catch (error) {
+	// 	// 	throw Error()
+	// 	// }
+	// 	// }
+	// 	// const data = await fetchData()
+	// 	// console.log('res', res)
+			
+	// 	// const supplierProducts = useFetch("https://fecko.org/productdelivery/Order/create", {}).response;
+	// 	// console.log('supplierProducts', supplierProducts)
+	// }
+
+
+	async function onSubmit() {
+		//
+		let formDataCustomer = new FormData();
+		formDataCustomer.append('Name', name);
+		formDataCustomer.append('LastName', lastName);
+
+		const optionPost = {
+			method: 'POST',
+		}
+		const resCustomer = await fetch('https://fecko.org/productdelivery/Customer/create', optionPost);
+		const jsonCustomer = await resCustomer.json();
+		console.log('jsonCustomer', jsonCustomer);
+		console.log('resCustomer', resCustomer);
+
+		let formData = new FormData();
+		formData.append('CustomerID', '1');
+		formData.append('SupplierID', '1');
+
+		const options = {
+			method: 'POST',
+			body: formData,
+		}
+
+		dispatch({
+			type: "SEND_PERSONAL_FORM",
+			payload: { 
+				id: 1,
+				name: name.value,
+				lastName: name.lastName,
+				email: email.value,
+				tel: tel.value,
+				message: message.value,
+			}
+		});
+
+		const res = await fetch('https://fecko.org/productdelivery/Order/create', options);
+		const json = await res.json();
+		console.log('res', json)
 	}
 
 	return (
