@@ -359,6 +359,7 @@ h2 {
     width: 100%;
 	margin: auto;
 	background-color: #F3EDEB;
+	z-index: 10;
 }
 
 
