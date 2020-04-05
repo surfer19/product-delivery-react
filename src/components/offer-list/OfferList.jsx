@@ -9,23 +9,27 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 	const [count, setCount] = useState(0)
 	return (
 		<li key={product.ProductID}>
-			{product.Name}
-			{product.Price}€
-			{product.Description}
-			<span>{count}</span>
-			<button onClick={() =>{ 
-				addItemToBasket(product)
-				setCount(count+1)
-				recalculateTotalPrice()
-			}}
-			>+</button>
-			<button onClick={() =>{ 
-				removeItemfromBasket(product.ProductID)
-				setCount(count > 0 ? count-1 : count)
-				recalculateTotalPrice()
-			}}
-			> -
-			</button>
+			<span class="product-name">{product.Name}</span>
+			<span class="product-price">{product.Price} €</span>
+			<p class="product-desc">{product.Description}</p>
+			
+			
+			<div class="product-amount">
+				<span>{count}</span>
+				<button onClick={() =>{ 
+					removeItemfromBasket(product.ProductID)
+					setCount(count > 0 ? count-1 : count)
+					recalculateTotalPrice()
+				}}
+				> -
+				</button>
+				<button onClick={() =>{ 
+					addItemToBasket(product)
+					setCount(count+1)
+					recalculateTotalPrice()
+				}}
+				>+</button>
+			</div>
 		</li>
 	)
 }
@@ -87,12 +91,12 @@ export function OfferList() {
 								<span class="shopheader-title">To je <br></br>všetko :)</span>
 							</li>
 						</ul>
-						<ul>
+						<ul class="noul">
 							{state.categoryProductList.map(categoryProducts => {
 								return (
 									<li key={categoryProducts.ProductCategoryID}>
-										{categoryProducts.Name}
-										<ul>
+										<p class="catname">{categoryProducts.Name}</p>
+										<ul class="noul productlist">
 											{renderCategoryProducts(categoryProducts)}
 										</ul>
 									</li>

@@ -29,9 +29,55 @@ body, html {
     padding: 0;
     display: flex;
 	justify-content: space-between;
-	margin-top: 30px;
+	padding-top: 30px;
+	margin-bottom: 26px;
 }
 
+.productlist li {
+	margin-bottom: 12px;
+	padding: 12px 24px;
+	background-color: white;
+	border-radius: 12px;
+	border: 3px solid white;
+	position: relative;
+	text-align: left;
+}
+
+.productlist li.active {
+	border: 3px solid #457D7E;
+	box-shadow: 0px 7px 16px rgba(23,16,14,0.3);
+	z-index: 1;
+}
+
+.productlist .product-name {
+	color: #736560;
+	font-size: 12px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.productlist .product-desc {
+	font-size: 14px;
+}
+/* 
+.productlist li:last-child {
+	margin-bottom: 0px;
+} */
+
+.catname {
+	color: #736560;
+	font-size: 14px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-bottom: 10px;
+}
+
+.noul {
+	padding: 0px;
+	list-style: none;
+}
 .shopheader li {
 	text-align: center;
 	position: relative;
