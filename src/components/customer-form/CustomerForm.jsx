@@ -6,6 +6,8 @@ import { BottomBar } from "../bottom-bar/BottomBar";
 export function CustomerForm(props) {
 	console.log('props', props)
 	const [state, dispatch] = useContext(ContactContext);
+	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(false)
+	const [isActiveDeliveryAddress, setActiveDeliveryAddress] = useState(false)
 	const name = useFormInput("");
 	const lastName = useFormInput("");
 	const email = useFormInput("");
@@ -109,26 +111,53 @@ export function CustomerForm(props) {
 
 				<p class="catname">Doručenie objednávky</p>
 				<div class="choosedeliverybtn-group">
-					<button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>
+					<button class={isActiveDeliveryShop ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+							onSubmitDeliveryTypeChange("NA_PREDAJNI");
+							if (isActiveDeliveryShop) {
+								setActiveDeliveryAddress(false);
+								setActiveDeliveryShop(false);
+								return;
+							};
+							setActiveDeliveryShop(true);
+							setActiveDeliveryAddress(false);
+						}}>
 						<p class="choosedeliverybtn-title">Vyzvihnem <br></br>na predajni</p>
 						<span class="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
 					</button>
-					<button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>
+					<button class={isActiveDeliveryAddress ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+							onSubmitDeliveryTypeChange("NA_ADRESU");
+							// setActiveDeliveryAddress(true);
+							if (isActiveDeliveryAddress) {
+								setActiveDeliveryAddress(false);
+								setActiveDeliveryShop(false);
+								return;
+							};
+							setActiveDeliveryAddress(true);
+							setActiveDeliveryShop(false);
+						}}>
+					{/* <button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}> */}
 						<p class="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
 						<span class="choosedeliverybtn-subtitle">Poplatok <strong>+ 2€</strong></span>
 					</button>	
 				</div>
 				
-				<p class="catname">Kontakte informácie</p>
+				
 				<form 
 				 	ref={formRef}
 					onSubmit={e => {
 						e.preventDefault()
 						onSubmit()
-					}}
-				>
-					<input class="input" placeholder="Meno" value="MENOOO" {...name} required />
+					}}>	
+					<div class={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
+						<p class="catname">Doručovacie informácie</p>
+						<input class="input" placeholder="Meno" {...name} required />
+						<input class="input" placeholder="Priezvisko" {...lastName} required />
+					</div>
+
+					<p class="catname">Kontakte informácie</p>
+					<input class="input" placeholder="Meno" {...name} required />
 					<input class="input" placeholder="Priezvisko" {...lastName} required />
+
 					<input class="input" placeholder="Email" {...email} required />
 					<input class="input" placeholder="Tel. číslo" {...tel} required />
 					<textarea class="textarea" placeholder="Poznámka" {...message} />
