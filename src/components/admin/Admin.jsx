@@ -9,19 +9,31 @@ import { test } from 'ramda';
 
 export function Admin() {
 	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
-    const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
+	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
+	
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
+	const [inputVal, setInputVal] = useState(0);
+
+	if (!productCategories || !supplierProducts) {
+		return <>loading</>
+	}
+
+	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
 
 
 	// console.log({
 	// 	categoryProductList: productCategories
 	// })
-	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
-	const [state, stateUpdate] = useState();
-	useEffect(() => {
-		stateUpdate( {
-			categoryProductList: supplierProductsGroupedByCategory
-		} );
-	},[state]);
+	// const [state, stateUpdate] = useState();
+	// useEffect(() => {
+	// 	stateUpdate( {
+	// 		categoryProductList: supplierProductsGroupedByCategory
+	// 	} );
+	// },[state]);
 	
     // const state = {
 	// 	categoryProductList: supplierProductsGroupedByCategory
@@ -31,12 +43,6 @@ export function Admin() {
 	// console.log('jd',state)
 
 
-	const [show, setShow] = useState(false);
-
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-
-	const [inputVal, setInputVal] = useState(0);
 
 	function handleChange(event) {
 		setInputVal(event.target.value);
@@ -59,7 +65,7 @@ export function Admin() {
 			console.log(data);
 			// stateUpdate(data);
 			let hovno = supplierProductsGroupedByCategory(data, supplierProducts)
-			state = {}
+			// state = {}
 			handleClose();
 		});
 		
@@ -87,7 +93,7 @@ export function Admin() {
 			</Row>
 
 			<h4 style={{marginTop: '20px', textAlign: 'left'}}>Zoznam kategorii</h4>
-			<ShowCategories {...state} />
+			<ShowCategories categoryProductList={supplierProductsGroupedByCategory} />
 
 			{/* MODAL NA PRIDANIE KATEGORIE */}
 			<Modal show={show} onHide={handleClose}>
