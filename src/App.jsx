@@ -88,15 +88,14 @@ const groupSupplierProductsByCategory = (productCategories, supplierProducts) =>
 	if (!productCategories || !supplierProducts) return [];
 	return productCategories.records.map(productCategory => {
 		const productCategoryProducts = supplierProducts.products.map(product => {
-			if(product.SupplierID === productCategory.ProductCategoryID) {
+			if (product.ProductCategoryID === productCategory.ProductCategoryID) {
 				return product
 			}
 			return null;
-		}).filter(value => value)
-		const mergedProductCategoryWithProducts = {
+		}).filter(value => value);
+		return {
 			...productCategory,
 			listProducts: productCategoryProducts
-		}
-		return mergedProductCategoryWithProducts;
+		};
 	})
-}
+};

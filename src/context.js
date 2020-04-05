@@ -45,7 +45,6 @@ const reducer = (state, action) => {
 				...state,
 				deliveryType: action.payload
 			};
-
     default:
       throw new Error();
   }
