@@ -92,8 +92,16 @@ export function CustomerForm(props) {
 				</ul>
 
 				<p class="catname">Doručenie objednávky</p>
-				<button onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>Vyzvihnem <br></br>na predajni</button>
-				<button onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>Doručenie <br></br>na adresu</button>
+				<div class="choosedeliverybtn-group">
+					<button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>
+						<p class="choosedeliverybtn-title">Vyzvihnem <br></br>na predajni</p>
+						<span class="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
+					</button>
+					<button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>
+						<p class="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
+						<span class="choosedeliverybtn-subtitle">Poplatok <strong>+ 2€</strong></span>
+					</button>	
+				</div>
 				
 				<p class="catname">Kontakte informácie</p>
 				<form 
