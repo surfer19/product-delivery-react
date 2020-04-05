@@ -317,6 +317,11 @@ h2 {
 	margin-top: 72px;
 }
 
+.product-amount-div button {
+	outline: 0;
+	border: 0px;
+}
+
 .button:hover {
 	text-decoration: none;
 	color: white;
