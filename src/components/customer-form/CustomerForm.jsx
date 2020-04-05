@@ -71,6 +71,22 @@ export function CustomerForm(props) {
 		})
 
 		console.log('createdConnections', createdConnections)
+		// email
+		const data = {
+			customer: {
+				Name: 'Majko',
+				Email: 'marianmrva123@gmail.com'
+			}
+		}
+		const formDataSendEmailOption = {
+			method: 'POST',
+			body: JSON.stringify(data),
+		}
+		const resEmail = await fetch('https://fecko.org/productdelivery/custom/send-mail', formDataSendEmailOption);
+		const jsonEmail = await resEmail.json();
+		console.log('jsonEmail', jsonEmail)
+
+		// const 
 	}
 
 	return (
