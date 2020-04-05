@@ -7,8 +7,13 @@ import { BottomBar } from "../bottom-bar/BottomBar"
 
 export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice}) {
 	const [count, setCount] = useState(0)
+	const [isActive, setActive] = useState(false)
 	return (
-		<li key={product.ProductID}>
+		<li key={product.ProductID} onClick={() => {
+			if (isActive) return setActive(false);
+			setActive(true)
+		}} class={isActive ? "active" : ""}
+		>
 			<span class="product-name">{product.Name}</span>
 			<span class="product-price">{product.Price} €</span>
 			<p class="product-desc">{product.Description}</p>
