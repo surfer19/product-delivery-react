@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
-import { useFetch } from "../../hooks/useFetch";
 
-export function CustomerForm() {
+export function CustomerForm(props) {
+	console.log('props', props)
 	const [state, dispatch] = useContext(ContactContext);
 	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(false)
 	const [isActiveDeliveryAddress, setActiveDeliveryAddress] = useState(false)
@@ -13,7 +13,7 @@ export function CustomerForm() {
 	const email = useFormInput("");
 	const tel = useFormInput("");
 	const message = useFormInput("");
-
+	const formRef = useRef(null);
 	console.log('state', state)
 	
 	async function onSubmitDeliveryTypeChange (deliveryType) {
@@ -21,64 +21,58 @@ export function CustomerForm() {
 			type: "UPDATE_DELIVERY",
 			payload: deliveryType
 		});
-		console.log('state', state);
 	}
 
-	// 	// const fetchData = async () => {
-	// 	// try {
-	// 	const res = await fetch('https://fecko.org/productdelivery/Order/create', options);
-	// 	// const json = await res;
-	// 	console.log('res', res)
-	// 	// } catch (error) {
-	// 	// 	throw Error()
-	// 	// }
-	// 	// }
-	// 	// const data = await fetchData()
-	// 	// console.log('res', res)
-			
-	// 	// const supplierProducts = useFetch("https://fecko.org/productdelivery/Order/create", {}).response;
-	// 	// console.log('supplierProducts', supplierProducts)
-	// }
-
-
 	async function onSubmit() {
-		//
 		let formDataCustomer = new FormData();
-		formDataCustomer.append('Name', name);
-		formDataCustomer.append('LastName', lastName);
+		formDataCustomer.append('Name', name.value);
+		formDataCustomer.append('LastName', lastName.value);
 
 		const optionPost = {
 			method: 'POST',
+			body: formDataCustomer
 		}
+		// vytvoerenie noveho customera
 		const resCustomer = await fetch('https://fecko.org/productdelivery/Customer/create', optionPost);
 		const jsonCustomer = await resCustomer.json();
-		console.log('jsonCustomer', jsonCustomer);
-		console.log('resCustomer', resCustomer);
 
+		// vytvoerenie novej objednavky
 		let formData = new FormData();
-		formData.append('CustomerID', '1');
+		formData.append('CustomerID', jsonCustomer.record.CustomerID);
 		formData.append('SupplierID', '1');
-
 		const options = {
 			method: 'POST',
 			body: formData,
 		}
-
+		const resOrder = await fetch('https://fecko.org/productdelivery/Order/create', options);
+		const jsonOrder = await resOrder.json();
+		console.log('jsonOrder', jsonOrder)
 		dispatch({
 			type: "SEND_PERSONAL_FORM",
 			payload: { 
 				id: 1,
 				name: name.value,
-				lastName: name.lastName,
+				lastName: name.value,
 				email: email.value,
 				tel: tel.value,
 				message: message.value,
 			}
 		});
 
-		const res = await fetch('https://fecko.org/productdelivery/Order/create', options);
-		const json = await res.json();
-		console.log('res', json)
+		// map cez basket passovat orderID a productID
+		const createdConnections = state.basket.map(async item => {
+			let formData = new FormData();
+			formData.append('OrderID', jsonOrder.record.OrderID);
+			formData.append('ProductID', item.ProductID);
+
+			let optionsOrdersProducts = {
+				method: 'POST',
+				body: formData,
+			}
+			return await fetch('https://fecko.org/productdelivery/OrdersProducts/create', optionsOrdersProducts)
+		})
+
+		console.log('createdConnections', createdConnections)
 	}
 
 	return (
@@ -133,42 +127,34 @@ export function CustomerForm() {
 				
 				
 				<form 
+				 	ref={formRef}
 					onSubmit={e => {
 						e.preventDefault()
 						onSubmit()
-					}}
-				>	
+					}}>	
 					<p class="catname">Kontakte informácie</p>
 					<input class="input" placeholder="Meno" {...name} required />
-					<input class="input" placeholder="Priezvisko" {...name} required />
+					<input class="input" placeholder="Priezvisko" {...lastName} required />
+
 					<input class="input" placeholder="Email" {...email} required />
 					<input class="input" placeholder="Tel. číslo" {...tel} required />
 					<textarea class="textarea" placeholder="Poznámka" {...message} />
-					{/* type="email" */}
-					<button fluid primary>
-						New Contact
-					</button>
-				</form>		
-				{/* <Link to="/goodbye">
-					<button>
-						Potvrdit Udaje
-					</button>
-				</Link> */}
-			</div>
-			<div class="footer footer-shadow ">
-				<BottomBar />
-				<div class="btngroup">
-					<Link to="/supplier-offer" class="button button-back">
-						<span class="">
-						&lt;
-						</span>
-					</Link>
-					<Link to="/goodbye" class="button button-full">
-						<span>
-						Objednať
-						</span>
-					</Link>
+				<div class="footer footer-shadow ">
+					<BottomBar />
+					<div class="btngroup">
+						<Link to="/supplier-offer" class="button button-back">
+							<span class="">
+							&lt;
+							</span>
+						</Link>
+						<Link to="/goodbye" class="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit"))}>
+							<span>
+								Objednať
+							</span>
+						</Link>
+					</div>
 				</div>
+				</form>		
 			</div>
 		</div>
 	)
