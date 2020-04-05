@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
+import { BottomBar } from "../bottom-bar/BottomBar";
 
 export function CustomerForm() {
 	const [state, dispatch] = useContext(ContactContext);
@@ -47,18 +48,23 @@ export function CustomerForm() {
 						<span class="shopheader-title">To je <br></br>všetko :)</span>
 					</li>
 				</ul>
-				<button onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>NA PREDAJNI</button>
-				<button onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>DORUCENIE NA ADRESU</button>
+
+				<p class="catname">Doručenie objednávky</p>
+				<button onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>Vyzvihnem <br></br>na predajni</button>
+				<button onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>Doručenie <br></br>na adresu</button>
+				
+				<p class="catname">Kontakte informácie</p>
 				<form 
 					onSubmit={e => {
 						e.preventDefault()
 						onSubmit()
 					}}
 				>
-					<input placeholder="Meno a priezvisko" {...name} required />
-					<input placeholder="Email" {...email} required />
-					<input placeholder="Tel. cislo" {...tel} required />
-					<textarea placeholder="poznamka" {...message} />
+					<input class="input" placeholder="Meno" {...name} required />
+					<input class="input" placeholder="Priezvisko" {...name} required />
+					<input class="input" placeholder="Email" {...email} required />
+					<input class="input" placeholder="Tel. číslo" {...tel} required />
+					<textarea class="textarea" placeholder="Poznámka" {...message} />
 					{/* type="email" */}
 					<button fluid primary>
 						New Contact
@@ -70,17 +76,20 @@ export function CustomerForm() {
 					</button>
 				</Link> */}
 			</div>
-			<div class="footer footer-shadow btngroup">
-				<Link to="/supplier-offer" class="button button-back">
-					<span class="">
-					&lt;
-					</span>
-				</Link>
-				<Link to="/goodbye" class="button button-full">
-					<span>
-					Objednať
-					</span>
-				</Link>
+			<div class="footer footer-shadow ">
+				<BottomBar />
+				<div class="btngroup">
+					<Link to="/supplier-offer" class="button button-back">
+						<span class="">
+						&lt;
+						</span>
+					</Link>
+					<Link to="/goodbye" class="button button-full">
+						<span>
+						Objednať
+						</span>
+					</Link>
+				</div>
 			</div>
 		</div>
 	)

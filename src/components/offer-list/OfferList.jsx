@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GlobalContext } from "../../App";
 import { isEmpty } from 'ramda';
 import { ContactContext } from "../../context";
-import { BottomBar } from "../bottom-bar/BottomBar"
+import { BottomBar } from "../bottom-bar/BottomBar";
 
 export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice}) {
 	const [count, setCount] = useState(0)
