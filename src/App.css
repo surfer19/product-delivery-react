@@ -59,6 +59,27 @@ body, html {
 
 .productlist .product-desc {
 	font-size: 14px;
+	margin: 0px;
+	padding-right: 40px;
+}
+
+.product-amount {
+	text-align: right;
+	position: absolute;
+	bottom: 6px;
+	right: 20px;
+}
+.categorylist {
+	margin-bottom: 36px;
+}
+
+.productlist .product-price {
+	font-size: 14px;
+	color: #457D7E;
+	font-weight: 500;
+	position: absolute;
+	right: 24px;
+	top: 12px;
 }
 /* 
 .productlist li:last-child {

@@ -20,7 +20,6 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 			
 			
 			<div class="product-amount">
-				<span>{count}</span>
 				<button onClick={() =>{ 
 					removeItemfromBasket(product.ProductID)
 					setCount(count > 0 ? count-1 : count)
@@ -28,6 +27,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 				}}
 				> -
 				</button>
+				<span>{count}</span>
 				<button onClick={() =>{ 
 					addItemToBasket(product)
 					setCount(count+1)
@@ -99,7 +99,7 @@ export function OfferList() {
 						<ul class="noul">
 							{state.categoryProductList.map(categoryProducts => {
 								return (
-									<li key={categoryProducts.ProductCategoryID}>
+									<li class="categorylist" key={categoryProducts.ProductCategoryID}>
 										<p class="catname">{categoryProducts.Name}</p>
 										<ul class="noul productlist">
 											{renderCategoryProducts(categoryProducts)}
