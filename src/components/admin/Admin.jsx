@@ -4,31 +4,44 @@ import { useFetch } from "../../hooks/useFetch";
 // import { Link } from "react-router-dom";
 import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import { ShowCategories } from "../show-categories/ShowCategories";
+import { render } from '@testing-library/react';
 
 export function Admin() {
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	const [inputVal, setInputVal] = useState(0);
-	let formData = new FormData();
 
-	
-	
 	function handleChange(event) {
 		setInputVal(event.target.value);
-		formData.append('Name', event.target.value);
-		console.log(options.body)
+		// console.log(inputVal)
 	}
 	
 	function handleSubmit(event) {
-		alert('A name was submitted: ' + inputVal);
+		let formData = new FormData();
+		formData.append('Name', inputVal);
+
+		const options = {
+			method: 'POST',
+			body: formData,
+		}
+		console.log(formData);
+
+		fetch('https://fecko.org/productdelivery/ProductCategory/create', options)
+        .then(response => response.json())
+        .then(data => {
+			console.log(data);
+
+			handleClose();
+		});
 		
 		// const prodCategory = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
 		event.preventDefault();
 	}
 
-	const options = {
-		method: 'POST',
-		body: formData,
-    }
+
 
 	
 
@@ -44,10 +57,6 @@ export function Admin() {
     // const prodCategory = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
 	// console.log('categoryPostt', prodCategory)
 
-	const [show, setShow] = useState(false);
-
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 
 	return (
 		<div style={{

@@ -22,20 +22,20 @@ export function ShowCategories() {
         console.log(e.target.dataset.id)
     }
 
-    let formData = new FormData();
-	formData.append('Name', 'Johnyy');
+    // let formData = new FormData();
+	// formData.append('Name', 'Johnyy');
 
-	const options = {
-		method: 'POST',
-		body: formData,
-		// headers: { 
-			// 'content-type': 'application/json', 
-			// 'Access-Control-Allow-Origin': "*"
-		// }
-    }
+	// const options = {
+	// 	method: 'POST',
+	// 	body: formData,
+	// 	// headers: { 
+	// 		// 'content-type': 'application/json', 
+	// 		// 'Access-Control-Allow-Origin': "*"
+	// 	// }
+    // }
     
-    const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
-	console.log('categoryPostt', categoryPost)
+    // const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
+	// console.log('categoryPostt', categoryPost)
 
 
     return ( 
