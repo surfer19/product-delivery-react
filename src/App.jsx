@@ -1,4 +1,4 @@
-import React from 'react';
+import  React, { useState } from 'react';
 import './App.css';
 import { Introduction } from './components/introduction/Introduction';
 import { useFetch } from "./hooks/useFetch";
@@ -13,6 +13,7 @@ import {
 	Switch,
 	Route,
 } from "react-router-dom";
+import { ContactContextProvider } from './context'
 
 export const GlobalContext = React.createContext({
 	addItemToBasket: (id) => {},
@@ -20,6 +21,8 @@ export const GlobalContext = React.createContext({
 });
 
 export default function App() {
+	// const [ad, set] = useState(false);
+
 	const data = {
 		value: 'Majko'
 	}
@@ -65,15 +68,17 @@ export default function App() {
 	return (
 		<div className="App">
 			<Router>
-				<GlobalContext.Provider value={state}>
-					<Switch>
-						<Route path="/supplier-offer" children={<OfferList />} />
-						<Route path="/customer-form" children={<CustomerForm />} />
-						<Route path="/goodbye" children={<Goodbye />} />
-						<Route path="/admin" children={<Admin/>} />
-						<Route path="/" children={<Introduction/>} />
-					</Switch>
-				</GlobalContext.Provider>
+				<ContactContextProvider>
+					<GlobalContext.Provider value={state}>
+						<Switch>
+							<Route path="/supplier-offer" children={<OfferList />} />
+							<Route path="/customer-form" children={<CustomerForm />} />
+							<Route path="/goodbye" children={<Goodbye />} />
+							<Route path="/admin" children={<Admin/>} />
+							<Route path="/" children={<Introduction/>} />
+						</Switch>
+					</GlobalContext.Provider>
+				</ContactContextProvider>
 			</Router>
 		</div>
 	);
