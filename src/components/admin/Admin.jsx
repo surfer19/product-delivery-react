@@ -1,79 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { useFetch } from "../../hooks/useFetch";
-import { GlobalContext } from "../../App";
-import { Link } from "react-router-dom";
-import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
-import { ShowCategories } from "../show-categories/ShowCategories";
-import { render } from '@testing-library/react';
-import { test } from 'ramda';
+import React, {useEffect, useState} from 'react';
+import {Button, Col, Form, Modal, Row} from 'react-bootstrap';
+import {ShowCategories} from "../show-categories/ShowCategories";
 
 export function Admin() {
-	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
-	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
-	
 	const [show, setShow] = useState(false);
-
+	const [categories, setCategories] = useState([]);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const [inputVal, setInputVal] = useState(0);
+	let name = useFormInput("");
+	let categoryId = useFormInput("");
 
-	if (!productCategories || !supplierProducts) {
-		return <>loading</>
-	}
+	useEffect(() => {
+		loadCategories();
+	}, []);
 
-	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
-
-
-	// console.log({
-	// 	categoryProductList: productCategories
-	// })
-	// const [state, stateUpdate] = useState();
-	// useEffect(() => {
-	// 	stateUpdate( {
-	// 		categoryProductList: supplierProductsGroupedByCategory
-	// 	} );
-	// },[state]);
-	
-    // const state = {
-	// 	categoryProductList: supplierProductsGroupedByCategory
-	// }
-
-	// console.log(statee)
-	// console.log('jd',state)
-
-
-
-	function handleChange(event) {
-		setInputVal(event.target.value);
-		// console.log(inputVal)
+	function loadCategories() {
+		Promise.all([
+			fetch('https://fecko.org/productdelivery/ProductCategory'),
+			fetch('https://fecko.org/productdelivery/custom/supplier-products/1')
+		])
+			.then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+			.then(([productCategories, supplierProducts]) => {
+				setCategories(groupSupplierProductsByCategory(productCategories, supplierProducts));
+			});
 	}
 	
-	function handleSubmit(event) {
+	function handleModalSubmit(event) {
 		let formData = new FormData();
-		formData.append('Name', inputVal);
+		formData.append('Name', name.value);
 
 		const options = {
 			method: 'POST',
 			body: formData,
-		}
-		console.log(formData);
+		};
 
-		fetch('https://fecko.org/productdelivery/ProductCategory/create', options)
+		let url = 'https://fecko.org/productdelivery/ProductCategory/create';
+		if(categoryId.value) {
+			url = 'https://fecko.org/productdelivery/ProductCategory/update/' + categoryId.value;
+		}
+
+		fetch(url, options)
         .then(response => response.json())
         .then(data => {
-			console.log(data);
-			// stateUpdate(data);
-			let hovno = supplierProductsGroupedByCategory(data, supplierProducts)
-			// state = {}
-			handleClose();
+        	loadCategories();
+        	handleClose();
 		});
-		
-		// const prodCategory = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
 		event.preventDefault();
 	}
 
-
+	function editCategory(category) {
+		name.onInitValue(category.Name);
+		categoryId.onInitValue(category.ProductCategoryID);
+		setShow(true);
+	}
 
 	return (
 		<div style={{
@@ -93,7 +73,7 @@ export function Admin() {
 			</Row>
 
 			<h4 style={{marginTop: '20px', textAlign: 'left'}}>Zoznam kategorii</h4>
-			<ShowCategories categoryProductList={supplierProductsGroupedByCategory} />
+			<ShowCategories categories={categories} callback={loadCategories} editCategory={editCategory}/>
 
 			{/* MODAL NA PRIDANIE KATEGORIE */}
 			<Modal show={show} onHide={handleClose}>
@@ -101,10 +81,11 @@ export function Admin() {
 					<Modal.Title>Pridat kategoriu</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form onSubmit={handleSubmit}>
+					<Form onSubmit={handleModalSubmit}>
 						<Form.Group controlId="formBasicEmail">
 							<Form.Label>Názov kategórie</Form.Label>
-							<Form.Control type="text" placeholder="(napr. Pondelok 1.4.)" onChange={handleChange} />
+							<Form.Control type="text" placeholder="(napr. Pondelok 1.4.)" {...name}/>
+							<Form.Control type="hidden" {...categoryId}/>
 						</Form.Group>
 
 						<Button variant="primary" type="submit">
@@ -119,21 +100,36 @@ export function Admin() {
 	)
 }
 
-
 const groupSupplierProductsByCategory = (productCategories, supplierProducts) => {
 	if (!productCategories || !supplierProducts) return [];
 	return productCategories.records.map(productCategory => {
 		const productCategoryProducts = supplierProducts.products.map(product => {
-			if(product.SupplierID === productCategory.ProductCategoryID) {
+			if (product.ProductCategoryID === productCategory.ProductCategoryID) {
 				return product
 			}
 			return null;
-		}).filter(value => value)
-		const mergedProductCategoryWithProducts = {
+		}).filter(value => value);
+		return {
 			...productCategory,
 			listProducts: productCategoryProducts
-		}
-		return mergedProductCategoryWithProducts;
+		};
 	})
-}
+};
 
+function useFormInput(initialValue) {
+	const [value, setValue] = useState(initialValue);
+
+	const handleChange = e => {
+		setValue(e.target.value);
+	};
+
+	const onInitValue = value => {
+		setValue(value);
+	};
+
+	return {
+		value,
+		onInitValue: onInitValue,
+		onChange: handleChange
+	};
+}
