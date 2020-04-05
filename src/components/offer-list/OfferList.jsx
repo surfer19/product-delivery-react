@@ -74,11 +74,19 @@ export function OfferList() {
 				<>
 					<div class="wrapper">
 						<ul class="shopheader">
-						<li>Výber z ponuky</li>
-						<li>Vaše údaje</li>
-						<li>To je všetko :)</li>
+							<li class="active">
+								<span class="shopheader-num">1</span>
+								<span class="shopheader-title">Výber <br></br>z ponuky</span>
+							</li>
+							<li>
+								<span class="shopheader-num">2</span>
+								<span class="shopheader-title">Vaše <br></br>údaje</span>
+							</li>
+							<li>
+								<span class="shopheader-num">3</span>
+								<span class="shopheader-title">To je <br></br>všetko :)</span>
+							</li>
 						</ul>
-						<p>VYBER Z PONUKY</p>
 						<ul>
 							{state.categoryProductList.map(categoryProducts => {
 								return (
@@ -96,8 +104,8 @@ export function OfferList() {
 
 					<div class="footer footer-shadow">
 						<Link to="/customer-form">
-							<span class="button">
-							vase udaje
+							<span class="button button-full">
+							POKRAČOVAŤ
 							</span>
 						</Link>
 					</div>

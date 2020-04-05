@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
 
 body, html {
 	background-color: #F3EDEB;
 	color: #1A1310;
 	font-size: 16px;
+	font-family: 'Source Sans Pro', sans-serif;
 
 }
 
@@ -26,7 +28,70 @@ body, html {
 	list-style: none;
     padding: 0;
     display: flex;
-    justify-content: space-between;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+
+.shopheader li {
+	text-align: center;
+	position: relative;
+	padding: 0 10px;
+	flex-basis: 33.3%;
+	
+}
+
+.shopheader li:before {
+	content: '';
+	display: block;
+    width: 100%;
+    height: 1px;
+    background: #736560;
+    top: 15px;
+    position: absolute;
+	left: 50%;
+	opacity: 0.4;
+}
+
+.shopheader li:last-child:before {
+	content: '';
+	display: none;
+}
+
+.shopheader li.active .shopheader-num {
+
+	background-color: #457D7E;
+
+}
+
+.shopheader li.active .shopheader-title {
+	color: #457D7E;
+}
+
+.shopheader-num {
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #736560;
+	color: white;
+	font-size: 11px;
+	line-height: 18px;
+	margin: auto;
+	margin-bottom: 6px;
+	text-align: center;
+	text-indent: -1px;
+	position: relative;
+	z-index: 1;
+	border: 6px solid #F3EDEB;
+}
+
+.shopheader-title {
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #736560;
+	font-size: 12px;
+	display: block;
+    line-height: 1.4;
 }
 
 .wrapper {
@@ -74,7 +139,7 @@ h2 {
 	background-color: #457D7E;
 	color: white;
 	height: 50px;
-	line-height: 48px;
+	line-height: 50px;
 	font-family: 'Amatic SC', cursive;
 	font-weight: 700;
 	padding: 0 30px;
@@ -99,6 +164,9 @@ h2 {
 	background-color: #F3EDEB;
 }
 
+
+
 .footer-shadow {
+	padding: 12px 24px;
 	box-shadow: 0px -5px 14px rgba(23,16,14,0.2);
 }
