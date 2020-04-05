@@ -11,8 +11,16 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 	return (
 		<li key={product.ProductID} class={isActive ? "active" : ""}>
 			<span class="product-inner" onClick={() => {
-				if (isActive) return setActive(false);
-					setActive(true)
+				if (isActive) {
+					removeItemfromBasket(product.ProductID);
+					setCount(count > 0 ? count-1 : count);
+					recalculateTotalPrice();
+					return setActive(false);
+				};
+					setActive(true);
+					addItemToBasket(product);
+					setCount(count+1);
+					recalculateTotalPrice();
 				}} 
 			>
 				<span class="product-name">{product.Name}</span>
@@ -115,10 +123,11 @@ export function OfferList() {
 								)
 							})}
 						</ul>
-						{/* <BottomBar /> */}
+						
 					</div>
 
 					<div class="footer footer-shadow">
+						<BottomBar />
 						<Link to="/customer-form" class="button button-full">
 							<span>
 							POKRAČOVAŤ

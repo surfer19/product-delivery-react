@@ -62,6 +62,26 @@ body, html {
 	margin: 0px;
 	padding-right: 40px;
 }
+
+.totalprice{
+	text-align: left;
+}
+.totalprice-name {
+	color: #736560;
+	font-size: 12px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.totalprice-price {
+	font-size: 14px;
+	color: #457D7E;
+	font-weight: 500;
+	position: absolute;
+	right: 24px;
+	top: 12px;
+}
 .productlist .product-inner {
 	display: block;
     padding: 12px 24px;
