@@ -6,6 +6,8 @@ import { useFetch } from "../../hooks/useFetch";
 
 export function CustomerForm() {
 	const [state, dispatch] = useContext(ContactContext);
+	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(false)
+	const [isActiveDeliveryAddress, setActiveDeliveryAddress] = useState(false)
 	const name = useFormInput("");
 	const lastName = useFormInput("");
 	const email = useFormInput("");
@@ -99,23 +101,44 @@ export function CustomerForm() {
 
 				<p class="catname">Doručenie objednávky</p>
 				<div class="choosedeliverybtn-group">
-					<button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>
+					<button class={isActiveDeliveryShop ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+							onSubmitDeliveryTypeChange("NA_PREDAJNI");
+							if (isActiveDeliveryShop) {
+								setActiveDeliveryAddress(false);
+								setActiveDeliveryShop(false);
+								return;
+							};
+							setActiveDeliveryShop(true);
+							setActiveDeliveryAddress(false);
+						}}>
 						<p class="choosedeliverybtn-title">Vyzvihnem <br></br>na predajni</p>
 						<span class="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
 					</button>
-					<button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>
+					<button class={isActiveDeliveryAddress ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+							onSubmitDeliveryTypeChange("NA_ADRESU");
+							// setActiveDeliveryAddress(true);
+							if (isActiveDeliveryAddress) {
+								setActiveDeliveryAddress(false);
+								setActiveDeliveryShop(false);
+								return;
+							};
+							setActiveDeliveryAddress(true);
+							setActiveDeliveryShop(false);
+						}}>
+					{/* <button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}> */}
 						<p class="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
 						<span class="choosedeliverybtn-subtitle">Poplatok <strong>+ 2€</strong></span>
 					</button>	
 				</div>
 				
-				<p class="catname">Kontakte informácie</p>
+				
 				<form 
 					onSubmit={e => {
 						e.preventDefault()
 						onSubmit()
 					}}
-				>
+				>	
+					<p class="catname">Kontakte informácie</p>
 					<input class="input" placeholder="Meno" {...name} required />
 					<input class="input" placeholder="Priezvisko" {...name} required />
 					<input class="input" placeholder="Email" {...email} required />
