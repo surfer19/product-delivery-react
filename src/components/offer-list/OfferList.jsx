@@ -94,7 +94,7 @@ export function OfferList() {
 						<ul class="noul">
 							{state.categoryProductList.map(categoryProducts => {
 								return (
-									<li key={categoryProducts.ProductCategoryID}>
+									<li class="categorylist" key={categoryProducts.ProductCategoryID}>
 										<p class="catname">{categoryProducts.Name}</p>
 										<ul class="noul productlist">
 											{renderCategoryProducts(categoryProducts)}
