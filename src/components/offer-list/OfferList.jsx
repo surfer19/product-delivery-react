@@ -9,31 +9,38 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 	const [count, setCount] = useState(0)
 	const [isActive, setActive] = useState(false)
 	return (
-		<li key={product.ProductID} onClick={() => {
-			if (isActive) return setActive(false);
-			setActive(true)
-		}} class={isActive ? "active" : ""}
-		>
-			<span class="product-name">{product.Name}</span>
-			<span class="product-price">{product.Price} €</span>
-			<p class="product-desc">{product.Description}</p>
+		<li key={product.ProductID} class={isActive ? "active" : ""}>
+			<span class="product-inner" onClick={() => {
+				if (isActive) return setActive(false);
+					setActive(true)
+				}} 
+			>
+				<span class="product-name">{product.Name}</span>
+				<span class="product-price">{product.Price} €</span>
+				<p class="product-desc">{product.Description}</p>
+			</span>
 			
 			
 			<div class="product-amount">
-				<button onClick={() =>{ 
-					removeItemfromBasket(product.ProductID)
-					setCount(count > 0 ? count-1 : count)
-					recalculateTotalPrice()
-				}}
-				> -
-				</button>
-				<span>{count}</span>
-				<button onClick={() =>{ 
-					addItemToBasket(product)
-					setCount(count+1)
-					recalculateTotalPrice()
-				}}
-				>+</button>
+				<span class="product-amount-title">Zadajte množstvo</span>
+
+				<div class="product-amount-div">
+					<button onClick={() =>{ 
+						removeItemfromBasket(product.ProductID)
+						setCount(count > 0 ? count-1 : count)
+						recalculateTotalPrice()
+					}}
+					> -
+					</button>
+					<span>{count}</span>
+					<button onClick={() =>{ 
+						addItemToBasket(product)
+						setCount(count+1)
+						recalculateTotalPrice()
+					}}
+					>+</button>
+				</div>
+				
 			</div>
 		</li>
 	)
