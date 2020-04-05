@@ -15,7 +15,6 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 			
 			
 			<div class="product-amount">
-				<span>{count}</span>
 				<button onClick={() =>{ 
 					removeItemfromBasket(product.ProductID)
 					setCount(count > 0 ? count-1 : count)
@@ -23,6 +22,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 				}}
 				> -
 				</button>
+				<span>{count}</span>
 				<button onClick={() =>{ 
 					addItemToBasket(product)
 					setCount(count+1)
