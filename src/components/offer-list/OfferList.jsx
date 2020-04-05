@@ -103,8 +103,8 @@ export function OfferList() {
 					</div>
 
 					<div class="footer footer-shadow">
-						<Link to="/customer-form">
-							<span class="button button-full">
+						<Link to="/customer-form" class="button button-full">
+							<span>
 							POKRAČOVAŤ
 							</span>
 						</Link>

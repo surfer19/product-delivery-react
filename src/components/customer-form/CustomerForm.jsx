@@ -32,28 +32,56 @@ export function CustomerForm() {
 
 	return (
 		<div>
-			<button onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>NA PREDAJNI</button>
-			<button onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>DORUCENIE NA ADRESU</button>
-			<form 
-				onSubmit={e => {
-					e.preventDefault()
-					onSubmit()
-				}}
-			>
-				<input placeholder="Meno a priezvisko" {...name} required />
-				<input placeholder="Email" {...email} required />
-				<input placeholder="Tel. cislo" {...tel} required />
-				<textarea placeholder="poznamka" {...message} />
-				{/* type="email" */}
-				<button fluid primary>
-					New Contact
-				</button>
-			</form>		
-			<Link to="/goodbye">
-				<button>
-					Potvrdit Udaje
-				</button>
-			</Link>
+			<div class="wrapper">
+				<ul class="shopheader">
+					<li class="active">
+						<span class="shopheader-num">1</span>
+						<span class="shopheader-title">Výber <br></br>z ponuky</span>
+					</li>
+					<li class="active">
+						<span class="shopheader-num">2</span>
+						<span class="shopheader-title">Vaše <br></br>údaje</span>
+					</li>
+					<li>
+						<span class="shopheader-num">3</span>
+						<span class="shopheader-title">To je <br></br>všetko :)</span>
+					</li>
+				</ul>
+				<button onClick={() => onSubmitDeliveryTypeChange("NA_PREDAJNI")}>NA PREDAJNI</button>
+				<button onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}>DORUCENIE NA ADRESU</button>
+				<form 
+					onSubmit={e => {
+						e.preventDefault()
+						onSubmit()
+					}}
+				>
+					<input placeholder="Meno a priezvisko" {...name} required />
+					<input placeholder="Email" {...email} required />
+					<input placeholder="Tel. cislo" {...tel} required />
+					<textarea placeholder="poznamka" {...message} />
+					{/* type="email" */}
+					<button fluid primary>
+						New Contact
+					</button>
+				</form>		
+				{/* <Link to="/goodbye">
+					<button>
+						Potvrdit Udaje
+					</button>
+				</Link> */}
+			</div>
+			<div class="footer footer-shadow btngroup">
+				<Link to="/supplier-offer" class="button button-back">
+					<span class="">
+					&lt;
+					</span>
+				</Link>
+				<Link to="/goodbye" class="button button-full">
+					<span>
+					Objednať
+					</span>
+				</Link>
+			</div>
 		</div>
 	)
 }

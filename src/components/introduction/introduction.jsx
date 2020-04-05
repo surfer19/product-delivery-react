@@ -18,8 +18,8 @@ export function Introduction() {
 						<p class="subtitle">{state.supplier.type}</p>
 						<p>{state.supplier.info}</p>
 						<div class="footer">
-							<Link to="/supplier-offer">
-								<span class="button button-full">
+							<Link to="/supplier-offer" class="button button-full">
+								<span>
 								spustiť objednávku
 								</span>
 							</Link>

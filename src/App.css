@@ -152,6 +152,21 @@ h2 {
 	width: 100%;
 }
 
+.btngroup {
+	display: flex;
+    justify-content: space-between;
+}
+.btngroup .button.button-full {
+	width: calc(100% - 62px);
+}
+
+.button-back {
+	width: 50px;
+	background-color: white;
+	color: #1A1310;
+	padding: 0px;
+}
+
 .footer {
 	position: fixed;
 	bottom: 0;
