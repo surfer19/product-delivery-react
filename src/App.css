@@ -317,6 +317,11 @@ h2 {
 	margin-top: 72px;
 }
 
+.button:hover {
+	text-decoration: none;
+	color: white;
+}
+
 .button {
 	background-color: #457D7E;
 	color: white;
