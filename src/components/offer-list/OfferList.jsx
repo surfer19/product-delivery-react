@@ -72,25 +72,35 @@ export function OfferList() {
 		<GlobalContext.Consumer>
 			{state => (
 				<>
-					<p>VYBER Z PONUKY</p>
-					<ul>
-						{state.categoryProductList.map(categoryProducts => {
-							return (
-								<li key={categoryProducts.ProductCategoryID}>
-									{categoryProducts.Name}
-									<ul>
-										{renderCategoryProducts(categoryProducts)}
-									</ul>
-								</li>
-							)
-						})}
-					</ul>
-					<BottomBar />
-					<Link to="/customer-form">
-						<button>
+					<div class="wrapper">
+						<ul class="shopheader">
+						<li>Výber z ponuky</li>
+						<li>Vaše údaje</li>
+						<li>To je všetko :)</li>
+						</ul>
+						<p>VYBER Z PONUKY</p>
+						<ul>
+							{state.categoryProductList.map(categoryProducts => {
+								return (
+									<li key={categoryProducts.ProductCategoryID}>
+										{categoryProducts.Name}
+										<ul>
+											{renderCategoryProducts(categoryProducts)}
+										</ul>
+									</li>
+								)
+							})}
+						</ul>
+						{/* <BottomBar /> */}
+					</div>
+
+					<div class="footer footer-shadow">
+						<Link to="/customer-form">
+							<span class="button">
 							vase udaje
-						</button>
-					</Link>
+							</span>
+						</Link>
+					</div>
 				</>
 			)}
 		</GlobalContext.Consumer>
