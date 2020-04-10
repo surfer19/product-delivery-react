@@ -56,8 +56,6 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 
 export function OfferList() {	
 	const [state, dispatch] = useContext(ContactContext);
-	console.log('ddd')
-	console.log('state', state)
 	
 	const renderCategoryProducts = (categoryProducts) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
@@ -79,7 +77,6 @@ export function OfferList() {
 	}
 
 	const addItemToBasket = item => {
-		console.log('itemitem', item)
 		dispatch({
 			type: "ADD_TO_BASKET",
 		    payload: item

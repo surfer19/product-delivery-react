@@ -1,5 +1,6 @@
 
-import React, { useReducer, createContext } from "react";
+import React, {useReducer, createContext } from "react";
+import { findIndex, propEq } from "ramda";
 
 export const ContactContext = createContext();
 
@@ -14,25 +15,29 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
 		case "ADD_TO_BASKET":
-			// console.log('action', action)
-			// console.log('state.',state)
-			// console.log('basket: [...state.basket, action.payload]', {basket: [...state.basket, action.payload]})
 			return {
 				...state,
 				basket: [...state.basket, action.payload]
 			}
 		case "REMOVE_FROM_BASKET":
+			const basketItems = [...state.basket]
+			const idx = findIndex(propEq('ProductID', action.payload))(basketItems);
+			if (idx === -1) {
+				return {
+					...state
+				}
+			}
+			basketItems.splice(idx, 1);
 			return {
 				...state,
-				basket: [...state.basket.find(item => {
-					return item.ProductID === action.payload
-				})]
+				basket: basketItems
 			}
+
 		case "RECALCULATE_TOTAL_PRICE":
 			return {
 				...state,
 				totalPrice: state.basket.map(item => item.Price)
-					.reduce((prev, next) => parseFloat(prev) + parseFloat(next)),
+					.reduce((prev, next) => (parseFloat(prev) + parseFloat(next)).toFixed(2), 0),
 			}
 		case "SEND_PERSONAL_FORM":
 			return {
