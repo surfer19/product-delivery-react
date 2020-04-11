@@ -23,6 +23,26 @@ export function CustomerForm(props) {
 		});
 	}
 
+	const removeItemfromBasket = id => {
+		dispatch({
+			type: "REMOVE_FROM_BASKET",
+		    payload: id
+		});
+	}
+
+	const addItemToBasket = item => {
+		dispatch({
+			type: "ADD_TO_BASKET",
+		    payload: item
+		});
+	  };
+
+	const recalculateTotalPrice = () => {
+		dispatch({
+			type: "RECALCULATE_TOTAL_PRICE",
+		});
+	}
+
 	async function onSubmit() {
 		let formDataCustomer = new FormData();
 		formDataCustomer.append('Name', name.value);
@@ -87,97 +107,109 @@ export function CustomerForm(props) {
 		const resEmail = await fetch('https://fecko.org/productdelivery/custom/send-mail', formDataSendEmailOption);
 		const jsonEmail = await resEmail.json();
 		console.log('jsonEmail', jsonEmail)
-
-		// const 
 	}
 
 	return (
-		<div>
-			<div class="wrapper">
-				<ul class="shopheader">
-					<li class="active">
-						<span class="shopheader-num">1</span>
-						<span class="shopheader-title">Výber <br></br>z ponuky</span>
-					</li>
-					<li class="active">
-						<span class="shopheader-num">2</span>
-						<span class="shopheader-title">Vaše <br></br>údaje</span>
-					</li>
-					<li>
-						<span class="shopheader-num">3</span>
-						<span class="shopheader-title">To je <br></br>všetko :)</span>
-					</li>
-				</ul>
+		<div class="wrapper">
+			<ul class="shopheader">
+				<li class="active">
+					<span class="shopheader-num">1</span>
+					<span class="shopheader-title">Výber <br></br>z ponuky</span>
+				</li>
+				<li class="active">
+					<span class="shopheader-num">2</span>
+					<span class="shopheader-title">Vaše <br></br>údaje</span>
+				</li>
+				<li>
+					<span class="shopheader-num">3</span>
+					<span class="shopheader-title">To je <br></br>všetko :)</span>
+				</li>
+			</ul>
 
-				<p class="catname">Doručenie objednávky</p>
-				<div class="choosedeliverybtn-group">
-					<button class={isActiveDeliveryShop ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
-							onSubmitDeliveryTypeChange("NA_PREDAJNI");
-							if (isActiveDeliveryShop) {
-								setActiveDeliveryAddress(false);
-								setActiveDeliveryShop(false);
-								return;
-							};
-							setActiveDeliveryShop(true);
+			<p class="catname">Doručenie objednávky</p>
+			<div class="choosedeliverybtn-group">
+				<button class={isActiveDeliveryShop ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+						if (foundDelivery){
+							removeItemfromBasket(foundDelivery.ProductID)
+							recalculateTotalPrice()
+						}
+						onSubmitDeliveryTypeChange("NA_PREDAJNI");
+						if (isActiveDeliveryShop) {
 							setActiveDeliveryAddress(false);
-						}}>
-						<p class="choosedeliverybtn-title">Vyzvihnem <br></br>na predajni</p>
-						<span class="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
-					</button>
-					<button class={isActiveDeliveryAddress ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
-							onSubmitDeliveryTypeChange("NA_ADRESU");
-							// setActiveDeliveryAddress(true);
-							if (isActiveDeliveryAddress) {
-								setActiveDeliveryAddress(false);
-								setActiveDeliveryShop(false);
-								return;
-							};
-							setActiveDeliveryAddress(true);
 							setActiveDeliveryShop(false);
-						}}>
-					{/* <button class="choosedeliverybtn" onClick={() => onSubmitDeliveryTypeChange("NA_ADRESU")}> */}
-						<p class="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
-						<span class="choosedeliverybtn-subtitle">Poplatok <strong>+ 2€</strong></span>
-					</button>	
+							return;
+						};
+						setActiveDeliveryShop(true);
+						setActiveDeliveryAddress(false);
+					}}>
+					<p class="choosedeliverybtn-title">Vyzvihnem <br></br>na predajni</p>
+					<span class="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
+				</button>
+				<button class={isActiveDeliveryAddress ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+						onSubmitDeliveryTypeChange("NA_ADRESU");
+						// remove
+						if (isActiveDeliveryAddress) {
+							setActiveDeliveryAddress(false);
+							setActiveDeliveryShop(false);
+							if (foundDelivery)
+								removeItemfromBasket(foundDelivery.ProductID)
+								recalculateTotalPrice()
+							return;
+						};
+						// add
+						setActiveDeliveryAddress(true);
+						setActiveDeliveryShop(false);
+						
+						addItemToBasket({
+							Name: "Doručenie na adresu",
+							SupplierID: 1,
+							OrderID: null,
+							Price: "2.00"
+						})
+						recalculateTotalPrice()
+					}}>
+					<p class="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
+					<span class="choosedeliverybtn-subtitle">Poplatok <strong>+ 2€</strong></span>
+				</button>				
 				</div>
-				
-				
-				<form 
-				 	ref={formRef}
-					onSubmit={e => {
-						e.preventDefault()
-						onSubmit()
-					}}>	
-					<div class={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
-						<p class="catname">Doručovacie informácie</p>
-						<input class="input" placeholder="Meno" {...name} required />
-						<input class="input" placeholder="Priezvisko" {...lastName} required />
-					</div>
-
-					<p class="catname">Kontakte informácie</p>
+			<form 
+				ref={formRef}
+				onSubmit={e => {
+					e.preventDefault()
+					onSubmit()
+				}}>	
+				<div class={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
+					<p class="catname">Doručovacie informácie</p>
 					<input class="input" placeholder="Meno" {...name} required />
 					<input class="input" placeholder="Priezvisko" {...lastName} required />
-
-					<input class="input" placeholder="Email" {...email} required />
-					<input class="input" placeholder="Tel. číslo" {...tel} required />
-					<textarea class="textarea" placeholder="Poznámka" {...message} />
-				<div class="footer footer-shadow ">
-					<BottomBar />
-					<div class="btngroup">
-						<Link to="/supplier-offer" class="button button-back">
-							<span class="">
-							&lt;
-							</span>
-						</Link>
-						<Link to="/goodbye" class="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit"))}>
-							<span>
-								Objednať
-							</span>
-						</Link>
-					</div>
 				</div>
-				</form>		
+
+				<p class="catname">Kontakte informácie</p>
+				<input class="input" placeholder="Meno" {...name} required />
+				<input class="input" placeholder="Priezvisko" {...lastName} required />
+
+				<input class="input" placeholder="Email" {...email} required />
+				<input class="input" placeholder="Tel. číslo" {...tel} required />
+				<textarea class="textarea" placeholder="Poznámka" {...message} />
+			<div class="footer footer-shadow ">
+				<BottomBar />
+				<div class="btngroup">
+					<Link to="/supplier-offer" class="button button-back">
+						<span class="">
+						&lt;
+						</span>
+					</Link>
+					<Link to="/goodbye" class="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit"))}>
+						<span>
+							Objednať
+						</span>
+					</Link>
+				</div>
 			</div>
+			</form>		
+		
 		</div>
 	)
 }
