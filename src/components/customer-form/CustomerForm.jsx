@@ -6,7 +6,7 @@ import { BottomBar } from "../bottom-bar/BottomBar";
 export function CustomerForm(props) {
 	console.log('props', props)
 	const [state, dispatch] = useContext(ContactContext);
-	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(false)
+	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(true)
 	const [isActiveDeliveryAddress, setActiveDeliveryAddress] = useState(false)
 	const name = useFormInput("");
 	const lastName = useFormInput("");
@@ -14,6 +14,9 @@ export function CustomerForm(props) {
 	const tel = useFormInput("");
 	const message = useFormInput("");
 	const formRef = useRef(null);
+	const postCode = useFormInput("");
+	const city = useFormInput("");
+	const address = useFormInput("");
 	console.log('state', state)
 	
 	async function onSubmitDeliveryTypeChange (deliveryType) {
@@ -56,6 +59,22 @@ export function CustomerForm(props) {
 		const resCustomer = await fetch('https://fecko.org/productdelivery/Customer/create', optionPost);
 		const jsonCustomer = await resCustomer.json();
 
+		let formDataAddress = new FormData();
+		formDataAddress.append('CustomerID', jsonCustomer.record.CustomerID);
+		formDataAddress.append('City', city.value);
+		formDataAddress.append('Address', address.value);
+		formDataAddress.append('PostCode', postCode.value);
+		formDataAddress.append('Email', email.value);
+		formDataAddress.append('PhoneNo', tel.value);
+		formDataAddress.append('SupplierID', '1');
+		// vytvorenie adresy customera
+		const resCustomerAddress = await fetch('https://fecko.org/productdelivery/Address/create', {
+			method: 'POST',
+			body: formDataAddress,
+		});
+		const jsonCustomerAddress = await resCustomerAddress.json();
+		console.log('jsonCustomerAddress', jsonCustomerAddress)
+		console.log('')
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
@@ -72,7 +91,7 @@ export function CustomerForm(props) {
 			payload: { 
 				id: 1,
 				name: name.value,
-				lastName: name.value,
+				lastName: lastName.value,
 				email: email.value,
 				tel: tel.value,
 				message: message.value,
@@ -92,14 +111,24 @@ export function CustomerForm(props) {
 			return await fetch('https://fecko.org/productdelivery/OrdersProducts/create', optionsOrdersProducts)
 		})
 
-		console.log('createdConnections', createdConnections)
-		// email
+		// vytvorit email
 		const data = {
 			customer: {
-				Name: 'Majko',
-				Email: 'marianmrva123@gmail.com'
+				Name: name.value,
+				LastName: lastName.value,
+				Email: email.value,
+				Telephone: tel.value,
+				message: message.value,
+				productsOrdered: state.basket.map(product => ({
+					productCategory: "<p>categoria</p>",
+					productName: product.Name,
+					productDescription: product.Description,
+					productCount: "1",
+					productPrice: product.Price
+				}))
 			}
 		}
+		console.log('data', data)
 		const formDataSendEmailOption = {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -184,6 +213,9 @@ export function CustomerForm(props) {
 					<p class="catname">Doručovacie informácie</p>
 					<input class="input" placeholder="Meno" {...name} required />
 					<input class="input" placeholder="Priezvisko" {...lastName} required />
+					<input class="input" placeholder="Mesto" {...city} required />
+					<input class="input" placeholder="Ulica a číslo domu" {...address} required />
+					<input class="input" placeholder="PSČ" {...postCode} required />
 				</div>
 
 				<p class="catname">Kontakte informácie</p>
