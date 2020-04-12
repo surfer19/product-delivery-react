@@ -6,20 +6,19 @@ import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 
 export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice}) {
-	const [count, setCount] = useState(0)
-	const [isActive, setActive] = useState(false)
+	const [state, dispatch] = useContext(ContactContext);
+	let productBasketItem = state.basket.find(item => item.ProductID === product.ProductID)
+	let count = productBasketItem ? productBasketItem.count : 0;
 	return (
-		<li key={product.ProductID} class={isActive ? "active" : ""}>
+		<li key={product.ProductID} class={count > 0 ? "active" : ""}>
 			<span class="product-inner" onClick={() => {
-				if (isActive) {
+				// already exists -> remove
+				if (productBasketItem) {
 					removeItemfromBasket(product.ProductID);
-					setCount(count > 0 ? count-1 : count);
 					recalculateTotalPrice();
-					return setActive(false);
+					return;
 				};
-					setActive(true);
 					addItemToBasket(product);
-					setCount(count+1);
 					recalculateTotalPrice();
 				}} 
 			>
@@ -34,16 +33,16 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 
 				<div class="product-amount-div">
 					<button onClick={() =>{ 
+						console.log('--')
 						removeItemfromBasket(product.ProductID)
-						setCount(count > 0 ? count-1 : count)
 						recalculateTotalPrice()
 					}}
 					> -
 					</button>
 					<span>{count}</span>
 					<button onClick={() =>{ 
+						console.log('++')
 						addItemToBasket(product)
-						setCount(count+1)
 						recalculateTotalPrice()
 					}}
 					>+</button>
@@ -59,14 +58,14 @@ export function OfferList() {
 	
 	const renderCategoryProducts = (categoryProducts) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
-		return categoryProducts.listProducts.map(product => (
-			<ProductItem
+		return categoryProducts.listProducts.map(product => {
+			return <ProductItem
 				product={product}
 				addItemToBasket={addItemToBasket}
 				removeItemfromBasket={removeItemfromBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
 			/>
-		))
+		})
 	}
 	
 	const removeItemfromBasket = id => {

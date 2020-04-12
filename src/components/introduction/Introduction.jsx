@@ -10,8 +10,6 @@ export function Introduction() {
 			{state => (
 				<>
 					<div class="cover" style={{backgroundImage: "url("+cover+")"}}></div>
-					
-					
 					<div class="wrapper" style={{position: 'relative'}}>
 						<div class="roundedlogo" style={{backgroundImage: "url("+logo+")"}}></div>
 						<h2>{state.supplier.Name}</h2>

@@ -49,8 +49,6 @@ export default function App() {
 	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/1", {}).response;
 	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
 	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
-
-	console.log('productCategories', productCategories)
 	
 	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
 	// console.log('GROUPED!', supplierProductsGroupedByCategory);
@@ -89,7 +87,10 @@ const groupSupplierProductsByCategory = (productCategories, supplierProducts) =>
 	return productCategories.records.map(productCategory => {
 		const productCategoryProducts = supplierProducts.products.map(product => {
 			if (product.ProductCategoryID === productCategory.ProductCategoryID) {
-				return product
+				return {
+					...product,
+					count: 0
+				}
 			}
 			return null;
 		}).filter(value => value);
