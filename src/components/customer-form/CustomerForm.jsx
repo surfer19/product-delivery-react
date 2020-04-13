@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
+import { CustomerEmailTemplate } from "../email-templates/CustomerEmailTemplate";
 
 export function CustomerForm(props) {
 	console.log('props', props)
@@ -125,15 +126,22 @@ export function CustomerForm(props) {
 			City: city.value || "Nevyplnené",
 			PostCode: postCode.value || "Nevyplnené",
 		}
+		const supplierInfo = {
+			PhoneNumber: '0908456421',
+			OpeningHoursFrom: '8:00',
+			OpeningHoursTo: '17:00',
+			Name: "MS Lobelka"
+		}
 		// vytvorit email
 		const data = {
 			to: "marianmrva123@gmail.com",
-			header: "subject test",
+			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
 					basket={state.basket}
 					personalInfo={personalInfo}
 					deliveryInfo={deliveryInfo}
+					supplierInfo={supplierInfo}
 					deliveryType={state.deliveryType}
 					totalPrice={state.totalPrice}
 				/>
@@ -147,6 +155,29 @@ export function CustomerForm(props) {
 		const resEmail = await fetch('https://fecko.org/productdelivery/custom/create-mail', formDataSendEmailOption);
 		const jsonEmail = await resEmail.json();
 		console.log('jsonEmail', jsonEmail)
+
+		// CustomerEmailTemplate
+		const dataCustomer = {
+			to: email.value,
+			header: "Potvrdenie o objednávke",
+			body: ReactDOMServer.renderToStaticMarkup(
+				<CustomerEmailTemplate
+					basket={state.basket}
+					personalInfo={personalInfo}
+					deliveryInfo={deliveryInfo}
+					supplierInfo={supplierInfo}
+					deliveryType={state.deliveryType}
+					totalPrice={state.totalPrice}
+				/>
+			),
+		}
+		const formDataSendEmailCustomerOption = {
+			method: 'POST',
+			body: JSON.stringify(dataCustomer),
+		}
+		const resCustomerEmail = await fetch('https://fecko.org/productdelivery/custom/create-mail', formDataSendEmailCustomerOption);
+		const jsonCutomerEmail = await resCustomerEmail.json();
+		console.log('jsonCutomerEmail', jsonCutomerEmail)
 	}
 
 	return (
