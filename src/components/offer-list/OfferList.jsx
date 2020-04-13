@@ -136,11 +136,18 @@ export function OfferList() {
 
 					<div className="footer footer-shadow">
 						<BottomBar />
-						<Link to="/customer-form" className="button button-full">
-							<span>
-							Pokračovať
-							</span>
-						</Link>
+						<div className="btngroup">
+							<Link to="/" className="button button-back">
+								<span className="">
+								&lt;
+								</span>
+							</Link>
+							<Link to="/customer-form" className="button button-full">
+								<span>
+									Pokračovať
+								</span>
+							</Link>
+						</div>
 					</div>
 				</>
 			)}
