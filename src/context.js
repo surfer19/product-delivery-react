@@ -10,7 +10,8 @@ const initialState = {
   basket: [],
   totalPrice: 0,
   personalData: {},
-  deliveryType: 'NA_PREDAJNI'
+  deliveryType: 'NA_PREDAJNI',
+  selectedCity: null
 };
 
 const reducer = (state, action) => {
@@ -91,6 +92,12 @@ const reducer = (state, action) => {
 				...state,
 				deliveryType: action.payload
 			};
+		
+		case "UPDATE_SELECTED_CITY":
+			return {
+				...state,
+				selectedCity: action.payload
+			}
     default:
       throw new Error();
   }
