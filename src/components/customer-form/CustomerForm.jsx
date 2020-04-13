@@ -261,48 +261,7 @@ export function CustomerForm(props) {
 							<option value="3">Beňadiková (+3€)</option>
 						</select>
 					</div>
-					<select className="select" id="cities" required>
-						<option value="" selected disabled>Vyberte miesto doručenia</option>
-						<option value="3">Beňadiková (+3€)</option>
-						<option value="3">Bobrovček (+3€)</option>
-						<option value="3">Bobrovec (+3€)</option>
-						<option value="4">Demänovská dolina (Jasná) (+4€)</option>
-						<option value="3">Galovany (+3€)</option>
-						<option value="4">Gôtovany (+4€)</option>
-						<option value="3">Jakubovany (+3€)</option>
-						<option value="3">Jalovec (+3€)</option>
-						<option value="4">Jamník (+4€)</option>
-						<option value="4">Konská (+4€)</option>
-						<option value="4">Kvačany (+4€)</option>
-						<option value="1">Liptovská Ondrášová (+1€)</option>
-						<option value="4">Liptovská Porúbka (+4€)</option>
-						<option value="4">Liptovská Sielnica (+4€)</option>
-						<option value="4">Liptovské Matiašovce (+4€)</option>
-						<option value="4">Liptovský Hrádok (+4€)</option>
-						<option value="3">Liptovský Ján (+3€)</option>
-						<option value="1">Liptovský Mikuláš (+1€)</option>
-						<option value="2">Liptovský Mikuláš - Bodice (+2€)</option>
-						<option value="1">Liptovský Mikuláš - časť Podbreziny (+1€)</option>
-						<option value="2">Liptovský Mikuláš - Demänová (+2€)</option>
-						<option value="2">Liptovský Mikuláš - Tatralandia (+2€)</option>
-						<option value="3">Liptovský Ondrej (+3€)</option>
-						<option value="4">Liptovský Peter (+4€)</option>
-						<option value="3">Liptovský Trnovec (+3€)</option>
-						<option value="4">Ľubeľa (+4€)</option>
-						<option value="1">Okoličné (+1€)</option>
-						<option value="4">Partizánska Ľupča (+4€)</option>
-						<option value="3">Pavčina Lehota (+3€)</option>
-						<option value="3">Pavlova Ves (+3€)</option>
-						<option value="2">Ploštín / Iľanovo (+2€)</option>
-						<option value="3">Podtureň (+3€)</option>
-						<option value="3">Smrečany (+3€)</option>
-						<option value="3">Svätý kríž (+3€)</option>
-						<option value="3">Trstené (+3€)</option>
-						<option value="3">Uhorská Ves (+3€)</option>
-						<option value="4">Vavrišovo (+4€)</option>
-						<option value="3">Závažná poruba (+3€)</option>
-						<option value="3">Žiar (+3€)</option>
-					</select>
+
 					{/* <input className="input" placeholder="Miesto doručenia" {...city} required /> */}
 					<input className="input" placeholder="Ulica a číslo domu" {...address} required />
 					{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
