@@ -132,7 +132,12 @@ export function OfferList() {
 							})}
 						</ul>
 						
+						<div>
+							<h5>Alergény</h5>
+							<small>1 - obilniny obsahujúce lepok; 2 - kôrovce a výrobky z nich; 3 - vajcia a výrobky z vajec; 4 - ryby a výrobky z rýb; 5 - arašidy a výrobky z nich; 6 - sója a výrobky zo sóje; 7 - mlieko a výrobky z mlieka; 8 - orechy a výrobky z orechov; 9 - zeler a výrobky zo zeleru; 10 - horčica a výrobky z horčice; 11 - sezamové semená a výrobky z nich; 12 - oxid siričitý a siričitan; 13 - vlčí bôb a výrobky z neho; 14 - mäkkýše a výrobky z nich</small>
+						</div>
 					</div>
+					
 
 					<div className="footer footer-shadow">
 						<BottomBar />

@@ -72,7 +72,7 @@ export default function App() {
 							<Route path="/supplier-offer" children={<OfferList />} />
 							<Route path="/customer-form" children={<CustomerForm />} />
 							<Route path="/goodbye" children={<Goodbye />} />
-							<Route path="/admin" children={<Admin/>} />
+							<Route path="/administraciapremslobelka" children={<Admin/>} />
 							<Route path="/" children={<Introduction/>} />
 						</Switch>
 					</GlobalContext.Provider>

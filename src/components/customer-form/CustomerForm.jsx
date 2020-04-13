@@ -129,14 +129,14 @@ export function CustomerForm(props) {
 			PostCode: postCode.value || "Nevyplnené",
 		}
 		const supplierInfo = {
-			PhoneNumber: '0908456421',
+			PhoneNumber: '+421 911 705 160',
 			OpeningHoursFrom: '8:00',
-			OpeningHoursTo: '17:00',
-			Name: "MS Lobelka"
+			OpeningHoursTo: '18:00',
+			Name: "MŠ Lobelka"
 		}
 		// vytvorit email
 		const data = {
-			to: "marianmrva123@gmail.com",
+			to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
@@ -217,7 +217,7 @@ export function CustomerForm(props) {
 						setActiveDeliveryAddress(false);
 					}}>
 					<p className="choosedeliverybtn-title">Vyzvihnem <br></br>u nás</p>
-					<span className="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
+					<span className="choosedeliverybtn-subtitle">od 10:00 do 11:00</span>
 				</button>
 				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -281,11 +281,11 @@ export function CustomerForm(props) {
 				</div>
 
 				<p className="catname">Kontakte informácie</p>
-				<input className="input" placeholder="Meno" {...name} required />
-				<input className="input" placeholder="Priezvisko" {...lastName} required />
+				<input className="input" type="text" placeholder="Meno" {...name} required />
+				<input className="input" type="text" placeholder="Priezvisko" {...lastName} required />
 
-				<input className="input" placeholder="Email" {...email} required />
-				<input className="input" placeholder="Tel. číslo" {...tel} required />
+				<input className="input" type="email" placeholder="Email" {...email} required />
+				<input className="input" type="text" placeholder="Tel. číslo" {...tel} required />
 				<textarea className="textarea" placeholder="Poznámka" {...message} />
 			<div className="footer footer-shadow ">
 				<BottomBar />
