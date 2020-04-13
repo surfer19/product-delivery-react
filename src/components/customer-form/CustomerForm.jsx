@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import ReactDOMServer from 'react-dom/server';
+import selectboxArrow from "../../img/arrow-selectbox.png";
 import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
@@ -247,30 +248,33 @@ export function CustomerForm(props) {
 				}}>	
 				<div className={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
 					<p className="catname">Doručovacie informácie</p>
-					<select 
-						className="select"
-						id="cities" 
-						required
-						onChange={event => {
-							const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
-							if (foundDelivery) {
-								removeItemfromBasket(foundDelivery.ProductID)
+					<div className="selectbox">
+						<span className="selectbox-arrow" style={{backgroundImage: "url("+selectboxArrow+")"}}></span>
+						<select 
+							className="select"
+							id="cities" 
+							required
+							onChange={event => {
+								const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+								if (foundDelivery) {
+									removeItemfromBasket(foundDelivery.ProductID)
+									recalculateTotalPrice()
+								}
+								addItemToBasket({
+									Name: "Doručenie na adresu",
+									SupplierID: 1,
+									OrderID: null,
+									Price: event.target.value.toString()
+								})
 								recalculateTotalPrice()
-							}
-							addItemToBasket({
-								Name: "Doručenie na adresu",
-								SupplierID: 1,
-								OrderID: null,
-								Price: event.target.value.toString()
-							})
-							recalculateTotalPrice()
-						}}>
-					>
-						<option value="" selected disabled>Vyberte miesto doručenia</option>
-						{cities.map(city => (
-							<option value={city.cena}>{city.nazov} (+{city.cena}€)</option>
-						))}
-					</select>
+							}}>
+						>
+							<option value="" selected disabled>Vyberte miesto doručenia</option>
+							{cities.map(city => (
+								<option value={city.cena}>{city.nazov} (+{city.cena}€)</option>
+							))}
+						</select>
+					</div>
 					{/* <input className="input" placeholder="Miesto doručenia" {...city} required /> */}
 					<input className="input" placeholder="Ulica a číslo domu" {...address} required />
 					{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
