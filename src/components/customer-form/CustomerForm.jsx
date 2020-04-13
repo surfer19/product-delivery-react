@@ -1,7 +1,9 @@
 import React, { useState, useContext, useRef } from "react";
+import ReactDOMServer from 'react-dom/server';
 import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
+import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
 
 export function CustomerForm(props) {
 	console.log('props', props)
@@ -110,31 +112,39 @@ export function CustomerForm(props) {
 			}
 			return await fetch('https://fecko.org/productdelivery/OrdersProducts/create', optionsOrdersProducts)
 		})
-
+		// console.log('buildEmailHtmlString', buildEmailHtmlString())
+		const personalInfo = {
+			Name: name.value || "Nevyplnené",
+			LastName: lastName.value || "Nevyplnené",
+			Email: email.value || "Nevyplnené",
+			Telephone: tel.value || "Nevyplnené",
+			Message: message.value || "Nevyplnené",
+		}
+		const deliveryInfo = {
+			Address: address.value || "Nevyplnené",
+			City: city.value || "Nevyplnené",
+			PostCode: postCode.value || "Nevyplnené",
+		}
 		// vytvorit email
 		const data = {
-			customer: {
-				Name: name.value,
-				LastName: lastName.value,
-				Email: email.value,
-				Telephone: tel.value,
-				message: message.value,
-			},
-			finalPrice: state.totalPrice,
-			productsOrdered: state.basket.map(product => ({
-				productCategory: "categoria",
-				productName: product.Name,
-				productDescription: product.Description || "desc",
-				productCount: product.count,
-				productPrice: product.Price
-			}))
+			to: "marianmrva123@gmail.com",
+			header: "subject test",
+			body: ReactDOMServer.renderToStaticMarkup(
+				<SupplierEmailTemplate
+					basket={state.basket}
+					personalInfo={personalInfo}
+					deliveryInfo={deliveryInfo}
+					deliveryType={state.deliveryType}
+					totalPrice={state.totalPrice}
+				/>
+			),
 		}
 		console.log('data', data)
 		const formDataSendEmailOption = {
 			method: 'POST',
 			body: JSON.stringify(data),
 		}
-		const resEmail = await fetch('https://fecko.org/productdelivery/custom/send-mail', formDataSendEmailOption);
+		const resEmail = await fetch('https://fecko.org/productdelivery/custom/create-mail', formDataSendEmailOption);
 		const jsonEmail = await resEmail.json();
 		console.log('jsonEmail', jsonEmail)
 	}
