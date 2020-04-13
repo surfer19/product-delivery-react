@@ -51,6 +51,13 @@ export function CustomerForm(props) {
 		});
 	}
 
+	const updateSelectedCity = (city) => {
+		dispatch({
+			type: "UPDATE_SELECTED_CITY",
+			payload: city
+		});
+	}
+
 	async function onSubmit() {
 		let formDataCustomer = new FormData();
 		formDataCustomer.append('Name', name.value);
@@ -246,7 +253,7 @@ export function CustomerForm(props) {
 					e.preventDefault()
 					onSubmit()
 				}}>	
-				<div className={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
+				<div className={state.deliveryType === "NA_ADRESU" ? "deliverytoaddress active" : "deliverytoaddress"}>
 					<p className="catname">Doručovacie informácie</p>
 					<div className="selectbox">
 						<span className="selectbox-arrow" style={{backgroundImage: "url("+selectboxArrow+")"}}></span>
@@ -255,6 +262,7 @@ export function CustomerForm(props) {
 							id="cities" 
 							required
 							onChange={event => {
+								updateSelectedCity(event.target.options[event.target.selectedIndex].text)
 								const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
 								if (foundDelivery) {
 									removeItemfromBasket(foundDelivery.ProductID)
@@ -269,7 +277,7 @@ export function CustomerForm(props) {
 								recalculateTotalPrice()
 							}}>
 						>
-							<option value="" selected disabled>Vyberte miesto doručenia</option>
+							<option value="" selected disabled>{state.selectedCity || "Vyberte miesto doručenia"}</option>
 							{cities.map(city => (
 								<option value={city.cena}>{city.nazov} (+{city.cena}€)</option>
 							))}
