@@ -1,5 +1,5 @@
 import  React, { useState } from 'react';
-import './App.css';
+import './App-lobelka.css';
 import { Introduction } from './components/introduction/Introduction';
 import { useFetch } from "./hooks/useFetch";
 import 'bootstrap/dist/css/bootstrap.min.css';

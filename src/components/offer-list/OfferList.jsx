@@ -138,7 +138,7 @@ export function OfferList() {
 						<BottomBar />
 						<Link to="/customer-form" className="button button-full">
 							<span>
-							POKRAČOVAŤ
+							Pokračovať
 							</span>
 						</Link>
 					</div>
