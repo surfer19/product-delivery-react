@@ -78,7 +78,7 @@ export function ShowCategories(props) {
                         <li style={{marginBottom: '40px', background: 'rgba(51, 146, 83, 0.26)', padding: '20px'}} key={category.ProductCategoryID}>
                             <Row className="show-grid" style={{marginBottom: '10px'}}>
                                 <Col xs={12} md={5}>
-                                    <strong>{category.Name}</strong>
+                                    <strong>{category.Name} {category.Date}</strong>
                                 </Col>
                                 <Col xs={6} md={7} style={{textAlign: 'right'}}>
                                     <Button variant="primary" size="sm" onClick={handleShowModal.bind(this, category)}>Pridat polozku do kategorie</Button>{' '}

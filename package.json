@@ -8,10 +8,13 @@
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
     "immer": "^6.0.3",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
+    "react-moment": "^0.9.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"
   },

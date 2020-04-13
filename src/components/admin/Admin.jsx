@@ -9,6 +9,7 @@ export function Admin() {
 	const handleShow = () => setShow(true);
 
 	let name = useFormInput("");
+	let date = useFormInput("");
 	let categoryId = useFormInput("");
 
 	useEffect(() => {
@@ -29,6 +30,7 @@ export function Admin() {
 	function handleModalSubmit(event) {
 		let formData = new FormData();
 		formData.append('Name', name.value);
+		formData.append('Date', date.value);
 
 		const options = {
 			method: 'POST',
@@ -84,7 +86,9 @@ export function Admin() {
 					<Form onSubmit={handleModalSubmit}>
 						<Form.Group controlId="formBasicEmail">
 							<Form.Label>Názov kategórie</Form.Label>
-							<Form.Control type="text" placeholder="(napr. Pondelok 1.4.)" {...name}/>
+							<Form.Control type="text" placeholder="(napr. Pondelok)" {...name}/>
+							<Form.Label>Dátum kategórie</Form.Label>
+							<Form.Control type="date" placeholder="dátum napr. 1.4.2020" {...date}/>
 							<Form.Control type="hidden" {...categoryId}/>
 						</Form.Group>
 

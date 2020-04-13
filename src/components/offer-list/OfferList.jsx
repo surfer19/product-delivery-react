@@ -4,14 +4,19 @@ import { GlobalContext } from "../../App";
 import { isEmpty } from 'ramda';
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
+import moment from 'moment';
+// import timezone from 'moment-timezone'
 
-export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice}) {
+export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice, isDisabled}) {
 	const [state, dispatch] = useContext(ContactContext);
 	let productBasketItem = state.basket.find(item => item.ProductID === product.ProductID)
 	let count = productBasketItem ? productBasketItem.count : 0;
 	return (
-		<li key={product.ProductID} class={count > 0 ? "active" : ""}>
-			<span class="product-inner" onClick={() => {
+		<li key={product.ProductID} 
+			className={count > 0 ? "active" : ""}
+		>
+			<span className="product-inner" onClick={() => {
+				if (isDisabled) return;
 				// already exists -> remove
 				if (productBasketItem) {
 					removeItemfromBasket(product.ProductID);
@@ -22,18 +27,18 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 					recalculateTotalPrice();
 				}} 
 			>
-				<span class="product-name">{product.Name}</span>
-				<span class="product-price">{product.Price} €</span>
-				<p class="product-desc">{product.Description}</p>
+				<span className="product-name">{product.Name}</span>
+				<span className="product-price">{product.Price} €</span>
+				<p className="product-desc">{product.Description}</p>
 			</span>
 			
 			
-			<div class="product-amount">
-				<span class="product-amount-title">Zadajte množstvo</span>
+			<div className="product-amount">
+				<span className="product-amount-title">Zadajte množstvo</span>
 
-				<div class="product-amount-div">
+				<div className="product-amount-div">
 					<button onClick={() =>{ 
-						console.log('--')
+						if (isDisabled) return;
 						removeItemfromBasket(product.ProductID)
 						recalculateTotalPrice()
 					}}
@@ -41,7 +46,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 					</button>
 					<span>{count}</span>
 					<button onClick={() =>{ 
-						console.log('++')
+						if (isDisabled) return;
 						addItemToBasket(product)
 						recalculateTotalPrice()
 					}}
@@ -56,7 +61,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 export function OfferList() {	
 	const [state, dispatch] = useContext(ContactContext);
 	
-	const renderCategoryProducts = (categoryProducts) => {
+	const renderCategoryProducts = (categoryProducts, isDisabled) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
 		return categoryProducts.listProducts.map(product => {
 			return <ProductItem
@@ -64,6 +69,7 @@ export function OfferList() {
 				addItemToBasket={addItemToBasket}
 				removeItemfromBasket={removeItemfromBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
+				isDisabled={isDisabled}
 			/>
 		})
 	}
@@ -92,28 +98,34 @@ export function OfferList() {
 		<GlobalContext.Consumer>
 			{state => (
 				<>
-					<div class="wrapper">
-						<ul class="shopheader">
-							<li class="active">
-								<span class="shopheader-num">1</span>
-								<span class="shopheader-title">Výber <br></br>z ponuky</span>
+					<div className="wrapper">
+						<ul className="shopheader">
+							<li className="active">
+								<span className="shopheader-num">1</span>
+								<span className="shopheader-title">Výber <br></br>z ponuky</span>
 							</li>
 							<li>
-								<span class="shopheader-num">2</span>
-								<span class="shopheader-title">Vaše <br></br>údaje</span>
+								<span className="shopheader-num">2</span>
+								<span className="shopheader-title">Vaše <br></br>údaje</span>
 							</li>
 							<li>
-								<span class="shopheader-num">3</span>
-								<span class="shopheader-title">To je <br></br>všetko :)</span>
+								<span className="shopheader-num">3</span>
+								<span className="shopheader-title">To je <br></br>všetko :)</span>
 							</li>
 						</ul>
-						<ul class="noul">
+						<ul className="noul">
 							{state.categoryProductList.map(categoryProducts => {
+								const isDisabled = isDisabledCategory(categoryProducts)						
 								return (
-									<li class="categorylist" key={categoryProducts.ProductCategoryID}>
-										<p class="catname">{categoryProducts.Name}</p>
-										<ul class="noul productlist">
-											{renderCategoryProducts(categoryProducts)}
+									<li className="categorylist" key={categoryProducts.ProductCategoryID}>
+										<p className="catname">
+											<span>{categoryProducts.Name} </span>
+											<span>
+												{!isNaN(Date.parse(categoryProducts.Date)) ? moment(categoryProducts.Date).format('DD.MM.YYYY') : ""}
+											</span>
+										</p>
+										<ul className={`noul productlist ${isDisabled ? "disabled" : ""}`}>
+											{renderCategoryProducts(categoryProducts, isDisabled)}
 										</ul>
 									</li>
 								)
@@ -122,9 +134,9 @@ export function OfferList() {
 						
 					</div>
 
-					<div class="footer footer-shadow">
+					<div className="footer footer-shadow">
 						<BottomBar />
-						<Link to="/customer-form" class="button button-full">
+						<Link to="/customer-form" className="button button-full">
 							<span>
 							POKRAČOVAŤ
 							</span>
@@ -135,4 +147,24 @@ export function OfferList() {
 		</GlobalContext.Consumer>
 	)
 	
+}
+
+const isDisabledCategory = (categoryProducts) => {
+	if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
+	// change now for debug purpose .add(6, 'hours')
+	const now = moment();
+	const dateCategoryMoment = moment(categoryProducts.Date, 'YYYY-MM-DD');
+	// date is from - INF to today night
+	const endOfToday = now.endOf('today')
+	const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
+
+	const categoryPreviousDayLimit = dateCategoryMoment.subtract(1, 'day').add(18, 'hours')
+	// add .add(6, 'hours') after moment() for debug purpose
+	// check if now is between current category time minus X hours and end of category day
+	const nowIsBetweenLimitYesterdayAndCategoryEndDay = moment().isBetween(
+		categoryPreviousDayLimit, 
+		moment(categoryProducts.Date).endOf('day')
+	)
+
+	return categoryIsHistory || nowIsBetweenLimitYesterdayAndCategoryEndDay
 }

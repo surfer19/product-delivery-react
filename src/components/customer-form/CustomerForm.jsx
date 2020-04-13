@@ -119,14 +119,15 @@ export function CustomerForm(props) {
 				Email: email.value,
 				Telephone: tel.value,
 				message: message.value,
-				productsOrdered: state.basket.map(product => ({
-					productCategory: "<p>categoria</p>",
-					productName: product.Name,
-					productDescription: product.Description,
-					productCount: "1",
-					productPrice: product.Price
-				}))
-			}
+			},
+			finalPrice: state.totalPrice,
+			productsOrdered: state.basket.map(product => ({
+				productCategory: "categoria",
+				productName: product.Name,
+				productDescription: product.Description || "desc",
+				productCount: product.count,
+				productPrice: product.Price
+			}))
 		}
 		console.log('data', data)
 		const formDataSendEmailOption = {
