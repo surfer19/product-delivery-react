@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import ReactDOMServer from 'react-dom/server';
+import selectboxArrow from "../../img/arrow-selectbox.png";
 import { Link } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
@@ -253,6 +254,13 @@ export function CustomerForm(props) {
 				}}>	
 				<div className={isActiveDeliveryAddress ? "deliverytoaddress active" : "deliverytoaddress"}>
 					<p className="catname">Doručovacie informácie</p>
+					<div className="selectbox">
+						<span className="selectbox-arrow" style={{backgroundImage: "url("+selectboxArrow+")"}}></span>
+						<select className="select" id="cities" required>
+							<option value="" selected disabled>Vyberte miesto doručenia</option>
+							<option value="3">Beňadiková (+3€)</option>
+						</select>
+					</div>
 					<select className="select" id="cities" required>
 						<option value="" selected disabled>Vyberte miesto doručenia</option>
 						<option value="3">Beňadiková (+3€)</option>
