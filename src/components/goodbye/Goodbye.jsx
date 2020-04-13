@@ -9,7 +9,7 @@ export function Goodbye() {
 			 V prípade akýchkoľvek zmien nás kontaktujte na tel. čísle: <strong>+421 915 910 592</strong>
 				<br></br>Vaša burina
 			</p>
-			<Link to="/" class="button">Vrátiť sa na homepage</Link>			
+			<Link to="/" className="button">Vrátiť sa na homepage</Link>			
 		</div>
 	)
 }
