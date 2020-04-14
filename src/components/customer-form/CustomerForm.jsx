@@ -78,7 +78,7 @@ export function CustomerForm(props) {
 		formDataAddress.append('PostCode', postCode.value);
 		formDataAddress.append('Email', email.value);
 		formDataAddress.append('PhoneNo', tel.value);
-		formDataAddress.append('SupplierID', '1');
+		formDataAddress.append('SupplierID', '2');
 		// vytvorenie adresy customera
 		const resCustomerAddress = await fetch('https://fecko.org/productdelivery/Address/create', {
 			method: 'POST',
@@ -90,7 +90,7 @@ export function CustomerForm(props) {
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
-		formData.append('SupplierID', '1');
+		formData.append('SupplierID', '2');
 		const options = {
 			method: 'POST',
 			body: formData,
@@ -101,7 +101,7 @@ export function CustomerForm(props) {
 		dispatch({
 			type: "SEND_PERSONAL_FORM",
 			payload: { 
-				id: 1,
+				id: 2,
 				name: name.value,
 				lastName: lastName.value,
 				email: email.value,
@@ -136,10 +136,10 @@ export function CustomerForm(props) {
 			PostCode: postCode.value || "Nevyplnené",
 		}
 		const supplierInfo = {
-			PhoneNumber: '+421 911 705 160',
+			PhoneNumber: '+421 915 910 592',
 			OpeningHoursFrom: '8:00',
-			OpeningHoursTo: '18:00',
-			Name: "MŠ Lobelka"
+			OpeningHoursTo: '24:00',
+			Name: "Burina"
 		}
 		// vytvorit email
 		const data = {
@@ -223,8 +223,8 @@ export function CustomerForm(props) {
 						setActiveDeliveryShop(true);
 						setActiveDeliveryAddress(false);
 					}}>
-					<p className="choosedeliverybtn-title">Vyzvihnem <br></br>u nás</p>
-					<span className="choosedeliverybtn-subtitle">od 10:00 do 11:00</span>
+					<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
+					<span className="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
 				</button>
 				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -270,7 +270,7 @@ export function CustomerForm(props) {
 								}
 								addItemToBasket({
 									Name: "Doručenie na adresu",
-									SupplierID: 1,
+									SupplierID: 2,
 									OrderID: null,
 									Price: event.target.value.toString()
 								})
@@ -288,7 +288,7 @@ export function CustomerForm(props) {
 					{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
 				</div>
 
-				<p className="catname">Kontakte informácie</p>
+				<p className="catname">Kontaktné informácie</p>
 				<input className="input" type="text" placeholder="Meno" {...name} required />
 				<input className="input" type="text" placeholder="Priezvisko" {...lastName} required />
 

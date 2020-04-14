@@ -19,7 +19,7 @@ export function Admin() {
 	function loadCategories() {
 		Promise.all([
 			fetch('https://fecko.org/productdelivery/ProductCategory'),
-			fetch('https://fecko.org/productdelivery/custom/supplier-products/1')
+			fetch('https://fecko.org/productdelivery/custom/supplier-products/2')
 		])
 			.then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
 			.then(([productCategories, supplierProducts]) => {

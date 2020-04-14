@@ -1,5 +1,5 @@
 import  React, { useState } from 'react';
-import './App-lobelka.css';
+import './App.css';
 import { Introduction } from './components/introduction/Introduction';
 import { useFetch } from "./hooks/useFetch";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -46,9 +46,9 @@ export default function App() {
 	// const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
 	// console.log('categoryPost', categoryPost)
 	
-	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/1", {}).response;
+	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/2", {}).response;
 	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
-	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
+	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/2", {}).response;
 	
 	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
 	// console.log('GROUPED!', supplierProductsGroupedByCategory);
@@ -72,7 +72,7 @@ export default function App() {
 							<Route path="/supplier-offer" children={<OfferList />} />
 							<Route path="/customer-form" children={<CustomerForm />} />
 							<Route path="/goodbye" children={<Goodbye />} />
-							<Route path="/administraciapremslobelka" children={<Admin/>} />
+							<Route path="/burinatuadministruje" children={<Admin/>} />
 							<Route path="/" children={<Introduction/>} />
 						</Switch>
 					</GlobalContext.Provider>

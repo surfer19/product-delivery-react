@@ -38,7 +38,7 @@ export function ShowCategories(props) {
         formData.append('Name', name.value);
         formData.append('Price', price.value);
         formData.append('Description', description.value);
-        formData.append('SupplierID', "1"); // TODO has to be generic
+        formData.append('SupplierID', "2"); // TODO has to be generic
         formData.append('ProductCategoryID', categoryId.value);
         let url = 'https://fecko.org/productdelivery/Product/create';
         if(productId.value) {
