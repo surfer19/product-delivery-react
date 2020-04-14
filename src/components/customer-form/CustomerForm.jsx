@@ -223,7 +223,7 @@ export function CustomerForm(props) {
 						setActiveDeliveryShop(true);
 						setActiveDeliveryAddress(false);
 					}}>
-					<p className="choosedeliverybtn-title">Vyzvihnem <br></br>u nás</p>
+					<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
 					<span className="choosedeliverybtn-subtitle">od 10:00 do 11:00</span>
 				</button>
 				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
@@ -288,7 +288,7 @@ export function CustomerForm(props) {
 					{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
 				</div>
 
-				<p className="catname">Kontakte informácie</p>
+				<p className="catname">Kontaktné informácie</p>
 				<input className="input" type="text" placeholder="Meno" {...name} required />
 				<input className="input" type="text" placeholder="Priezvisko" {...lastName} required />
 
