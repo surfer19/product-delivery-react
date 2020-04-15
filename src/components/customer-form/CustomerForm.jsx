@@ -97,7 +97,7 @@ export function CustomerForm(props) {
 		}
 		const resOrder = await fetch('https://fecko.org/productdelivery/Order/create', options);
 		const jsonOrder = await resOrder.json();
-		console.log('jsonOrder', jsonOrder)
+		console.log('jsonOrder', jsonOrder);
 		dispatch({
 			type: "SEND_PERSONAL_FORM",
 			payload: { 
@@ -153,6 +153,7 @@ export function CustomerForm(props) {
 					supplierInfo={supplierInfo}
 					deliveryType={state.deliveryType}
 					totalPrice={state.totalPrice}
+					selectedCity={state.selectedCity}
 				/>
 			),
 		}
@@ -177,6 +178,7 @@ export function CustomerForm(props) {
 					supplierInfo={supplierInfo}
 					deliveryType={state.deliveryType}
 					totalPrice={state.totalPrice}
+					selectedCity={state.selectedCity}
 				/>
 			),
 		}
@@ -261,6 +263,7 @@ export function CustomerForm(props) {
 							className="select"
 							id="cities" 
 							required
+							{...city}
 							onChange={event => {
 								updateSelectedCity(event.target.options[event.target.selectedIndex].text)
 								const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -272,6 +275,7 @@ export function CustomerForm(props) {
 									Name: "Doručenie na adresu",
 									SupplierID: 1,
 									OrderID: null,
+									DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
 									Price: event.target.value.toString()
 								})
 								recalculateTotalPrice()
@@ -279,7 +283,7 @@ export function CustomerForm(props) {
 						>
 							<option value="" selected disabled>{state.selectedCity || "Vyberte miesto doručenia"}</option>
 							{cities.map(city => (
-								<option value={city.cena}>{city.nazov} (+{city.cena}€)</option>
+								<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
 							))}
 						</select>
 					</div>

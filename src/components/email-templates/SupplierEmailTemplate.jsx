@@ -1,7 +1,7 @@
 import React from "react";
 import moment from 'moment';
 
-export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliveryType, totalPrice}) => (
+export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliveryType, totalPrice, selectedCity}) => (
 	<div>
 		<p>Nová objednávka z dňa {moment().format("DD.MM.YYYY")}</p>
 		Objednané:
@@ -13,6 +13,7 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 						{` ${item.Price}`}€
 						{` ${item.Name} - `}
 						{item.Description ? ` ${item.Description}` : ''} 
+						{item.DeliveryCity ? ` ${item.DeliveryCity} ` : ''}
 					</li>
 				))
 			}
@@ -25,9 +26,9 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 		<ul>
 			<li>Meno: {personalInfo.Name}</li>
 			<li>Priezvisko: {personalInfo.LastName}</li>
-			<li>Email: {personalInfo.Email}</li>
-			<li>Tel.cislo: {personalInfo.Telephone}</li>
-			<li>Poznamka: {personalInfo.Message}</li>
+			<li>E-mail: {personalInfo.Email}</li>
+			<li>Tel.číslo: {personalInfo.Telephone}</li>
+			<li>Poznámka: {personalInfo.Message}</li>
 		</ul>
 		
 		{deliveryType === "NA_ADRESU" ? 
@@ -35,8 +36,7 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 				<p>Informácie o doručení: </p>
 				<ul>
 					<li>Adresa: {deliveryInfo.Address}</li>
-					<li>Mesto: {deliveryInfo.City}</li>
-					<li>PSC: {deliveryInfo.PostCode}</li>
+					<li>Mesto: {selectedCity}</li>
 				</ul>
 			</div>
 			: ""
