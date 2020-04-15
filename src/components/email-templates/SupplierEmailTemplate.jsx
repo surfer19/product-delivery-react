@@ -9,9 +9,9 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 			{
 				basket.map(item => (
 					<li>
-						{`${item.ProductCategoryName} `}
+						{item.ProductCategoryName ? `${item.ProductCategoryName} ` : ''}
+						{item.ProductCategoryDate ? `(${moment(item.ProductCategoryDate).format("DD.MM.YYYY")}) - ` : ' - '}	
 						{/* {moment(item.ProductCategoryDate).format('DD.MM.YYYY') ` - `} */}
-						{`${item.ProductCategoryDate} - `}
 						{item.count}x  
 						{` ${item.Price}`}€
 						{` ${item.Name} - `}

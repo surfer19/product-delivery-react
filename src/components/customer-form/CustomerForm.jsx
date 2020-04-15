@@ -281,24 +281,25 @@ export function CustomerForm(props) {
 								recalculateTotalPrice()
 							}}>
 						>
-							<option value="" selected disabled>{state.selectedCity || "Vyberte miesto doručenia"}</option>
+							<option value="" selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
 							{cities.map(city => (
 								<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
 							))}
 						</select>
 					</div>
 					{/* <input className="input" placeholder="Miesto doručenia" {...city} required /> */}
-					<input className="input" placeholder="Ulica a číslo domu" {...address} required />
+					<input className="input" placeholder="Ulica a číslo domu *" {...address} required />
 					{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
 				</div>
 
 				<p className="catname">Kontaktné informácie</p>
-				<input className="input" type="text" placeholder="Meno" {...name} required />
-				<input className="input" type="text" placeholder="Priezvisko" {...lastName} required />
+				<input className="input" type="text" placeholder="Meno *" {...name} required />
+				<input className="input" type="text" placeholder="Priezvisko *" {...lastName} required />
 
-				<input className="input" type="email" placeholder="Email" {...email} required />
-				<input className="input" type="text" placeholder="Tel. číslo" {...tel} required />
+				<input className="input" type="email" placeholder="Email *" {...email} required />
+				<input className="input" type="text" placeholder="Tel. číslo *" {...tel} required />
 				<textarea className="textarea" placeholder="Poznámka" {...message} />
+				<small>* povinný údaj</small>
 			<div className="footer footer-shadow ">
 				<BottomBar />
 				<div className="btngroup">
