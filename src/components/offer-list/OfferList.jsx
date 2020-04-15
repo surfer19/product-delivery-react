@@ -64,13 +64,17 @@ export function OfferList() {
 	const renderCategoryProducts = (categoryProducts, isDisabled) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
 		return categoryProducts.listProducts.map(product => {
-			return <ProductItem
+			product = { 
+				...product,
+				CategoryName: categoryProducts.Name
+			}
+			return (<ProductItem
 				product={product}
 				addItemToBasket={addItemToBasket}
 				removeItemfromBasket={removeItemfromBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
 				isDisabled={isDisabled}
-			/>
+			/>)
 		})
 	}
 	
