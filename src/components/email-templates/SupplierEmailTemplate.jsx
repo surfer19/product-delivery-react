@@ -9,10 +9,10 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 			{
 				basket.map(item => (
 					<li>
-						{item.ProductCategoryName ? `${item.ProductCategoryName} ` : ''}
-						{item.ProductCategoryDate ? `(${moment(item.ProductCategoryDate).format("DD.MM.YYYY")}) - ` : ' - '}	
-						{/* {moment(item.ProductCategoryDate).format('DD.MM.YYYY') ` - `} */}
-						{item.count}x  
+						{item.ProductCategoryName ? `${item.ProductCategoryName}` : ''}
+						{item.ProductCategoryDate ? ` (${moment(item.ProductCategoryDate).format("DD.MM.YYYY")})` : ''}	
+						{/* {` - ${item.count}`}x   */}
+						{item.DeliveryCity ? ` ${item.count}x` : ` - ${item.count}x`}
 						{` ${item.Price}`}€
 						{` ${item.Name} - `}
 						{item.Description ? ` ${item.Description}` : ''} 
@@ -20,8 +20,8 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 					</li>
 				))
 			}
-			<li>Cena celkom: {totalPrice}€</li>
 		</ul>
+		<p><strong>Cena spolu: {totalPrice} €</strong></p>
 		<p>Typ doručenia: 
 			{deliveryType === "NA_PREDAJNI" ? " Vyzdvihnutie na predajni" : " Doručenie na adresu" }
 		</p>

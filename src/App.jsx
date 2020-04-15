@@ -53,7 +53,11 @@ export default function App() {
 	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
 	// console.log('GROUPED!', supplierProductsGroupedByCategory);
 	if (!responseSupplier || !productCategories || !supplierProducts) {
-	  return <Spinner animation="border" />
+	  return (
+		<div style={{position: 'absolute', top: '50%', left: '50%', marginTop: '-17px', marginLeft: '-17px'}}>
+			<Spinner animation="border" />
+		</div>
+	  );
 	}
 
 	const state = {

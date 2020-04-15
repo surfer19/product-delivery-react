@@ -9,9 +9,10 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 		<ul>
 			{basket.map(item => (
 				<li>
-					{item.ProductCategoryName ? `${item.ProductCategoryName} ` : ''}
-					{item.ProductCategoryDate ? `(${moment(item.ProductCategoryDate).format("DD.MM.YYYY")}) - ` : ' - '}		
-					{item.count}x  
+					{item.ProductCategoryName ? `${item.ProductCategoryName}` : ''}
+					{item.ProductCategoryDate ? ` (${moment(item.ProductCategoryDate).format("DD.MM.YYYY")})` : ''}		
+					{/* {` - ${item.count}`}x   */}
+					{item.DeliveryCity ? ` ${item.count}x` : ` - ${item.count}x`}
 					{` ${item.Price}`}€
 					{` ${item.Name} - `}
 					{item.Description ? ` ${item.Description} ` : ''}
@@ -20,7 +21,7 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 			))}
 		</ul>
 		
-		<p>Cena spolu: {totalPrice} €</p>
+		<p><strong>Cena spolu: {totalPrice} €</strong></p>
 
 		<p>Kontaktné informácie: </p>
 		<ul>
