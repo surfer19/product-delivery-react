@@ -211,6 +211,7 @@ export function CustomerForm(props) {
 			<p className="catname">Doručenie objednávky</p>
 			<div className="choosedeliverybtn-group">
 				<button className={state.deliveryType === "NA_PREDAJNI" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+						updateSelectedCity(null);
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
 						if (foundDelivery){
 							removeItemfromBasket(foundDelivery.ProductID)
@@ -261,9 +262,10 @@ export function CustomerForm(props) {
 						<span className="selectbox-arrow" style={{backgroundImage: "url("+selectboxArrow+")"}}></span>
 						<select 
 							className="select"
-							id="cities" 
+							id="cities"
+							value={state.selectedCity}
 							required
-							{...city}
+							// {...city}
 							onChange={event => {
 								updateSelectedCity(event.target.options[event.target.selectedIndex].text)
 								const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -281,7 +283,7 @@ export function CustomerForm(props) {
 								recalculateTotalPrice()
 							}}>
 						>
-							<option value="" selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
+							<option value={state.selectedCity} selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
 							{cities.map(city => (
 								<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
 							))}
