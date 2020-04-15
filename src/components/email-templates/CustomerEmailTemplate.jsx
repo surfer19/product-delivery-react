@@ -38,8 +38,8 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 				<p>Vašu objednávku si môžete vyzdvihnúť u nás v MŠ Lobelka od 
 					{/* <strong> {supplierInfo.OpeningHoursFrom}</strong> do 
 					<strong> {supplierInfo.OpeningHoursTo}</strong>. */}
-					<strong> 10:00</strong> do 
-					<strong> 11:00</strong>.
+					<strong> 11:00</strong> do 
+					<strong> 12:00</strong>.
 				</p>
 				<p>
 					V prípade, že chcete niečo zmeniť vo Vašej objednávke kontaktujte nás 

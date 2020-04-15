@@ -19,7 +19,7 @@ export function Introduction() {
 						<p>V Momente nakúpime, v Lobelke uvaríme a privezieme priamo k Vám. Kvalitný obed z poctivých surovín, uvarený s láskou. Priamo od šéfkuchára <strong>Romana Kováča</strong>, nášho Romča, chlapca, ktorý varil s hviezdami a dnes tu varí pre Vás. Overené našimi najmenšími a zároveň najväčšími gurmánmi. </p>
 						<h3 style={{color: '#a9bf06'}}>Ako to funguje?</h3>
 						<h4 style={{color: '#a9bf06'}}>1. My uvaríme, vy vyzdvihnete</h4>
-						<p>V čase od <strong>10:00 - 11:00</strong> si pripravený obed vyzdvihnete osobne na adrese SNP 9, 031 01 Liptovský Mikuláš - Súkromná materská škola Lobelka.</p>
+						<p>V čase od <strong>11:00 - 12:00</strong> si pripravený obed vyzdvihnete osobne na adrese SNP 9, 031 01 Liptovský Mikuláš - Súkromná materská škola Lobelka.</p>
 						<h4 style={{color: '#a9bf06'}}>2. My uvaríme a privezieme</h4>
 						<p>Každý deň obed uvaríme, zabalíme a v čase od <strong>11:00</strong> privezieme priamo k Vám na Vami zadanú adresu.</p>
 						<small style={{marginTop: '20px', lineHeight: 1.3, display: 'block', color: 'grey', fontSize: '10px'}}>Rezervačný systém bol vyvorený ako podpora <br/> pre podnikateľov v dobe korona-krízy.<br/> <a style={{textDecoration: 'underline', color: 'grey'}} href="mailto:productdelivery@gorazd.sk">Kontaktný e-mail na tvorcu</a></small>

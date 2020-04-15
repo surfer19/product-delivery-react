@@ -144,6 +144,7 @@ export function CustomerForm(props) {
 		// vytvorit email
 		const data = {
 			to: "menu@lobelka.sk",
+			// to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
@@ -227,7 +228,7 @@ export function CustomerForm(props) {
 						setActiveDeliveryAddress(false);
 					}}>
 					<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
-					<span className="choosedeliverybtn-subtitle">od 10:00 do 11:00</span>
+					<span className="choosedeliverybtn-subtitle">od 11:00 do 12:00</span>
 				</button>
 				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
