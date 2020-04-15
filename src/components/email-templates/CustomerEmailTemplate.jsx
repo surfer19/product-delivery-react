@@ -9,7 +9,8 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 		<ul>
 			{basket.map(item => (
 				<li>
-					{`${item.CategoryName} - `}
+					{`${item.ProductCategoryName} `}
+					{`${item.ProductCategoryDate} - `}					
 					{item.count}x  
 					{` ${item.Price}`}€
 					{` ${item.Name} - `}
