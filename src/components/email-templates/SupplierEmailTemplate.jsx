@@ -10,6 +10,7 @@ export const SupplierEmailTemplate = ({basket, personalInfo, deliveryInfo, deliv
 				basket.map(item => (
 					<li>
 						{item.count}x  
+						{` ${item.CategoryName} `}
 						{` ${item.Price}`}€
 						{` ${item.Name} - `}
 						{item.Description ? ` ${item.Description}` : ''} 
