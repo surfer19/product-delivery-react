@@ -169,19 +169,19 @@ export function OfferList() {
 const isDisabledCategory = (categoryProducts) => {
     if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
     // change now for debug purpose .add(6, 'hours')
-    const now = moment();
+    // const now = moment();
     const dateCategoryMoment = moment(categoryProducts.Date, 'YYYY-MM-DD');
-    // date is from - INF to today night
-    const endOfToday = now.endOf('today')
-    const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
+    // category date je medzi -INF az end of today -1
+    const endOfYesterday = moment().subtract(1, 'day').endOf('day')
+    const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfYesterday)
  
-    // now is between category day 11:00 - end of category day
+    // now is between category day 8:00 - end of category day
     const categoryCurrentDayLimit = dateCategoryMoment.add(8, 'hours')
     const nowIsBetweenLimitTodayAndCategoryEndDay = moment().isBetween(
         categoryCurrentDayLimit,
         moment(categoryProducts.Date).endOf('day')
     )
- 
+   
     return categoryIsHistory || nowIsBetweenLimitTodayAndCategoryEndDay; //nowIsBetweenLimitYesterdayAndCategoryEndDay
 }
 
