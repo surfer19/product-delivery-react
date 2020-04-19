@@ -78,7 +78,7 @@ export function CustomerForm(props) {
 		formDataAddress.append('PostCode', postCode.value);
 		formDataAddress.append('Email', email.value);
 		formDataAddress.append('PhoneNo', tel.value);
-		formDataAddress.append('SupplierID', '1');
+		formDataAddress.append('SupplierID', '2');
 		// vytvorenie adresy customera
 		const resCustomerAddress = await fetch('https://fecko.org/productdelivery/Address/create', {
 			method: 'POST',
@@ -90,7 +90,7 @@ export function CustomerForm(props) {
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
-		formData.append('SupplierID', '1');
+		formData.append('SupplierID', '2');
 		const options = {
 			method: 'POST',
 			body: formData,
@@ -136,15 +136,15 @@ export function CustomerForm(props) {
 			PostCode: postCode.value || "Nevyplnené",
 		}
 		const supplierInfo = {
-			PhoneNumber: '+421 911 705 160',
-			OpeningHoursFrom: '8:00',
-			OpeningHoursTo: '18:00',
-			Name: "MŠ Lobelka"
+			PhoneNumber: '+421 915 910 592',
+			OpeningHoursFrom: '10:00',
+			OpeningHoursTo: '22:00',
+			Name: "Burina Restaurant"
 		}
 		// vytvorit email
 		const data = {
-			to: "menu@lobelka.sk",
-			// to: "gorazd.ratulovsky@gmail.com",
+			// to: "menu@lobelka.sk",
+			to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
@@ -276,7 +276,7 @@ export function CustomerForm(props) {
 								}
 								addItemToBasket({
 									Name: "Doručenie na adresu",
-									SupplierID: 1,
+									SupplierID: 2,
 									OrderID: null,
 									DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
 									Price: event.target.value.toString()
@@ -301,7 +301,7 @@ export function CustomerForm(props) {
 
 				<input className="input" type="email" placeholder="Email *" {...email} required />
 				<input className="input" type="text" placeholder="Tel. číslo *" {...tel} required />
-				<textarea className="textarea" placeholder="Poznámka" {...message} />
+				<textarea className="textarea" placeholder="Poznámka (napr. orientačný čas vyzdvihnutia)" {...message} />
 				<small>* povinný údaj</small>
 			<div className="footer footer-shadow ">
 				<BottomBar />

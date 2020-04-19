@@ -35,11 +35,11 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 		{deliveryType === "NA_PREDAJNI"
 			? (<>
 				<p>Forma doručenia: <span>Vyzdvihnutie na pobočke</span></p>
-				<p>Vašu objednávku si môžete vyzdvihnúť u nás v MŠ Lobelka od 
+				<p>Vašu objednávku si môžete vyzdvihnúť u nás v reštaurácii Burina od 
 					{/* <strong> {supplierInfo.OpeningHoursFrom}</strong> do 
 					<strong> {supplierInfo.OpeningHoursTo}</strong>. */}
 					<strong> 11:00</strong> do 
-					<strong> 12:00</strong>.
+					<strong> 15:00</strong>.
 				</p>
 				<p>
 					V prípade, že chcete niečo zmeniť vo Vašej objednávke kontaktujte nás 

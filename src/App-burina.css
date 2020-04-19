@@ -48,13 +48,15 @@ button:focus {
 	border: 3px solid white;
 	position: relative;
 	text-align: left;
-	overflow: hidden;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .productlist li.active {
 	border: 3px solid #457D7E;
 	box-shadow: 0px 7px 16px rgba(23,16,14,0.3);
-	z-index: 1;
+    z-index: 1;
+    cursor: default;
 }
 
 .productlist .product-name {
