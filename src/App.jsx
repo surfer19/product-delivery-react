@@ -1,4 +1,4 @@
-import  React, { useState } from 'react';
+import  React from 'react';
 import './App-lobelka.css';
 import { Introduction } from './components/introduction/Introduction';
 import { useFetch } from "./hooks/useFetch";
@@ -51,7 +51,6 @@ export default function App() {
 	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
 	
 	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
-	// console.log('GROUPED!', supplierProductsGroupedByCategory);
 	if (!responseSupplier || !productCategories || !supplierProducts) {
 	  return (
 		<div style={{position: 'absolute', top: '50%', left: '50%', marginTop: '-17px', marginLeft: '-17px'}}>
@@ -66,7 +65,7 @@ export default function App() {
 		},
 		categoryProductList: supplierProductsGroupedByCategory
 	}
-
+	
 	return (
 		<div className="App">
 			<Router>
@@ -76,7 +75,8 @@ export default function App() {
 							<Route path="/supplier-offer" children={<OfferList />} />
 							<Route path="/customer-form" children={<CustomerForm />} />
 							<Route path="/goodbye" children={<Goodbye />} />
-							<Route path="/administraciapremslobelka" children={<Admin/>} />
+							{/* premslobelka */}
+							<Route path="/administracia/:adminId" children={<Admin/>} />
 							<Route path="/" children={<Introduction/>} />
 						</Switch>
 					</GlobalContext.Provider>

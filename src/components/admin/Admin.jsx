@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, Modal, Row} from 'react-bootstrap';
 import {ShowCategories} from "../show-categories/ShowCategories";
+import {useParams} from 'react-router-dom';
 
-export function Admin() {
+export function Admin(props) {
 	const [show, setShow] = useState(false);
 	const [categories, setCategories] = useState([]);
+	const [supplierId, setSupplierId] = useState(0)
+
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
@@ -12,14 +15,24 @@ export function Admin() {
 	let date = useFormInput("");
 	let categoryId = useFormInput("");
 
-	useEffect(() => {
-		loadCategories();
-	}, []);
+	let { adminId } = useParams()
 
-	function loadCategories() {
+	useEffect(() => {
+		async function loadSuppliers() {
+			const suppliersRes = await fetch("https://fecko.org/productdelivery/Supplier");
+			return (await suppliersRes.json()).records;
+		}
+		Promise.resolve(loadSuppliers()).then(suppliers => {
+			const supplierId = getSupplierIdBySupplierList(suppliers, adminId);
+			setSupplierId(supplierId);
+			loadCategories(supplierId);
+		});
+	}, [adminId]);
+
+	function loadCategories(supplierId) {
 		Promise.all([
 			fetch('https://fecko.org/productdelivery/ProductCategory'),
-			fetch('https://fecko.org/productdelivery/custom/supplier-products/1')
+			fetch(`https://fecko.org/productdelivery/custom/supplier-products/${supplierId}`)
 		])
 			.then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
 			.then(([productCategories, supplierProducts]) => {
@@ -56,6 +69,7 @@ export function Admin() {
 		categoryId.onInitValue(category.ProductCategoryID);
 		setShow(true);
 	}
+	console.log('supplierId', supplierId)
 
 	return (
 		<div style={{
@@ -136,4 +150,9 @@ function useFormInput(initialValue) {
 		onInitValue: onInitValue,
 		onChange: handleChange
 	};
+}
+
+const getSupplierIdBySupplierList = (supplierList, adminId) => {
+	const foundSupplier = supplierList.find(supplier => supplier.admin === adminId)
+	return foundSupplier.SupplierID;
 }
