@@ -175,8 +175,8 @@ const isDisabledCategory = (categoryProducts) => {
     const endOfYesterday = moment().subtract(1, 'day').endOf('day')
     const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfYesterday)
  
-    // now is between category day 11:00 - end of category day
-    const categoryCurrentDayLimit = dateCategoryMoment.add(11, 'hours')
+    // now is between category day 8:00 - end of category day
+    const categoryCurrentDayLimit = dateCategoryMoment.add(8, 'hours')
     const nowIsBetweenLimitTodayAndCategoryEndDay = moment().isBetween(
         categoryCurrentDayLimit,
         moment(categoryProducts.Date).endOf('day')
