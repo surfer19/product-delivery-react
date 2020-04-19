@@ -22,3 +22,10 @@ export const groupSupplierProductsByCategory = (supplierProductCategories, suppl
 
 export const filterProductCategoriesBySupplierId = (productCategories, supplierId) =>
 	productCategories.filter(category => category.SupplierID === supplierId)
+
+
+export const getSupplierIdBySupplierList = (supplierList, adminId) => {
+	const foundSupplier = supplierList.find(supplier => supplier.admin === adminId)
+	return foundSupplier.SupplierID;
+}
+

@@ -4,7 +4,8 @@ import {ShowCategories} from "../show-categories/ShowCategories";
 import {useParams} from 'react-router-dom';
 import {
 	filterProductCategoriesBySupplierId,
-	groupSupplierProductsByCategory
+	groupSupplierProductsByCategory,
+	getSupplierIdBySupplierList
 } from '../../utils';
 
 export function Admin(props) {
@@ -75,7 +76,6 @@ export function Admin(props) {
 		categoryId.onInitValue(category.ProductCategoryID);
 		setShow(true);
 	}
-	console.log('supplierId', supplierId)
 
 	return (
 		<div style={{
@@ -145,9 +145,4 @@ function useFormInput(initialValue) {
 		onInitValue: onInitValue,
 		onChange: handleChange
 	};
-}
-
-const getSupplierIdBySupplierList = (supplierList, adminId) => {
-	const foundSupplier = supplierList.find(supplier => supplier.admin === adminId)
-	return foundSupplier.SupplierID;
 }

@@ -1,10 +1,11 @@
 import React  from 'react'
 import logo from "../../img/lobelka.png";
 import cover from "../../img/cover.png";
-import { GlobalContext } from "../../App";
-import { Link } from "react-router-dom";
+import { GlobalContext } from "../loading-wrapper/LoadingWrapper";
+import { Link, useRouteMatch } from "react-router-dom";
 
 export function Introduction() {
+	let { url } = useRouteMatch();
 	return (
 		<GlobalContext.Consumer>
 			{state => (
@@ -25,7 +26,7 @@ export function Introduction() {
 						<small style={{marginTop: '20px', lineHeight: 1.3, display: 'block', color: 'grey', fontSize: '10px'}}>Rezervačný systém bol vyvorený ako podpora <br/> pre podnikateľov v dobe korona-krízy.<br/> <a style={{textDecoration: 'underline', color: 'grey'}} href="mailto:productdelivery@gorazd.sk">Kontaktný e-mail na tvorcu</a></small>
 
 						<div className="footer">
-							<Link to="/supplier-offer" className="button button-full">
+							<Link to={`${url}/supplier-offer`} className="button button-full">
 								<span>
 								Spustiť objednávku
 								</span>

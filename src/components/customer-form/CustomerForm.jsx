@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import ReactDOMServer from 'react-dom/server';
 import selectboxArrow from "../../img/arrow-selectbox.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
@@ -9,7 +9,7 @@ import { CustomerEmailTemplate } from "../email-templates/CustomerEmailTemplate"
 import { cities } from "../../cities"
 
 export function CustomerForm(props) {
-	console.log('props', props)
+	let { supplierIdName } = useParams();
 	const [state, dispatch] = useContext(ContactContext);
 	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(true)
 	const [isActiveDeliveryAddress, setActiveDeliveryAddress] = useState(false)
@@ -22,7 +22,6 @@ export function CustomerForm(props) {
 	const postCode = useFormInput("");
 	const city = useFormInput("");
 	const address = useFormInput("");
-	console.log('state', state)
 	
 	async function onSubmitDeliveryTypeChange (deliveryType) {
 		dispatch({
@@ -86,7 +85,7 @@ export function CustomerForm(props) {
 		});
 		const jsonCustomerAddress = await resCustomerAddress.json();
 		console.log('jsonCustomerAddress', jsonCustomerAddress)
-		console.log('')
+	
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
@@ -97,7 +96,7 @@ export function CustomerForm(props) {
 		}
 		const resOrder = await fetch('https://fecko.org/productdelivery/Order/create', options);
 		const jsonOrder = await resOrder.json();
-		console.log('jsonOrder', jsonOrder);
+	
 		dispatch({
 			type: "SEND_PERSONAL_FORM",
 			payload: { 
@@ -143,7 +142,7 @@ export function CustomerForm(props) {
 		}
 		// vytvorit email
 		const data = {
-			to: "menu@lobelka.sk",
+			// to: "menu@lobelka.sk",
 			// to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
@@ -158,7 +157,7 @@ export function CustomerForm(props) {
 				/>
 			),
 		}
-		console.log('data', data)
+		
 		const formDataSendEmailOption = {
 			method: 'POST',
 			body: JSON.stringify(data),
@@ -306,12 +305,12 @@ export function CustomerForm(props) {
 			<div className="footer footer-shadow ">
 				<BottomBar />
 				<div className="btngroup">
-					<Link to="/supplier-offer" className="button button-back">
+					<Link to={`/${supplierIdName}/supplier-offer`} className="button button-back">
 						<span className="">
 						&lt;
 						</span>
 					</Link>
-					<Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit"))}>
+					<Link to={`/${supplierIdName}/goodbye`} className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit"))}>
 						<span>
 							Objednať
 						</span>

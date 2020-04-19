@@ -1,10 +1,12 @@
 import React, {useContext, useState} from 'react'
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../App";
+import { GlobalContext } from "../loading-wrapper/LoadingWrapper";
 import { isEmpty } from 'ramda';
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import moment from 'moment';
+import { useRouteMatch, useParams } from "react-router-dom";
+
 // import timezone from 'moment-timezone'
 
 export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice, isDisabled}) {
@@ -59,6 +61,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 }
 
 export function OfferList() {	
+	let { supplierIdName } = useParams();
 	const [state, dispatch] = useContext(ContactContext);
 	
 	const renderCategoryProducts = (categoryProducts, isDisabled) => {
@@ -147,12 +150,12 @@ export function OfferList() {
 					<div className="footer footer-shadow">
 						<BottomBar />
 						<div className="btngroup">
-							<Link to="/" className="button button-back">
+							<Link to={`/${supplierIdName}`} className="button button-back">
 								<span className="">
 								&lt;
 								</span>
 							</Link>
-							<Link to="/customer-form" className="button button-full">
+							<Link to={`/${supplierIdName}/customer-form`} className="button button-full">
 								<span>
 									Pokračovať
 								</span>

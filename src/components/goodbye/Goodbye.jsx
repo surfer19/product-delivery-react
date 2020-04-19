@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 
 export function Goodbye() {
+	let { supplierIdName } = useParams();
 	return (
 		<div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column',height: '100vh'}}>
 			<h3 style={{color: '#a9bf06'}}>Už sa na tom pracuje!</h3>
@@ -10,7 +11,7 @@ export function Goodbye() {
 			 {/* <br></br>Vaša burina */}
 			 <br></br>Vaša MŠ Lobelka
 			</p>
-			<Link to="/" className="button">Vrátiť sa na homepage</Link>			
+			<Link to={`/${supplierIdName}`} className="button">Vrátiť sa na homepage</Link>			
 		</div>
 	)
 }
