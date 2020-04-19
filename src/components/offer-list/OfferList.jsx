@@ -137,10 +137,10 @@ export function OfferList() {
 							})}
 						</ul>
 						
-						<div>
+						{/* <div>
 							<h5>Alergény</h5>
 							<small>1 - obilniny obsahujúce lepok; 2 - kôrovce a výrobky z nich; 3 - vajcia a výrobky z vajec; 4 - ryby a výrobky z rýb; 5 - arašidy a výrobky z nich; 6 - sója a výrobky zo sóje; 7 - mlieko a výrobky z mlieka; 8 - orechy a výrobky z orechov; 9 - zeler a výrobky zo zeleru; 10 - horčica a výrobky z horčice; 11 - sezamové semená a výrobky z nich; 12 - oxid siričitý a siričitan; 13 - vlčí bôb a výrobky z neho; 14 - mäkkýše a výrobky z nich</small>
-						</div>
+						</div> */}
 					</div>
 					
 
@@ -167,21 +167,20 @@ export function OfferList() {
 }
 
 const isDisabledCategory = (categoryProducts) => {
-	if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
-	// change now for debug purpose .add(6, 'hours')
-	const now = moment();
-	const dateCategoryMoment = moment(categoryProducts.Date, 'YYYY-MM-DD');
-	// date is from - INF to today night
-	const endOfToday = now.endOf('today')
-	const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
-
-	const categoryPreviousDayLimit = dateCategoryMoment.subtract(1, 'day').add(18, 'hours')
-	// add .add(6, 'hours') after moment() for debug purpose
-	// check if now is between current category time minus X hours and end of category day
-	const nowIsBetweenLimitYesterdayAndCategoryEndDay = moment().isBetween(
-		categoryPreviousDayLimit, 
-		moment(categoryProducts.Date).endOf('day')
-	)
-
-	return categoryIsHistory || nowIsBetweenLimitYesterdayAndCategoryEndDay
+    if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
+    // change now for debug purpose .add(6, 'hours')
+    // const now = moment();
+    const dateCategoryMoment = moment(categoryProducts.Date, 'YYYY-MM-DD');
+    // category date je medzi -INF az end of today -1
+    const endOfYesterday = moment().subtract(1, 'day').endOf('day')
+    const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfYesterday)
+ 
+    // now is between category day 11:00 - end of category day
+    const categoryCurrentDayLimit = dateCategoryMoment.add(11, 'hours')
+    const nowIsBetweenLimitTodayAndCategoryEndDay = moment().isBetween(
+        categoryCurrentDayLimit,
+        moment(categoryProducts.Date).endOf('day')
+    )
+   
+    return categoryIsHistory || nowIsBetweenLimitTodayAndCategoryEndDay; //nowIsBetweenLimitYesterdayAndCategoryEndDay
 }

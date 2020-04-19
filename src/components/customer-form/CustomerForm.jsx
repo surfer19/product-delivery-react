@@ -78,7 +78,7 @@ export function CustomerForm(props) {
 		formDataAddress.append('PostCode', postCode.value);
 		formDataAddress.append('Email', email.value);
 		formDataAddress.append('PhoneNo', tel.value);
-		formDataAddress.append('SupplierID', '1');
+		formDataAddress.append('SupplierID', '3');
 		// vytvorenie adresy customera
 		const resCustomerAddress = await fetch('https://fecko.org/productdelivery/Address/create', {
 			method: 'POST',
@@ -90,7 +90,7 @@ export function CustomerForm(props) {
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
-		formData.append('SupplierID', '1');
+		formData.append('SupplierID', '3');
 		const options = {
 			method: 'POST',
 			body: formData,
@@ -136,15 +136,15 @@ export function CustomerForm(props) {
 			PostCode: postCode.value || "Nevyplnené",
 		}
 		const supplierInfo = {
-			PhoneNumber: '+421 911 705 160',
+			PhoneNumber: '+421 948 033 354',
 			OpeningHoursFrom: '8:00',
 			OpeningHoursTo: '18:00',
-			Name: "MŠ Lobelka"
+			Name: "moment Lipt. Mikuláš"
 		}
 		// vytvorit email
 		const data = {
-			to: "menu@lobelka.sk",
-			// to: "gorazd.ratulovsky@gmail.com",
+			// to: "menu@lobelka.sk",
+			to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
@@ -276,7 +276,7 @@ export function CustomerForm(props) {
 								}
 								addItemToBasket({
 									Name: "Doručenie na adresu",
-									SupplierID: 1,
+									SupplierID: 3,
 									OrderID: null,
 									DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
 									Price: event.target.value.toString()

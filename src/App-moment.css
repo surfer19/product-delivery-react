@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
 
 body, html {
-	background-color: #EDEDED;
+	background-color: #ffffff;
 	color: #1A1310;
 	font-size: 16px;
 	font-family: 'Source Sans Pro', sans-serif;
@@ -10,7 +10,7 @@ body, html {
 }
 
 #root {
-	background-color: #EDEDED;
+	background-color: #ffffff;
 }
 
 button:focus {
@@ -53,7 +53,7 @@ button:focus {
 }
 
 .productlist li.active {
-	border: 3px solid #C02A42;
+	border: 3px solid #FDA100;
 	box-shadow: 0px 7px 16px rgba(23,16,14,0.3);
     z-index: 1;
     cursor: default;
@@ -61,11 +61,11 @@ button:focus {
 
 
 .productlist .product-name {
-	color: #676767;
-	font-size: 12px;
-	font-weight: 500;
-	text-transform: uppercase;
-	letter-spacing: 1px;
+	color: #000000;
+	font-size: 14px;
+	font-weight: 700;
+	/* text-transform: uppercase; */
+	/* letter-spacing: 1px; */
 }
 .input, .select {
 	width: 100%;
@@ -168,9 +168,10 @@ button:focus {
 }
 
 .productlist .product-desc {
-	font-size: 14px;
+	font-size: 13px;
 	margin: 0px;
-	padding-right: 40px;
+    padding-right: 40px;
+    color: #676767;
 }
 
 .totalprice{
@@ -186,8 +187,8 @@ button:focus {
 
 .totalprice-price {
 	font-size: 14px;
-	color: #4C2C7B;
-	font-weight: 500;
+	color: #FDA100;
+	font-weight: 700;
 	position: absolute;
 	right: 24px;
 	top: 12px;
@@ -201,7 +202,7 @@ button:focus {
 	padding: 0 24px;
     display: flex;
     justify-content: space-between;
-    background-color: #C02A42;
+    background-color: #FDA100;
     height: 40px;
 	align-items: center;
 	display: none;
@@ -233,8 +234,8 @@ button:focus {
 
 .productlist .product-price {
 	font-size: 14px;
-	color: #C02A42;
-	font-weight: 500;
+	color: #FDA100;
+	font-weight: 700;
 	position: absolute;
 	right: 24px;
 	top: 12px;
@@ -284,12 +285,12 @@ button:focus {
 
 .shopheader li.active .shopheader-num {
 
-	background-color: #C02A42;
+	background-color: #FDA100;
 
 }
 
 .shopheader li.active .shopheader-title {
-	color: #C02A42;
+	color: #FDA100;
 }
 
 .shopheader-num {
@@ -322,7 +323,11 @@ button:focus {
 .wrapper {
 	padding-left: 12px;
 	padding-right: 12px;
-	padding-bottom: 120px;
+    padding-bottom: 120px;
+    
+    background-position: top right;
+    background-size: 50%;
+    background-repeat: no-repeat;
 }
 
 .subtitle { 
@@ -337,7 +342,17 @@ h1,h2,h3,h4,h5 {
 
 h2 {
     font-size: 32px !important;
-    color: #C02A42;
+    color: #FDA100;
+}
+
+h3 {
+    font-size: 24px !important;
+    color: #FDA100;
+}
+
+h4 {
+    font-size: 18px !important;
+    color: #FDA100;
 }
 
 .cover {
@@ -372,7 +387,7 @@ h2 {
 }
 
 .button {
-	background-color: #C02A42;
+	background-color: rgb(134, 70, 49);
 	color: white;
 	height: 50px;
 	line-height: 50px;
@@ -418,13 +433,14 @@ h2 {
 	max-width: 700px;
     width: 100%;
 	margin: auto;
-	background-color: #FFFFFF;
+	background-color: #EDEDED;
 	z-index: 10;
 }
 
 
 
 .footer-shadow {
-	padding: 12px 24px;
+    padding: 12px 24px;
+    background-color: white;
 	box-shadow: 0px -5px 14px rgba(23,16,14,0.2);
 }
