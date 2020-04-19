@@ -2,6 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, Modal, Row} from 'react-bootstrap';
 import {ShowCategories} from "../show-categories/ShowCategories";
 import {useParams} from 'react-router-dom';
+import {
+	filterProductCategoriesBySupplierId,
+	groupSupplierProductsByCategory
+} from '../../utils';
 
 export function Admin(props) {
 	const [show, setShow] = useState(false);
@@ -36,7 +40,8 @@ export function Admin(props) {
 		])
 			.then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
 			.then(([productCategories, supplierProducts]) => {
-				setCategories(groupSupplierProductsByCategory(productCategories, supplierProducts));
+				const supplierProductCategories = filterProductCategoriesBySupplierId(productCategories.records, supplierId)
+				setCategories(groupSupplierProductsByCategory(supplierProductCategories, supplierProducts));
 			});
 	}
 	
@@ -44,6 +49,7 @@ export function Admin(props) {
 		let formData = new FormData();
 		formData.append('Name', name.value);
 		formData.append('Date', date.value);
+		formData.append('SupplierID', supplierId);
 
 		const options = {
 			method: 'POST',
@@ -122,22 +128,6 @@ export function Admin(props) {
 		
 	)
 }
-
-const groupSupplierProductsByCategory = (productCategories, supplierProducts) => {
-	if (!productCategories || !supplierProducts) return [];
-	return productCategories.records.map(productCategory => {
-		const productCategoryProducts = supplierProducts.products.map(product => {
-			if (product.ProductCategoryID === productCategory.ProductCategoryID) {
-				return product
-			}
-			return null;
-		}).filter(value => value);
-		return {
-			...productCategory,
-			listProducts: productCategoryProducts
-		};
-	})
-};
 
 function useFormInput(initialValue) {
 	const [value, setValue] = useState(initialValue);
