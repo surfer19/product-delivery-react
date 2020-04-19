@@ -21,7 +21,7 @@ export function Introduction() {
 						<h4>1. Chlieb</h4>
 						<p>V čase do <strong>08:00 hod.</strong> si chlieb objednáte a počká na vás v Momente.  Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť. Ak nemáte cestu radi vám ho privezieme na Vami zadanú adresu.</p>
 						<h4>2. Poctivé potraviny</h4>
-						<p>V čase do <strong>08:00 hod.</strong> vám k chlebu pribalíme čokoľvek nachádzajúce sa v našich regáloch. Napíšete svoj nákupný zoznam, my ho nachystáme a zabalíme. Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť alebo vám ho taktiež privezieme. </p>
+						<p>V čase do <strong>08:00 hod.</strong> vám k chlebu pribalíme čokoľvek nachádzajúce sa v našich regáloch. Napíšete svoj nákupný zoznam <strong>do poznámky v druhom kroku objednávky</strong>, my ho nachystáme a zabalíme. Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť alebo vám ho taktiež privezieme. </p>
 						<p><strong>Viac info na: +421 948 033 354; potraviny@vmomente.sk</strong></p>
 						<small style={{marginTop: '20px', lineHeight: 1.3, display: 'block', color: 'grey', fontSize: '10px'}}>Rezervačný systém bol vyvorený ako podpora <br/> pre podnikateľov v dobe korona-krízy.<br/> <a style={{textDecoration: 'underline', color: 'grey'}} href="mailto:productdelivery@gorazd.sk">Kontaktný e-mail na tvorcu</a></small>
 

@@ -301,7 +301,7 @@ export function CustomerForm(props) {
 
 				<input className="input" type="email" placeholder="Email *" {...email} required />
 				<input className="input" type="text" placeholder="Tel. číslo *" {...tel} required />
-				<textarea className="textarea" placeholder="Poznámka" {...message} />
+				<textarea className="textarea" placeholder="Poznámka k nákupu alebo Váš nákupný zoznam" {...message} />
 				<small>* povinný údaj</small>
 			<div className="footer footer-shadow ">
 				<BottomBar />
