@@ -13,7 +13,8 @@ import {
 	Switch,
 	Route,
 } from "react-router-dom";
-import { ContactContextProvider } from './context'
+import { ContactContextProvider } from './context';
+import { groupSupplierProductsByCategory, filterProductCategoriesBySupplierId } from './utils';
 
 export const GlobalContext = React.createContext({
 	addItemToBasket: (id) => {},
@@ -49,8 +50,6 @@ export default function App() {
 	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/1", {}).response;
 	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
 	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/1", {}).response;
-	
-	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(productCategories, supplierProducts)
 	if (!responseSupplier || !productCategories || !supplierProducts) {
 	  return (
 		<div style={{position: 'absolute', top: '50%', left: '50%', marginTop: '-17px', marginLeft: '-17px'}}>
@@ -58,6 +57,8 @@ export default function App() {
 		</div>
 	  );
 	}
+	const supplierProductCategories = filterProductCategoriesBySupplierId(productCategories.records, 1)// SupplierId
+	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(supplierProductCategories, supplierProducts)
 
 	const state = {
 		supplier: {
@@ -85,22 +86,3 @@ export default function App() {
 		</div>
 	);
 }
-
-const groupSupplierProductsByCategory = (productCategories, supplierProducts) => {
-	if (!productCategories || !supplierProducts) return [];
-	return productCategories.records.map(productCategory => {
-		const productCategoryProducts = supplierProducts.products.map(product => {
-			if (product.ProductCategoryID === productCategory.ProductCategoryID) {
-				return {
-					...product,
-					count: 0
-				}
-			}
-			return null;
-		}).filter(value => value);
-		return {
-			...productCategory,
-			listProducts: productCategoryProducts
-		};
-	})
-};

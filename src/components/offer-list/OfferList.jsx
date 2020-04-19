@@ -63,7 +63,6 @@ export function OfferList() {
 	
 	const renderCategoryProducts = (categoryProducts, isDisabled) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
-		console.log('cattt', categoryProducts)
 		return categoryProducts.listProducts.map(product => {
 			product = { 
 				...product,

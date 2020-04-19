@@ -6,7 +6,10 @@ export const groupSupplierProductsByCategory = (supplierProductCategories, suppl
 	return supplierProductCategories.map(productCategory => {
 		const productCategoryProducts = supplierProducts.products.map(product => {
 			if (product.ProductCategoryID === productCategory.ProductCategoryID) {
-				return product
+				return {
+					...product,
+					count: 0
+				}
 			}
 			return null;
 		}).filter(value => value);
