@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
 
 body, html {
-	background-color: #FFFFFF;
+	background-color: #EDEDED;
 	color: #1A1310;
 	font-size: 16px;
 	font-family: 'Source Sans Pro', sans-serif;
@@ -10,7 +10,7 @@ body, html {
 }
 
 #root {
-	background-color: #FFFFFF;
+	background-color: #EDEDED;
 }
 
 button:focus {
@@ -18,7 +18,7 @@ button:focus {
 }
 
 .App {
-	background-color: #FFFFFF;
+	background-color: #EDEDED;
 	text-align: center;
 	color: #1A1310;
 	max-width: 700px;
@@ -43,18 +43,20 @@ button:focus {
 
 .productlist li {
 	margin-bottom: 12px;
-	background-color: #e7e7e7;
+	background-color: #ffffff;
 	border-radius: 12px;
-	border: 3px solid #e7e7e7;
+	border: 3px solid #ffffff;
 	position: relative;
 	text-align: left;
-	overflow: hidden;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .productlist li.active {
-	border: 3px solid #4C2C7B;
+	border: 3px solid #C02A42;
 	box-shadow: 0px 7px 16px rgba(23,16,14,0.3);
-	z-index: 1;
+    z-index: 1;
+    cursor: default;
 }
 
 
@@ -199,7 +201,7 @@ button:focus {
 	padding: 0 24px;
     display: flex;
     justify-content: space-between;
-    background-color: #4c2c7b;
+    background-color: #C02A42;
     height: 40px;
 	align-items: center;
 	display: none;
@@ -231,7 +233,7 @@ button:focus {
 
 .productlist .product-price {
 	font-size: 14px;
-	color: #4C2C7B;
+	color: #C02A42;
 	font-weight: 500;
 	position: absolute;
 	right: 24px;
@@ -243,7 +245,7 @@ button:focus {
 } */
 
 .catname {
-	color: #4c2c7b;
+	color: #686868;
 	font-size: 14px;
 	font-weight: 500;
 	text-transform: uppercase;
@@ -282,12 +284,12 @@ button:focus {
 
 .shopheader li.active .shopheader-num {
 
-	background-color: #4C2C7B;
+	background-color: #C02A42;
 
 }
 
 .shopheader li.active .shopheader-title {
-	color: #4C2C7B;
+	color: #C02A42;
 }
 
 .shopheader-num {
@@ -295,7 +297,7 @@ button:focus {
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	background-color: #676767;
+	background-color: #686868;
 	color: white;
 	font-size: 11px;
 	line-height: 18px;
@@ -305,13 +307,13 @@ button:focus {
 	text-indent: -1px;
 	position: relative;
 	z-index: 1;
-	border: 6px solid #FFFFFF;
+	border: 6px solid #EDEDED;
 }
 
 .shopheader-title {
 	font-weight: bold;
 	text-transform: uppercase;
-	color: #676767;
+	color: #686868;
 	font-size: 12px;
 	display: block;
     line-height: 1.4;
@@ -324,18 +326,18 @@ button:focus {
 }
 
 .subtitle { 
-	color: #676767;
+	color: #686868;
 	margin-bottom: 24px;
 }
 
 h1,h2,h3,h4,h5 {
-	font-family: 'Jaldi', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: 700 !important;
 }
 
 h2 {
-    font-size: 34px !important;
-    color: #4C2C7B;
+    font-size: 32px !important;
+    color: #C02A42;
 }
 
 .cover {
@@ -370,14 +372,16 @@ h2 {
 }
 
 .button {
-	background-color: #BDC56E;
+	background-color: #C02A42;
 	color: white;
 	height: 50px;
 	line-height: 50px;
-	font-family: 'Jaldi', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
 	padding: 0 30px;
-	font-size: 22px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 	border-radius: 12px;
 	display: inline-block;
 }
