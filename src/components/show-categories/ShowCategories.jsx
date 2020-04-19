@@ -15,7 +15,8 @@ export function ShowCategories(props) {
     const handleShowModal = (category) => {
         categoryId = categoryId.onInitValue(category.ProductCategoryID);
         setShowModal(true);
-    };
+	};
+	const { supplierId } = props;
     const handleEditModal = (product) => {
         name.onInitValue(product.Name);
         description.onInitValue(product.Description);
@@ -29,7 +30,7 @@ export function ShowCategories(props) {
         fetch(`https://fecko.org/productdelivery/ProductCategory/delete/${category.ProductCategoryID}`)
             .then(response => response.json())
             .then(data => {
-                props.callback();
+                props.callback(supplierId);
             });
     }
 
@@ -38,7 +39,7 @@ export function ShowCategories(props) {
         formData.append('Name', name.value);
         formData.append('Price', price.value);
         formData.append('Description', description.value);
-        formData.append('SupplierID', "1"); // TODO has to be generic
+        formData.append('SupplierID', supplierId);
         formData.append('ProductCategoryID', categoryId.value);
         let url = 'https://fecko.org/productdelivery/Product/create';
         if(productId.value) {
@@ -52,7 +53,7 @@ export function ShowCategories(props) {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                props.callback();
+                props.callback(supplierId);
                 handleCloseModal();
             });
         event.preventDefault();
@@ -62,7 +63,7 @@ export function ShowCategories(props) {
         fetch(`https://fecko.org/productdelivery/Product/delete/${product.ProductID}`)
             .then(response => response.json())
             .then(data => {
-                props.callback();
+                props.callback(supplierId);
             });
     }
 

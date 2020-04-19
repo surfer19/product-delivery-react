@@ -40,7 +40,7 @@ export function Admin(props) {
 			});
 	}
 	
-	function handleModalSubmit(event) {
+	function handleAddCategorySubmit(event) {
 		let formData = new FormData();
 		formData.append('Name', name.value);
 		formData.append('Date', date.value);
@@ -58,7 +58,7 @@ export function Admin(props) {
 		fetch(url, options)
         .then(response => response.json())
         .then(data => {
-        	loadCategories();
+        	loadCategories(supplierId);
         	handleClose();
 		});
 		event.preventDefault();
@@ -89,7 +89,12 @@ export function Admin(props) {
 			</Row>
 
 			<h4 style={{marginTop: '20px', textAlign: 'left'}}>Zoznam kategorii</h4>
-			<ShowCategories categories={categories} callback={loadCategories} editCategory={editCategory}/>
+			<ShowCategories
+				categories={categories}
+				callback={loadCategories}
+				editCategory={editCategory}
+				supplierId={supplierId}
+			/>
 
 			{/* MODAL NA PRIDANIE KATEGORIE */}
 			<Modal show={show} onHide={handleClose}>
@@ -97,7 +102,7 @@ export function Admin(props) {
 					<Modal.Title>Pridat kategoriu</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Form onSubmit={handleModalSubmit}>
+					<Form onSubmit={handleAddCategorySubmit}>
 						<Form.Group controlId="formBasicEmail">
 							<Form.Label>Názov kategórie</Form.Label>
 							<Form.Control type="text" placeholder="(napr. Pondelok)" {...name}/>
