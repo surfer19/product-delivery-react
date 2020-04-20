@@ -311,7 +311,7 @@ export function CustomerForm(props) {
 						&lt;
 						</span>
 					</Link>
-					<Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit"))}>
+					<Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}>
 						<span>
 							Objednať
 						</span>
