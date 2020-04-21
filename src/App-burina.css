@@ -379,6 +379,10 @@ h2 {
 	display: inline-block;
 }
 
+.button.disabled {
+	cursor: default;
+}
+
 .button-full {
 	width: 100%;
 }

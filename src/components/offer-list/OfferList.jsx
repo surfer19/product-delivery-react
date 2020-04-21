@@ -11,6 +11,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 	const [state, dispatch] = useContext(ContactContext);
 	let productBasketItem = state.basket.find(item => item.ProductID === product.ProductID)
 	let count = productBasketItem ? productBasketItem.count : 0;
+
 	return (
 		<li key={product.ProductID} 
 			className={count > 0 ? "active" : ""}
@@ -60,6 +61,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 
 export function OfferList() {	
 	const [state, dispatch] = useContext(ContactContext);
+	const basketLength = state.basket.length;
 	
 	const renderCategoryProducts = (categoryProducts, isDisabled) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
@@ -100,6 +102,7 @@ export function OfferList() {
 	}
 
 	return (
+		
 		<GlobalContext.Consumer>
 			{state => (
 				<>
@@ -147,16 +150,13 @@ export function OfferList() {
 					<div className="footer footer-shadow">
 						<BottomBar />
 						<div className="btngroup">
+						
 							<Link to="/" className="button button-back">
 								<span className="">
 								&lt;
 								</span>
 							</Link>
-							<Link to="/customer-form" className="button button-full">
-								<span>
-									Pokračovať
-								</span>
-							</Link>
+							{basketLength === 0 ? <Link to="/customer-form" onClick={(e) => e.preventDefault()} className="button button-full disabled"><span>Pokračovať</span></Link> : <Link to="/customer-form" className="button button-full"><span>Pokračovať</span></Link>}
 						</div>
 					</div>
 				</>
