@@ -1,3 +1,5 @@
+import { isEmpty } from "ramda";
+
 /**
  * Utility functions
  */
@@ -29,3 +31,15 @@ export const getSupplierIdBySupplierList = (supplierList, adminId) => {
 	return foundSupplier.SupplierID;
 }
 
+export const productExceedStoreCount = (listBasket) => {
+	const listExceedProducts = listBasket.filter(product => (product.StoreCount - product.count) < 0)
+	if (!isEmpty(listExceedProducts)){
+		return {
+			doesExceed: true,
+			exceedItem: listExceedProducts[0]
+		}
+	}
+	return {
+		doesExceed: false,
+	}
+}
