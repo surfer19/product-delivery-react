@@ -16,12 +16,18 @@ export const cities = [
     // { nazov: 'Liptovské Matiašovce', cena: 4.00},
     // { nazov: 'Liptovský Hrádok', cena: 4.00},
     // { nazov: 'Liptovský Ján', cena: 3.00},
-    // { nazov: 'Liptovský Mikuláš', cena: 1.00},
-    { nazov: 'Liptovský Mikuláš - Bodice', cena: 2.00},
-    { nazov: 'Liptovský Mikuláš - časť Podbreziny', cena: 1.00},
-    { nazov: 'Liptovský Mikuláš - Demänová', cena: 2.00},
+    { nazov: 'Liptovský Mikuláš - Andice', cena: 1.00},
+
+    { nazov: 'Liptovský Mikuláš - Benice', cena: 1.00},
+    { nazov: 'Liptovský Mikuláš - Bodice', cena: 1.50},
+    { nazov: 'Liptovský Mikuláš – centrum', cena: 1.00},
+    { nazov: 'Liptovský Mikuláš - Iľanovo', cena: 1.50},
+    { nazov: 'Liptovský Mikuláš - Demänová', cena: 1.50},
+    { nazov: 'Liptovský Mikuláš - Okoličné', cena: 1.50},
     { nazov: 'Liptovský Mikuláš - Palúdzka', cena: 1.00},
-    { nazov: 'Liptovský Mikuláš - Tatralandia', cena: 2.00}
+    { nazov: 'Liptovský Mikuláš - Ploštín', cena: 1.50},
+    { nazov: 'Liptovský Mikuláš - Podbreziny', cena: 1.50}
+    // { nazov: 'Liptovský Mikuláš - Tatralandia', cena: 2.00}
     // { nazov: 'Liptovský Ondrej', cena: 3.00},
     // { nazov: 'Liptovský Peter', cena: 4.00},
     // { nazov: 'Liptovský Trnovec', cena: 3.00},
