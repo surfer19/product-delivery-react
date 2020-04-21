@@ -40,7 +40,8 @@ export function ShowCategories(props) {
         formData.append('Price', price.value);
         formData.append('Description', description.value);
         formData.append('SupplierID', supplierId);
-        formData.append('ProductCategoryID', categoryId.value);
+		formData.append('ProductCategoryID', categoryId.value);
+		formData.append('StoreCount', 0);
         let url = 'https://fecko.org/productdelivery/Product/create';
         if(productId.value) {
             url = 'https://fecko.org/productdelivery/Product/update/' + productId.value;
@@ -53,6 +54,7 @@ export function ShowCategories(props) {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
+				console.log('data', data)
                 props.callback(supplierId);
                 handleCloseModal();
             });
