@@ -58,6 +58,43 @@ export function CustomerForm(props) {
 		});
 	}
 
+	// const countValidedInput = () => {
+	// 	// const customerRequiredInfo = [{'name': name.value}, {'lastName': lastName.value}, {'email': email.value}, {'tel': tel.value}];
+	// 	const customerRequiredInfo = [name.value, lastName.value, email.value, tel.value];
+	// 	let validedInput = 0;
+	// 	// console.log(customerRequiredInfo)
+	// 	customerRequiredInfo.forEach(x => {
+	// 		if (x !== '') {
+	// 			validedInput += 1;
+	// 		} 
+	// 	});
+
+	// 	console.log(validedInput)
+	// }
+	
+
+	const validForm = () => {
+		// const customerRequiredInfo = [{'name': name.value}, {'lastName': lastName.value}, {'email': email.value}, {'tel': tel.value}];
+		const customerRequiredInfo = [name.value, lastName.value, email.value, tel.value];
+		let validedInput = 0;
+		customerRequiredInfo.forEach(x => {
+			if (x !== '') {
+				validedInput += 1;
+			} 
+		});
+
+		if (validedInput === customerRequiredInfo.length) {
+			return true;
+		} 
+	}
+
+	const test = validForm();
+
+	if (validForm()) {
+		console.log('sdfsdfsd')
+	}
+	// validForm();
+
 	async function onSubmit() {
 		let formDataCustomer = new FormData();
 		formDataCustomer.append('Name', name.value);
@@ -228,7 +265,7 @@ export function CustomerForm(props) {
 						setActiveDeliveryAddress(false);
 					}}>
 					<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
-					<span className="choosedeliverybtn-subtitle">od 11:00 do 12:00</span>
+					<span className="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
 				</button>
 				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -311,11 +348,7 @@ export function CustomerForm(props) {
 						&lt;
 						</span>
 					</Link>
-					<Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}>
-						<span>
-							Objednať
-						</span>
-					</Link>
+					{validForm() ? <Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
 				</div>
 			</div>
 			</form>		
