@@ -58,6 +58,21 @@ export function CustomerForm(props) {
 		});
 	}
 
+	const validForm = () => {
+		// const customerRequiredInfo = [{'name': name.value}, {'lastName': lastName.value}, {'email': email.value}, {'tel': tel.value}];
+		const customerRequiredInfo = [name.value, lastName.value, email.value, tel.value];
+		let validedInput = 0;
+		customerRequiredInfo.forEach(x => {
+			if (x !== '') {
+				validedInput += 1;
+			} 
+		});
+
+		if (validedInput === customerRequiredInfo.length) {
+			return true;
+		} 
+	}
+
 	async function onSubmit() {
 		let formDataCustomer = new FormData();
 		formDataCustomer.append('Name', name.value);
@@ -311,11 +326,7 @@ export function CustomerForm(props) {
 						&lt;
 						</span>
 					</Link>
-					<Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}>
-						<span>
-							Objednať
-						</span>
-					</Link>
+					{validForm() ? <Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
 				</div>
 			</div>
 			</form>		
