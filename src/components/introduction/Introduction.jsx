@@ -19,9 +19,9 @@ export function Introduction() {
 						<p>Remeselná pekáreň uprostred Liptova. Miesto, kde sa spája tradícia, srdce a vášeň. Sila prírody, ruky človeka a čas ju robia výnimočnou. Dobrý chlieb je výsledkom poctivej práce pekára Aleša, ktorý žije svoj sen. Kváskový chlieb, poctivé potraviny pod jednou strechou. To je Moment. </p>
 						<h3 style={{marginBottom: '15px'}}>Ako to funguje?</h3>
 						<h4>1. Chlieb</h4>
-						<p>V čase do <strong>08:00 hod.</strong> si chlieb objednáte a počká na vás v Momente.  Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť. Ak nemáte cestu radi vám ho privezieme na Vami zadanú adresu.</p>
+						<p>V čase do <strong>09:00 hod.</strong> si chlieb objednáte a počká na vás v Momente.  Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť. Ak nemáte cestu radi vám ho privezieme na Vami zadanú adresu.</p>
 						<h4>2. Poctivé potraviny</h4>
-						<p>V čase do <strong>08:00 hod.</strong> vám k chlebu pribalíme čokoľvek nachádzajúce sa v našich regáloch. Napíšete svoj nákupný zoznam <strong>do poznámky v druhom kroku objednávky</strong>, my ho nachystáme a zabalíme. Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť alebo vám ho taktiež privezieme. </p>
+						<p>V čase do <strong>09:00 hod.</strong> vám k chlebu pribalíme čokoľvek nachádzajúce sa v našich regáloch. Napíšete svoj nákupný zoznam <strong>do poznámky v druhom kroku objednávky</strong>, my ho nachystáme a zabalíme. Kedykoľvek počas otváracích hodín si ho môžete vyzdvihnúť alebo vám ho taktiež privezieme. </p>
 						<p><strong>Viac info na: +421 948 033 354; potraviny@vmomente.sk</strong></p>
 						<small style={{marginTop: '20px', lineHeight: 1.3, display: 'block', color: 'grey', fontSize: '10px'}}>Rezervačný systém bol vyvorený ako podpora <br/> pre podnikateľov v dobe korona-krízy.<br/> <a style={{textDecoration: 'underline', color: 'grey'}} href="mailto:productdelivery@gorazd.sk">Kontaktný e-mail na tvorcu</a></small>
 

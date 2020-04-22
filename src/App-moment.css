@@ -408,6 +408,10 @@ h4 {
 	width: 100%;
 }
 
+.button.disabled {
+	cursor: default;
+}
+
 .btngroup {
 	display: flex;
     justify-content: space-between;

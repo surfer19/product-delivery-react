@@ -60,6 +60,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 
 export function OfferList() {	
 	const [state, dispatch] = useContext(ContactContext);
+	const basketLength = state.basket.length;
 	
 	const renderCategoryProducts = (categoryProducts, isDisabled) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
@@ -152,11 +153,7 @@ export function OfferList() {
 								&lt;
 								</span>
 							</Link>
-							<Link to="/customer-form" className="button button-full">
-								<span>
-									Pokračovať
-								</span>
-							</Link>
+							{basketLength === 0 ? <Link to="/customer-form" onClick={(e) => e.preventDefault()} className="button button-full disabled"><span>Pokračovať</span></Link> : <Link to="/customer-form" className="button button-full"><span>Pokračovať</span></Link>}
 						</div>
 					</div>
 				</>
@@ -176,7 +173,7 @@ const isDisabledCategory = (categoryProducts) => {
     const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfYesterday)
  
     // now is between category day 8:00 - end of category day
-    const categoryCurrentDayLimit = dateCategoryMoment.add(8, 'hours')
+    const categoryCurrentDayLimit = dateCategoryMoment.add(9, 'hours')
     const nowIsBetweenLimitTodayAndCategoryEndDay = moment().isBetween(
         categoryCurrentDayLimit,
         moment(categoryProducts.Date).endOf('day')
