@@ -154,12 +154,12 @@ export function CustomerForm(props) {
 			PhoneNumber: '+421 948 033 354',
 			OpeningHoursFrom: '8:00',
 			OpeningHoursTo: '18:00',
-			Name: "moment Lipt. Mikuláš"
+			Name: "moment Liptovský Mikuláš"
 		}
 		// vytvorit email
 		const data = {
-			// to: "menu@lobelka.sk",
-			to: "gorazd.ratulovsky@gmail.com",
+			to: "potraviny@vmomente.sk",
+			// to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
