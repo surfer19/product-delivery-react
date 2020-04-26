@@ -2,14 +2,15 @@ import React, { useState, useContext, useRef } from "react";
 import ReactDOMServer from 'react-dom/server';
 import selectboxArrow from "../../img/arrow-selectbox.png";
 import { Link } from "react-router-dom";
+import { times, head } from "ramda";
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
 import { CustomerEmailTemplate } from "../email-templates/CustomerEmailTemplate";
-import { cities } from "../../cities"
+import { cities } from "../../cities";
+import { getNumberSelectedCategories } from '../../context';
 
 export function CustomerForm(props) {
-	console.log('props', props)
 	const [state, dispatch] = useContext(ContactContext);
 	const [isActiveDeliveryShop, setActiveDeliveryShop] = useState(true)
 	const [isActiveDeliveryAddress, setActiveDeliveryAddress] = useState(false)
@@ -22,7 +23,6 @@ export function CustomerForm(props) {
 	const postCode = useFormInput("");
 	const city = useFormInput("");
 	const address = useFormInput("");
-	console.log('state', state)
 	
 	async function onSubmitDeliveryTypeChange (deliveryType) {
 		dispatch({
@@ -51,10 +51,19 @@ export function CustomerForm(props) {
 		});
 	}
 
-	const updateSelectedCity = (city) => {
+	const updateSelectedCity = (placeholder, price) => {
 		dispatch({
 			type: "UPDATE_SELECTED_CITY",
-			payload: city
+			payload: {
+				placeholder,
+				price
+			}
+		});
+	}
+
+	const updateDeliveryBasket = () => {
+		dispatch({
+			type: "UPDATE_DELIVERY_BASKET",
 		});
 	}
 
@@ -101,7 +110,6 @@ export function CustomerForm(props) {
 		});
 		const jsonCustomerAddress = await resCustomerAddress.json();
 		console.log('jsonCustomerAddress', jsonCustomerAddress)
-		console.log('')
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
@@ -137,7 +145,6 @@ export function CustomerForm(props) {
 			}
 			return await fetch('https://fecko.org/productdelivery/OrdersProducts/create', optionsOrdersProducts)
 		})
-		// console.log('buildEmailHtmlString', buildEmailHtmlString())
 		const personalInfo = {
 			Name: name.value || "Nevyplnené",
 			LastName: lastName.value || "Nevyplnené",
@@ -148,7 +155,9 @@ export function CustomerForm(props) {
 		const deliveryInfo = {
 			Address: address.value || "Nevyplnené",
 			City: city.value || "Nevyplnené",
-			PostCode: postCode.value || "Nevyplnené",
+			PostCode: "Nevyplnené",
+			DeliveryCity: state.selectedCity.placeholder,
+			DeliveryPrice: state.selectedCity.price,
 		}
 		const supplierInfo = {
 			PhoneNumber: '+421 911 705 160',
@@ -156,10 +165,12 @@ export function CustomerForm(props) {
 			OpeningHoursTo: '18:00',
 			Name: "MŠ Lobelka"
 		}
+		
 		// vytvorit email
 		const data = {
-			to: "menu@lobelka.sk",
+			// to: "menu@lobelka.sk",
 			// to: "gorazd.ratulovsky@gmail.com",
+			to: "marianmrva123@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
@@ -228,9 +239,10 @@ export function CustomerForm(props) {
 			<div className="choosedeliverybtn-group">
 				<button className={state.deliveryType === "NA_PREDAJNI" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						updateSelectedCity(null);
-						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+						const foundDelivery = head(state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu"))
+						const selectedCategories = getNumberSelectedCategories(state.basket);
 						if (foundDelivery){
-							removeItemfromBasket(foundDelivery.ProductID)
+							times(() => removeItemfromBasket(foundDelivery.ProductID), selectedCategories)
 							recalculateTotalPrice()
 						}
 						onSubmitDeliveryTypeChange("NA_PREDAJNI");
@@ -252,9 +264,10 @@ export function CustomerForm(props) {
 						if (isActiveDeliveryAddress) {
 							// setActiveDeliveryAddress(false);
 							// setActiveDeliveryShop(false);
-							if (foundDelivery)
+							if (foundDelivery) {
 								removeItemfromBasket(foundDelivery.ProductID)
 								recalculateTotalPrice()
+							}
 							return;
 						};
 						// add
@@ -279,27 +292,17 @@ export function CustomerForm(props) {
 						<select 
 							className="select"
 							id="cities"
-							value={state.selectedCity}
+							value={state.selectedCity.placeholder}
 							required
-							// {...city}
 							onChange={event => {
-								updateSelectedCity(event.target.options[event.target.selectedIndex].text)
-								const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
-								if (foundDelivery) {
-									removeItemfromBasket(foundDelivery.ProductID)
-									recalculateTotalPrice()
-								}
-								addItemToBasket({
-									Name: "Doručenie na adresu",
-									SupplierID: 1,
-									OrderID: null,
-									DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
-									Price: event.target.value.toString()
-								})
+								const placeholder = event.target.options[event.target.selectedIndex].text;
+								const price = event.target.options[event.target.selectedIndex].value;
+								updateSelectedCity(placeholder, price)
+								updateDeliveryBasket()
 								recalculateTotalPrice()
 							}}>
 						>
-							<option value={state.selectedCity} selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
+							<option value={state.selectedCity.placeholder} selected disabled>{state.selectedCity.placeholder || "Vyberte miesto doručenia *"}</option>
 							{cities.map(city => (
 								<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
 							))}
@@ -334,7 +337,6 @@ export function CustomerForm(props) {
 		</div>
 	)
 }
-
 
 function useFormInput(initialValue) {
   const [value, setValue] = useState(initialValue);

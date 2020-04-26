@@ -7,18 +7,27 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 
 		<p>Objednali ste si:</p>
 		<ul>
-			{basket.map(item => (
-				<li>
-					{item.ProductCategoryName ? `${item.ProductCategoryName}` : ''}
-					{item.ProductCategoryDate ? ` (${moment(item.ProductCategoryDate).format("DD.MM.YYYY")})` : ''}		
-					{/* {` - ${item.count}`}x   */}
-					{item.DeliveryCity ? ` ${item.count}x` : ` - ${item.count}x`}
-					{` ${item.Price}`}€
-					{` ${item.Name} - `}
-					{item.Description ? ` ${item.Description} ` : ''}
-					{item.DeliveryCity ? ` (${item.DeliveryCity}) ` : ''}
-				</li>
-			))}
+			{basket.map(item => {
+				if (item.Name !== "Doručenie na adresu"){ 
+					return (
+						<li>
+							{item.ProductCategoryName ? `${item.ProductCategoryName}` : ''}
+							{item.ProductCategoryDate ? ` (${moment(item.ProductCategoryDate).format("DD.MM.YYYY")})` : ''}	
+							{` - ${item.count}x`}
+							{` ${item.Price}`}€
+							{` ${item.Name} - `}
+							{item.Description ? ` ${item.Description}` : ''} 
+						</li>
+					)
+				}
+				return (
+					<li>
+						{` ${item.count}x`}
+						{` ${item.Name} - `}
+						{` ${deliveryInfo.DeliveryCity}`}
+					</li>
+				)
+			})}
 		</ul>
 		
 		<p><strong>Cena spolu: {totalPrice} €</strong></p>
@@ -52,7 +61,7 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 				<p>	Vaše objednávka bude doručená na: </p>
 				<ul>
 					<li>Adresa: {deliveryInfo.Address}</li>
-					<li>Mesto: {selectedCity}</li>
+					<li>Mesto: {selectedCity.placeholder}</li>
 				</ul>
 				{/* <p>Cena rozvozu je [XX]€</p> */}
 				<p>

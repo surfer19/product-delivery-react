@@ -6,6 +6,11 @@ import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import moment from 'moment';
 // import timezone from 'moment-timezone'
+const updateDeliveryBasket = (dispatch) => {
+	dispatch({
+		type: "UPDATE_DELIVERY_BASKET",
+	});
+}
 
 export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice, isDisabled}) {
 	const [state, dispatch] = useContext(ContactContext);
@@ -20,10 +25,12 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 				// already exists -> remove
 				if (productBasketItem) {
 					removeItemfromBasket(product.ProductID);
+					updateDeliveryBasket(dispatch)
 					recalculateTotalPrice();
 					return;
 				};
 					addItemToBasket(product);
+					updateDeliveryBasket(dispatch)
 					recalculateTotalPrice();
 				}} 
 			>
@@ -40,6 +47,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 					<button onClick={() =>{ 
 						if (isDisabled) return;
 						removeItemfromBasket(product.ProductID)
+						updateDeliveryBasket(dispatch)
 						recalculateTotalPrice()
 					}}
 					> -
@@ -48,6 +56,7 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 					<button onClick={() =>{ 
 						if (isDisabled) return;
 						addItemToBasket(product)
+						updateDeliveryBasket(dispatch)
 						recalculateTotalPrice()
 					}}
 					>+</button>

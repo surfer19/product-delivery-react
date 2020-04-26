@@ -4,14 +4,18 @@ import { findIndex, propEq } from "ramda";
 import produce from "immer"
 
 export const ContactContext = createContext();
+export const ON_STORE = 'NA_PREDAJNI';
 
 const initialState = {
   count: 0,
   basket: [],
   totalPrice: 0,
   personalData: {},
-  deliveryType: 'NA_PREDAJNI',
-  selectedCity: null
+  deliveryType: ON_STORE,
+  selectedCity: {
+	placeholder: null,
+	price: 0
+  }
 };
 
 const reducer = (state, action) => {
@@ -40,7 +44,7 @@ const reducer = (state, action) => {
 					count: 1
 				}]
 			}
-		case "REMOVE_FROM_BASKET":
+		case "REMOVE_FROM_BASKET":			
 			const basketItems = [...state.basket]
 			const idx = findIndex(propEq('ProductID', action.payload))(basketItems);
 			// item not exists
@@ -49,7 +53,6 @@ const reducer = (state, action) => {
 					...state
 				}
 			}
-			// console.log('action.payload.count', action.payload.count)
 			// exist more than one item
 			if (basketItems[idx].count > 1) {
 				let itemToUpdate = state.basket[idx]
@@ -96,7 +99,49 @@ const reducer = (state, action) => {
 		case "UPDATE_SELECTED_CITY":
 			return {
 				...state,
-				selectedCity: action.payload
+				selectedCity: {
+					placeholder: action.payload.placeholder,
+					price: action.payload.price
+				}
+			}
+		case "UPDATE_DELIVERY_BASKET":
+			if (state.deliveryType === ON_STORE) {
+				return { ...state }
+			}
+			const foundDevilveryItemIdx = state.basket.findIndex(item => item.Name === "Doručenie na adresu");
+			let activeCategories = getNumberSelectedCategories(state.basket)
+			// not found
+			if (foundDevilveryItemIdx === -1) {
+				// add item to basket
+				// state.selectedCity.price				
+				const newItem = {
+					Name: "Doručenie na adresu",
+					ProductID: 0,
+					SupplierID: 1,
+					OrderID: null,
+					count: activeCategories,
+					DeliveryCity: state.selectedCity.placeholder,
+					Price: state.selectedCity.price
+				}
+				return {
+					...state,
+					basket: [
+						...state.basket,
+						newItem
+					]
+				}
+			}
+			const updatedBasket = produce(state.basket, draft => {
+				draft[foundDevilveryItemIdx] = {
+					...state.basket[foundDevilveryItemIdx],
+					count: activeCategories,
+					DeliveryCity: state.selectedCity.placeholder,
+					Price: state.selectedCity.price
+				}
+			});
+			return {
+				...state,
+				basket: updatedBasket
 			}
     default:
       throw new Error();
@@ -112,3 +157,9 @@ export const ContactContextProvider = props => {
     </ContactContext.Provider>
   );
 };
+
+export function getNumberSelectedCategories(basketProducts) {
+	const categoryIds = basketProducts.map(product => product.ProductCategoryID).filter(id => id);
+	let categoriesSet = new Set(categoryIds);
+	return categoriesSet.size;
+}
