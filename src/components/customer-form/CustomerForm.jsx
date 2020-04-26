@@ -6,7 +6,8 @@ import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
 import { CustomerEmailTemplate } from "../email-templates/CustomerEmailTemplate";
-import { cities } from "../../cities"
+import { cities } from "../../cities";
+import { productExceedStoreCount } from "../../utils";
 
 export function CustomerForm(props) {
 	console.log('props', props)
@@ -137,6 +138,40 @@ export function CustomerForm(props) {
 			}
 			return await fetch('https://fecko.org/productdelivery/OrdersProducts/create', optionsOrdersProducts)
 		})
+		
+		const productExceedCount = productExceedStoreCount(state.basket)
+
+		if(productExceedCount.doesExceed) {
+			alert(`Prekročený limit produktu ${productExceedCount.exceedItem.Name} prosím zopakujte objednávku a vyberte si nižší počet produktu.`)
+			return;
+		}
+
+		state.basket.map(async item => {
+			const nextStoreCount = item.StoreCount - item.count;
+			// update product StoreCount
+			let itemDecreasedStoreCount = {
+				ProductID: item.ProductID,
+				SupplierID: item.SupplierID,
+				ProductCategoryID: item.ProductCategoryID,
+				OrderID: 1, //TODO: update to dynamic
+				Name: item.Name,
+				Price: item.Price,
+				Description: item.Description,
+				StoreCount: nextStoreCount < 0 ? 0 : nextStoreCount, // just in case
+			}
+		
+			let formDataProduct = getFormData(itemDecreasedStoreCount)
+			let optionsProduct = {
+				method: 'POST',
+				body: formDataProduct,
+			}
+			let updatedProduct = await fetch(`https://fecko.org/productdelivery/Product/update/${item.ProductID}`, optionsProduct)
+			console.log('updatedProduct', updatedProduct)
+		})
+		
+		return;
+		// const updatedProduct = await fetch('https://fecko.org/productdelivery/Products/update/{id}', optionsProduct)
+
 		// console.log('buildEmailHtmlString', buildEmailHtmlString())
 		const personalInfo = {
 			Name: name.value || "Nevyplnené",
@@ -160,6 +195,7 @@ export function CustomerForm(props) {
 		const data = {
 			to: "menu@lobelka.sk",
 			// to: "gorazd.ratulovsky@gmail.com",
+			to: "marianmrva123@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
@@ -348,3 +384,10 @@ function useFormInput(initialValue) {
     onChange: handleChange,
   };
 }
+
+function getFormData(object) {
+    const formData = new FormData();
+    Object.keys(object).forEach(key => formData.append(key, object[key]));
+    return formData;
+}
+

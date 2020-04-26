@@ -6,7 +6,8 @@ export function ShowCategories(props) {
 
     let name = useFormInput("");
     let description = useFormInput("");
-    let price = useFormInput("");
+	let price = useFormInput("");
+	let storeCount = useFormInput("");
     let productId = useFormInput("");
     let categoryId = useFormInput("");
 
@@ -22,7 +23,8 @@ export function ShowCategories(props) {
         description.onInitValue(product.Description);
         price.onInitValue(product.Price);
         productId.onInitValue(product.ProductID);
-        categoryId.onInitValue(product.ProductCategoryID);
+		categoryId.onInitValue(product.ProductCategoryID);
+		storeCount.onInitValue(product.StoreCount);
         setShowModal(true);
     };
 
@@ -38,7 +40,8 @@ export function ShowCategories(props) {
         let formData = new FormData();
         formData.append('Name', name.value);
         formData.append('Price', price.value);
-        formData.append('Description', description.value);
+		formData.append('Description', description.value);
+		formData.append('StoreCount', storeCount.value);
         formData.append('SupplierID', supplierId);
 		formData.append('ProductCategoryID', categoryId.value);
 		formData.append('StoreCount', 0);
@@ -89,6 +92,7 @@ export function ShowCategories(props) {
                                     <Button variant="danger" disabled={category.listProducts.length !== 0} size="sm" onClick={deleteCategory.bind(this, category)}>X</Button>
                                 </Col>
                             </Row>
+							<hr />
                             <ul style={{listStyle: 'none',paddingLeft: '0px'}}>
                                 {renderCategoryProducts(handleEditModal, handleDeleteProduct, category)}
                             </ul>
@@ -105,8 +109,12 @@ export function ShowCategories(props) {
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Názov položky</Form.Label>
                             <Form.Control type="text" placeholder="Názov" {...name}/>
+							<Form.Label>Popis</Form.Label>
                             <Form.Control type="text" placeholder="Popis" {...description}/>
+							<Form.Label>Cena</Form.Label>
                             <Form.Control type="text" placeholder="Cena" {...price}/>
+							<Form.Label>Množstvo na sklade</Form.Label>
+							<Form.Control type="text" placeholder="Množstvo na sklade" {...storeCount}/>
                             <Form.Control type="hidden" {...productId}/>
                             <Form.Control type="hidden" {...categoryId}/>
                         </Form.Group>
@@ -133,8 +141,11 @@ const renderCategoryProducts = (callbackEdit, callbackDelete, categoryProducts) 
                         {product.Description}
                     </p>
 				</Col>
-				<Col xs={6} md={2} style={{textAlign: 'right'}}>
+				<Col xs={3} md={1} style={{textAlign: 'right'}}>
                     <p>{product.Price}€ </p>
+				</Col>
+				<Col xs={3} md={1} style={{textAlign: 'right'}}>
+                    <p>{product.StoreCount}ks</p>
 				</Col>
 
                 <Col xs={6} md={2} style={{textAlign: 'right'}}>

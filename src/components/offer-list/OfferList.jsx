@@ -11,9 +11,11 @@ export function ProductItem({product, addItemToBasket, removeItemfromBasket, rec
 	const [state, dispatch] = useContext(ContactContext);
 	let productBasketItem = state.basket.find(item => item.ProductID === product.ProductID)
 	let count = productBasketItem ? productBasketItem.count : 0;
+	let disabled = isDisabled ? "disabled" : "";
+	let active = count > 0 ? "active" : "";
 	return (
 		<li key={product.ProductID} 
-			className={count > 0 ? "active" : ""}
+			className={`${active} ${disabled}`}
 		>
 			<span className="product-inner" onClick={() => {
 				if (isDisabled) return;
@@ -75,7 +77,7 @@ export function OfferList() {
 				addItemToBasket={addItemToBasket}
 				removeItemfromBasket={removeItemfromBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
-				isDisabled={isDisabled}
+				isDisabled={isDisabled || isProductStoreCountNotPositive(product)}
 			/>)
 		})
 	}
@@ -121,7 +123,7 @@ export function OfferList() {
 						</ul>
 						<ul className="noul">
 							{state.categoryProductList.map(categoryProducts => {
-								const isDisabled = isDisabledCategory(categoryProducts)						
+								const isDisabled = isDisabledDate(categoryProducts)
 								return (
 									<li className="categorylist" key={categoryProducts.ProductCategoryID}>
 										<p className="catname">
@@ -163,7 +165,7 @@ export function OfferList() {
 	
 }
 
-const isDisabledCategory = (categoryProducts) => {
+const isDisabledDate = (categoryProducts) => {
 	if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
 	// change now for debug purpose .add(6, 'hours')
 	const now = moment();
@@ -181,4 +183,10 @@ const isDisabledCategory = (categoryProducts) => {
 	)
 
 	return categoryIsHistory || nowIsBetweenLimitYesterdayAndCategoryEndDay
+}
+
+const isProductStoreCountNotPositive = (product) => {
+	console.log('product', product);
+	console.log('DISABLED= ', product.StoreCount <= 0)
+	return product.StoreCount <= 0;
 }
