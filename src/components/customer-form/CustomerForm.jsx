@@ -169,10 +169,6 @@ export function CustomerForm(props) {
 			console.log('updatedProduct', updatedProduct)
 		})
 		
-		return;
-		// const updatedProduct = await fetch('https://fecko.org/productdelivery/Products/update/{id}', optionsProduct)
-
-		// console.log('buildEmailHtmlString', buildEmailHtmlString())
 		const personalInfo = {
 			Name: name.value || "Nevyplnené",
 			LastName: lastName.value || "Nevyplnené",
@@ -193,8 +189,6 @@ export function CustomerForm(props) {
 		}
 		// vytvorit email
 		const data = {
-			to: "menu@lobelka.sk",
-			// to: "gorazd.ratulovsky@gmail.com",
 			to: "marianmrva123@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
