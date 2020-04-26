@@ -44,7 +44,7 @@ export function ShowCategories(props) {
 		formData.append('StoreCount', storeCount.value);
         formData.append('SupplierID', supplierId);
 		formData.append('ProductCategoryID', categoryId.value);
-		formData.append('StoreCount', 0);
+		formData.append('StoreCount',  storeCount.value);
         let url = 'https://fecko.org/productdelivery/Product/create';
         if(productId.value) {
             url = 'https://fecko.org/productdelivery/Product/update/' + productId.value;
