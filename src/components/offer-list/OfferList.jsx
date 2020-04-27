@@ -81,7 +81,7 @@ export function OfferList() {
 							{state.categoryProductList.map(categoryProducts => {
 								const isDisabled = isDisabledDate(categoryProducts)
 								return (
-									<li className="categorylist" key={categoryProducts.ProductCategoryID}>
+									<li className="categorylist" key={categoryProducts.ProductCategoryID} style={ isDisabled ? {display: "none"} : {}}>
 										<p className="catname">
 											<span>{categoryProducts.Name} </span>
 											<span>
