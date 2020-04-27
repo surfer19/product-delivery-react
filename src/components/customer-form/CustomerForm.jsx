@@ -93,7 +93,7 @@ export function CustomerForm(props) {
 		formDataAddress.append('PostCode', postCode.value);
 		formDataAddress.append('Email', email.value);
 		formDataAddress.append('PhoneNo', tel.value);
-		formDataAddress.append('SupplierID', '1');
+		formDataAddress.append('SupplierID', '0');
 		// vytvorenie adresy customera
 		const resCustomerAddress = await fetch('https://fecko.org/productdelivery/Address/create', {
 			method: 'POST',
@@ -105,7 +105,7 @@ export function CustomerForm(props) {
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
-		formData.append('SupplierID', '1');
+		formData.append('SupplierID', '0');
 		const options = {
 			method: 'POST',
 			body: formData,
@@ -116,7 +116,7 @@ export function CustomerForm(props) {
 		dispatch({
 			type: "SEND_PERSONAL_FORM",
 			payload: { 
-				id: 1,
+				id: 0,
 				name: name.value,
 				lastName: lastName.value,
 				email: email.value,
@@ -158,8 +158,8 @@ export function CustomerForm(props) {
 		}
 		// vytvorit email
 		const data = {
-			to: "menu@lobelka.sk",
-			// to: "gorazd.ratulovsky@gmail.com",
+			// to: "menu@lobelka.sk",
+			to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
