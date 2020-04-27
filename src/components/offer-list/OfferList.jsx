@@ -5,58 +5,9 @@ import { isEmpty } from 'ramda';
 import { ContactContext } from "../../context";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import moment from 'moment';
-// import timezone from 'moment-timezone'
+import { OfferItem } from '../offer-item/offer-item';
+import { useParams } from "react-router-dom";
 
-export function ProductItem({product, addItemToBasket, removeItemfromBasket, recalculateTotalPrice, isDisabled}) {
-	const [state, dispatch] = useContext(ContactContext);
-	let productBasketItem = state.basket.find(item => item.ProductID === product.ProductID)
-	let count = productBasketItem ? productBasketItem.count : 0;
-	return (
-		<li key={product.ProductID} 
-			className={count > 0 ? "active" : ""}
-		>
-			<span className="product-inner" onClick={() => {
-				if (isDisabled) return;
-				// already exists -> remove
-				if (productBasketItem) {
-					removeItemfromBasket(product.ProductID);
-					recalculateTotalPrice();
-					return;
-				};
-					addItemToBasket(product);
-					recalculateTotalPrice();
-				}} 
-			>
-				<span className="product-name">{product.Name}</span>
-				<span className="product-price">{product.Price} €</span>
-				<p className="product-desc">{product.Description}</p>
-			</span>
-			
-			
-			<div className="product-amount">
-				<span className="product-amount-title">Zadajte množstvo</span>
-
-				<div className="product-amount-div">
-					<button onClick={() =>{ 
-						if (isDisabled) return;
-						removeItemfromBasket(product.ProductID)
-						recalculateTotalPrice()
-					}}
-					> -
-					</button>
-					<span>{count}</span>
-					<button onClick={() =>{ 
-						if (isDisabled) return;
-						addItemToBasket(product)
-						recalculateTotalPrice()
-					}}
-					>+</button>
-				</div>
-				
-			</div>
-		</li>
-	)
-}
 
 export function OfferList() {	
 	const [state, dispatch] = useContext(ContactContext);
@@ -70,12 +21,13 @@ export function OfferList() {
 				ProductCategoryName: categoryProducts.Name,
 				ProductCategoryDate: categoryProducts.Date ? categoryProducts.Date : ''
 			}
-			return (<ProductItem
+			return (<OfferItem
 				product={product}
 				addItemToBasket={addItemToBasket}
 				removeItemfromBasket={removeItemfromBasket}
+				updateDisabledAddToBasket={updateDisabledAddToBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
-				isDisabled={isDisabled}
+				isDisabled={isDisabled || isProductStoreCountNotPositive(product)}
 			/>)
 		})
 	}
@@ -100,6 +52,12 @@ export function OfferList() {
 		});
 	}
 
+	const updateDisabledAddToBasket = () => {
+		dispatch({
+			type: "UPDATE_DISABLED_ADD_TO_BASKET",
+		})
+	}
+
 	return (
 		<GlobalContext.Consumer>
 			{state => (
@@ -121,7 +79,7 @@ export function OfferList() {
 						</ul>
 						<ul className="noul">
 							{state.categoryProductList.map(categoryProducts => {
-								const isDisabled = isDisabledCategory(categoryProducts)						
+								const isDisabled = isDisabledDate(categoryProducts)
 								return (
 									<li className="categorylist" key={categoryProducts.ProductCategoryID}>
 										<p className="catname">
@@ -163,7 +121,7 @@ export function OfferList() {
 	
 }
 
-const isDisabledCategory = (categoryProducts) => {
+const isDisabledDate = (categoryProducts) => {
 	if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
 	// change now for debug purpose .add(6, 'hours')
 	const now = moment();
@@ -181,4 +139,8 @@ const isDisabledCategory = (categoryProducts) => {
 	)
 
 	return categoryIsHistory || nowIsBetweenLimitYesterdayAndCategoryEndDay
+}
+
+const isProductStoreCountNotPositive = (product) => {
+	return product.StoreCount <= 0;
 }

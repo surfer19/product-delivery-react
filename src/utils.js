@@ -1,3 +1,5 @@
+import { isEmpty } from "ramda";
+
 /**
  * Utility functions
  */
@@ -22,3 +24,22 @@ export const groupSupplierProductsByCategory = (supplierProductCategories, suppl
 
 export const filterProductCategoriesBySupplierId = (productCategories, supplierId) =>
 	productCategories.filter(category => category.SupplierID === supplierId)
+
+
+export const getSupplierIdBySupplierList = (supplierList, adminId) => {
+	const foundSupplier = supplierList.find(supplier => supplier.admin === adminId)
+	return foundSupplier.SupplierID;
+}
+
+export const productExceedStoreCount = (listBasket) => {
+	const listExceedProducts = listBasket.filter(product => (product.StoreCount - product.count) < 0)
+	if (!isEmpty(listExceedProducts)){
+		return {
+			doesExceed: true,
+			exceedItem: listExceedProducts[0]
+		}
+	}
+	return {
+		doesExceed: false,
+	}
+}
