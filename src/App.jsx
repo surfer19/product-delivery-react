@@ -8,6 +8,7 @@ import { OfferList } from "./components/offer-list/OfferList";
 import { Goodbye } from "./components/goodbye/Goodbye"
 import { CustomerForm } from "./components/customer-form/CustomerForm";
 import { Admin } from "./components/admin/Admin";
+import ScrollToTop from 'react-router-scroll-top'
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -70,6 +71,7 @@ export default function App() {
 	return (
 		<div className="App">
 			<Router>
+				<ScrollToTop/>
 				<ContactContextProvider>
 					<GlobalContext.Provider value={state}>
 						<Switch>
