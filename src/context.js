@@ -8,6 +8,7 @@ export const ContactContext = createContext();
 const initialState = {
   count: 0,
   basket: [],
+  selectedCategoryProducts: [],
   totalPrice: 0,
   personalData: {},
   deliveryType: 'NA_PREDAJNI',
@@ -116,6 +117,25 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				selectedCity: action.payload
+			}
+		case "UPDATE_SELECTED_CATEGORY_PRODUCTS":
+			// clicked item ->
+			const updatedItem = action.payload.selectedItem;
+			// doesnt update for categories without date
+			if (updatedItem.ProductCategoryDate === "") {
+				return {
+					...state
+				};
+			}
+			const categoryProducts = action.payload.categoryProducts;
+			// found category -> active
+			const itemsToMakeActive = categoryProducts.filter(
+				item => updatedItem.ProductCategoryID === item.ProductCategoryID
+			)
+			
+			return {
+				...state,
+				selectedCategoryProducts: itemsToMakeActive,
 			}
     default:
       throw new Error();
