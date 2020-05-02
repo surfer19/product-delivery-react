@@ -188,6 +188,7 @@ export function CustomerForm(props) {
 		}
 		// vytvorit email
 		const data = {
+			to: "marianmrva123@gmail.com",
 			// to: "menu@lobelka.sk",
 			// to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
@@ -356,7 +357,7 @@ export function CustomerForm(props) {
 						&lt;
 						</span>
 					</Link>
-					{validForm() ? <Link to="/goodbye" className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
+					{validForm() ? <Link to={`/${supplierIdName}/goodbye`} className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
 				</div>
 			</div>
 			</form>		

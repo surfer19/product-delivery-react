@@ -9,7 +9,6 @@ import { useRouteMatch, useParams } from "react-router-dom";
 
 // import timezone from 'moment-timezone'
 import { OfferItem } from '../offer-item/offer-item';
-import { useParams } from "react-router-dom";
 
 
 export function OfferList() {	
@@ -61,6 +60,7 @@ export function OfferList() {
 			type: "UPDATE_DISABLED_ADD_TO_BASKET",
 		})
 	}
+	console.log('supplierIdName', supplierIdName)
 
 	return (
 		<GlobalContext.Consumer>
@@ -115,8 +115,21 @@ export function OfferList() {
 								&lt;
 								</span>
 							</Link>
-							{basketLength === 0 ? <Link to="/customer-form" onClick={(e) => e.preventDefault()} className="button button-full disabled"><span>Pokračovať</span></Link> : <Link to="/customer-form" className="button button-full"><span>Pokračovať</span></Link>}
-							<Link to={`/${supplierIdName}/customer-form`} className="button button-full">
+							{/* {basketLength === 0 ? <Link to={`/${supplierIdName}/customer-form`} onClick={(e) => e.preventDefault()} className="button button-full disabled"><span>Pokračovať</span></Link> : <Link to="/customer-form" className="button button-full"><span>Pokračovať</span></Link>} */}
+							{
+								basketLength === 0 
+									? <Link
+										to={`/${supplierIdName}/customer-form`}
+										className="button button-full disabled"
+										onClick={(e) => e.preventDefault()}
+										>
+											<span>Pokračovať</span>
+										</Link>
+									: <Link 
+										to={`/${supplierIdName}/customer-form`}
+										className="button button-full">
+											<span>Pokračovať</span>
+										</Link>}
 						</div>
 					</div>
 				</>
