@@ -1,6 +1,6 @@
 
 import React, {useReducer, createContext } from "react";
-import { findIndex, propEq } from "ramda";
+import { findIndex, propEq, head } from "ramda";
 import produce from "immer"
 
 export const ContactContext = createContext();
@@ -16,7 +16,24 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-	  	// case "GET_BASKET_ITEM_COUNT"
+	  	case "UPDATE_DISABLED_ADD_TO_BASKET":
+			const disabledBasket = state.basket.map(item => {
+				if(item.StoreCount - item.count < 1){
+					// disabled
+					return {
+						...item,
+						disabled: true
+					}
+				}
+				return {
+					...item,
+					disabled: false
+				}
+			})
+			return {
+				...state,
+				basket: disabledBasket
+			}
 		case "ADD_TO_BASKET":
 			const foundItemBasketIdx = state.basket.findIndex(item => item.ProductID === action.payload.ProductID)
 			if (foundItemBasketIdx !== -1) {
@@ -25,6 +42,7 @@ const reducer = (state, action) => {
 				const updatedBasket = produce(state.basket, draft => {
 					draft[foundItemBasketIdx] = {
 						...itemToUpdate,
+						disabled: false,
 						count: (itemToUpdate.count + 1)//.toString()
 					}
 				});
@@ -33,10 +51,12 @@ const reducer = (state, action) => {
 					basket: updatedBasket,
 				}
 			}
+			// default
 			return {
 				...state,
 				basket: [...state.basket, {
 					...action.payload,
+					disabled: false,
 					count: 1
 				}]
 			}
@@ -48,8 +68,7 @@ const reducer = (state, action) => {
 				return {
 					...state
 				}
-			}
-			// console.log('action.payload.count', action.payload.count)
+			}			
 			// exist more than one item
 			if (basketItems[idx].count > 1) {
 				let itemToUpdate = state.basket[idx]
