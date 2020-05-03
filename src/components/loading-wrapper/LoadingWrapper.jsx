@@ -64,9 +64,11 @@ export function LoadingWrapper(props) {
 		</div>
 	  );
 	}
+	console.log('supplier', supplier)
 	const state = {
 		supplier: {
-			...supplier
+			...supplier,
+			DeliveryCosts: JSON.parse(supplier.DeliveryCosts) || []
 		},
 		categoryProductList: categories
 	}

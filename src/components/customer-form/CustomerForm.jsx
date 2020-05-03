@@ -7,7 +7,6 @@ import { GlobalContext } from "../loading-wrapper/LoadingWrapper";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
 import { CustomerEmailTemplate } from "../email-templates/CustomerEmailTemplate";
-import { cities } from "../../cities";
 import { productExceedStoreCount } from "../../utils";
 
 export function CustomerForm(props) {
@@ -183,7 +182,7 @@ export function CustomerForm(props) {
 			PostCode: postCode.value || "Nevyplnené",
 		}
 		const supplierInfo = {
-			PhoneNumber: '+421 911 705 160',
+			PhoneNumber: globalState.supplier.phone,
 			OpeningHoursFrom: '8:00',
 			OpeningHoursTo: '18:00',
 			Name: "MŠ Lobelka"
@@ -284,7 +283,7 @@ export function CustomerForm(props) {
 							setActiveDeliveryAddress(false);
 						}}>
 						<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
-						<span className="choosedeliverybtn-subtitle">od 11:00 do 12:00</span>
+						<span className="choosedeliverybtn-subtitle">{globalState.supplier.PickupTime}</span>
 					</button>
 					<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 							const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -341,7 +340,7 @@ export function CustomerForm(props) {
 								}}>
 							>
 								<option value={'DEFAULT'} disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
-								{cities.map((city, key) => (
+								{globalState.supplier.DeliveryCosts.map((city, key) => (
 									<option 
 										value={city.cena}
 										data-city={city.nazov}
