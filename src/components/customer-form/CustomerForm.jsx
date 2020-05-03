@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import selectboxArrow from "../../img/arrow-selectbox.png";
 import { Link, useParams } from "react-router-dom";
 import { ContactContext } from "../../context";
+import { GlobalContext } from "../loading-wrapper/LoadingWrapper";
 import { BottomBar } from "../bottom-bar/BottomBar";
 import { SupplierEmailTemplate } from "../email-templates/SupplierEmailTemplate";
 import { CustomerEmailTemplate } from "../email-templates/CustomerEmailTemplate";
@@ -23,7 +24,7 @@ export function CustomerForm(props) {
 	const postCode = useFormInput("");
 	const city = useFormInput("");
 	const address = useFormInput("");
-	
+	console.log('statebaslet', state)
 	async function onSubmitDeliveryTypeChange (deliveryType) {
 		dispatch({
 			type: "UPDATE_DELIVERY",
@@ -73,7 +74,8 @@ export function CustomerForm(props) {
 		} 
 	}
 
-	async function onSubmit() {
+	async function onSubmit(globalState) {
+		console.log('stateeeee', globalState)
 		let formDataCustomer = new FormData();
 		formDataCustomer.append('Name', name.value);
 		formDataCustomer.append('LastName', lastName.value);
@@ -188,7 +190,7 @@ export function CustomerForm(props) {
 		}
 		// vytvorit email
 		const data = {
-			to: "marianmrva123@gmail.com",
+			to: globalState.supplier.email,
 			// to: "menu@lobelka.sk",
 			// to: "gorazd.ratulovsky@gmail.com",
 			header: "Nová objednávka",
@@ -239,130 +241,133 @@ export function CustomerForm(props) {
 	}
 
 	return (
-		<div className="wrapper">
-			<ul className="shopheader">
-				<li className="active">
-					<span className="shopheader-num">1</span>
-					<span className="shopheader-title">Výber <br></br>z ponuky</span>
-				</li>
-				<li className="active">
-					<span className="shopheader-num">2</span>
-					<span className="shopheader-title">Vaše <br></br>údaje</span>
-				</li>
-				<li>
-					<span className="shopheader-num">3</span>
-					<span className="shopheader-title">To je <br></br>všetko :)</span>
-				</li>
-			</ul>
+		<GlobalContext.Consumer>
+			{globalState => (
+			<div className="wrapper">
+				<ul className="shopheader">
+					<li className="active">
+						<span className="shopheader-num">1</span>
+						<span className="shopheader-title">Výber <br></br>z ponuky</span>
+					</li>
+					<li className="active">
+						<span className="shopheader-num">2</span>
+						<span className="shopheader-title">Vaše <br></br>údaje</span>
+					</li>
+					<li>
+						<span className="shopheader-num">3</span>
+						<span className="shopheader-title">To je <br></br>všetko :)</span>
+					</li>
+				</ul>
 
-			<p className="catname">Doručenie objednávky</p>
-			<div className="choosedeliverybtn-group">
-				<button className={state.deliveryType === "NA_PREDAJNI" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
-						updateSelectedCity(null);
-						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
-						if (foundDelivery){
-							removeItemfromBasket(foundDelivery.ProductID)
-							recalculateTotalPrice()
-						}
-						onSubmitDeliveryTypeChange("NA_PREDAJNI");
-						if (isActiveDeliveryShop) {
-							setActiveDeliveryAddress(false);
-							setActiveDeliveryShop(false);
-							return;
-						};
-						setActiveDeliveryShop(true);
-						setActiveDeliveryAddress(false);
-					}}>
-					<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
-					<span className="choosedeliverybtn-subtitle">od 11:00 do 12:00</span>
-				</button>
-				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
-						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
-						onSubmitDeliveryTypeChange("NA_ADRESU");
-						// remove
-						if (isActiveDeliveryAddress) {
-							// setActiveDeliveryAddress(false);
-							// setActiveDeliveryShop(false);
-							if (foundDelivery)
+				<p className="catname">Doručenie objednávky</p>
+				<div className="choosedeliverybtn-group">
+					<button className={state.deliveryType === "NA_PREDAJNI" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+							updateSelectedCity(null);
+							const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+							if (foundDelivery){
 								removeItemfromBasket(foundDelivery.ProductID)
 								recalculateTotalPrice()
-							return;
-						};
-						// add
-						setActiveDeliveryAddress(true);
-						setActiveDeliveryShop(false);
-						
-					}}>
-					<p className="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
-					<span className="choosedeliverybtn-subtitle">Za poplatok</span>
-				</button>				
-				</div>
-			<form 
-				ref={formRef}
-				onSubmit={e => {
-					e.preventDefault()
-					onSubmit()
-				}}>	
-				<div className={state.deliveryType === "NA_ADRESU" ? "deliverytoaddress active" : "deliverytoaddress"}>
-					<p className="catname">Doručovacie informácie</p>
-					<div className="selectbox">
-						<span className="selectbox-arrow" style={{backgroundImage: "url("+selectboxArrow+")"}}></span>
-						<select 
-							className="select"
-							id="cities"
-							value={state.selectedCity}
-							required
-							// {...city}
-							onChange={event => {
-								updateSelectedCity(event.target.options[event.target.selectedIndex].text)
-								const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
-								if (foundDelivery) {
+							}
+							onSubmitDeliveryTypeChange("NA_PREDAJNI");
+							if (isActiveDeliveryShop) {
+								setActiveDeliveryAddress(false);
+								setActiveDeliveryShop(false);
+								return;
+							};
+							setActiveDeliveryShop(true);
+							setActiveDeliveryAddress(false);
+						}}>
+						<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
+						<span className="choosedeliverybtn-subtitle">od 11:00 do 12:00</span>
+					</button>
+					<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
+							const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+							onSubmitDeliveryTypeChange("NA_ADRESU");
+							// remove
+							if (isActiveDeliveryAddress) {
+								// setActiveDeliveryAddress(false);
+								// setActiveDeliveryShop(false);
+								if (foundDelivery)
 									removeItemfromBasket(foundDelivery.ProductID)
 									recalculateTotalPrice()
-								}
-								addItemToBasket({
-									Name: "Doručenie na adresu",
-									SupplierID: 1,
-									OrderID: null,
-									DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
-									Price: event.target.value.toString()
-								})
-								recalculateTotalPrice()
-							}}>
-						>
-							<option value={state.selectedCity} selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
-							{cities.map(city => (
-								<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
-							))}
-						</select>
+								return;
+							};
+							// add
+							setActiveDeliveryAddress(true);
+							setActiveDeliveryShop(false);
+							
+						}}>
+						<p className="choosedeliverybtn-title">Doručenie <br></br>na adresu</p>
+						<span className="choosedeliverybtn-subtitle">Za poplatok</span>
+					</button>				
 					</div>
-					{/* <input className="input" placeholder="Miesto doručenia" {...city} required /> */}
-					<input className="input" placeholder="Ulica a číslo domu *" {...address} required />
-					{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
-				</div>
+				<form 
+					ref={formRef}
+					onSubmit={e => {
+						e.preventDefault()
+						onSubmit(globalState)
+					}}>	
+					<div className={state.deliveryType === "NA_ADRESU" ? "deliverytoaddress active" : "deliverytoaddress"}>
+						<p className="catname">Doručovacie informácie</p>
+						<div className="selectbox">
+							<span className="selectbox-arrow" style={{backgroundImage: "url("+selectboxArrow+")"}}></span>
+							<select 
+								className="select"
+								id="cities"
+								value={state.selectedCity}
+								required
+								// {...city}
+								onChange={event => {
+									updateSelectedCity(event.target.options[event.target.selectedIndex].text)
+									const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
+									if (foundDelivery) {
+										removeItemfromBasket(foundDelivery.ProductID)
+										recalculateTotalPrice()
+									}
+									addItemToBasket({
+										Name: "Doručenie na adresu",
+										SupplierID: 1,
+										OrderID: null,
+										DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
+										Price: event.target.value.toString()
+									})
+									recalculateTotalPrice()
+								}}>
+							>
+								<option value={state.selectedCity} selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
+								{cities.map(city => (
+									<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
+								))}
+							</select>
+						</div>
+						{/* <input className="input" placeholder="Miesto doručenia" {...city} required /> */}
+						<input className="input" placeholder="Ulica a číslo domu *" {...address} required />
+						{/* <input className="input" placeholder="PSČ" {...postCode} required /> */}
+					</div>
 
-				<p className="catname">Kontaktné informácie</p>
-				<input className="input" type="text" placeholder="Meno *" {...name} required />
-				<input className="input" type="text" placeholder="Priezvisko *" {...lastName} required />
+					<p className="catname">Kontaktné informácie</p>
+					<input className="input" type="text" placeholder="Meno *" {...name} required />
+					<input className="input" type="text" placeholder="Priezvisko *" {...lastName} required />
 
-				<input className="input" type="email" placeholder="Email *" {...email} required />
-				<input className="input" type="text" placeholder="Tel. číslo *" {...tel} required />
-				<textarea className="textarea" placeholder="Poznámka" {...message} />
-				<small>* povinný údaj</small>
-			<div className="footer footer-shadow ">
-				<BottomBar />
-				<div className="btngroup">
-					<Link to={`/${supplierIdName}/supplier-offer`} className="button button-back">
-						<span className="">
-						&lt;
-						</span>
-					</Link>
-					{validForm() ? <Link to={`/${supplierIdName}/goodbye`} className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
+					<input className="input" type="email" placeholder="Email *" {...email} required />
+					<input className="input" type="text" placeholder="Tel. číslo *" {...tel} required />
+					<textarea className="textarea" placeholder="Poznámka" {...message} />
+					<small>* povinný údaj</small>
+				<div className="footer footer-shadow ">
+					<BottomBar />
+					<div className="btngroup">
+						<Link to={`/${supplierIdName}/supplier-offer`} className="button button-back">
+							<span className="">
+							&lt;
+							</span>
+						</Link>
+						{validForm() ? <Link to={`/${supplierIdName}/goodbye`} className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
+					</div>
 				</div>
+				</form>		
 			</div>
-			</form>		
-		
-		</div>
+		)}
+		</GlobalContext.Consumer>
 	)
 }
 
