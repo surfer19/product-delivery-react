@@ -16,7 +16,7 @@ export function OfferList() {
 	const [state, dispatch] = useContext(ContactContext);
 	const basketLength = state.basket.length;
 
-	const renderCategoryProducts = (categoryProducts, isDisabled) => {
+	const renderCategoryProducts = (categoryProducts, isDisabled, key) => {
 		if (!categoryProducts || isEmpty(categoryProducts.listProducts)) return "Žiadna ponuka pre tento deň";
 		return categoryProducts.listProducts.map(product => {
 			product = { 
@@ -31,6 +31,7 @@ export function OfferList() {
 				updateDisabledAddToBasket={updateDisabledAddToBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
 				isDisabled={isDisabled || isProductStoreCountNotPositive(product)}
+				key={product.ProductID}
 			/>)
 		})
 	}
@@ -82,7 +83,7 @@ export function OfferList() {
 							</li>
 						</ul>
 						<ul className="noul">
-							{state.categoryProductList.map(categoryProducts => {
+							{state.categoryProductList.map((categoryProducts, key) => {
 								const isDisabled = isDisabledDate(categoryProducts)
 								return (
 									<li className="categorylist" key={categoryProducts.ProductCategoryID} style={ isDisabled ? {display: "none"} : {}}>
@@ -93,7 +94,7 @@ export function OfferList() {
 											</span>
 										</p>
 										<ul className={`noul productlist ${isDisabled ? "disabled" : ""}`}>
-											{renderCategoryProducts(categoryProducts, isDisabled)}
+											{renderCategoryProducts(categoryProducts, isDisabled, key)}
 										</ul>
 									</li>
 								)

@@ -95,7 +95,7 @@ export function CustomerForm(props) {
 		formDataAddress.append('PostCode', postCode.value);
 		formDataAddress.append('Email', email.value);
 		formDataAddress.append('PhoneNo', tel.value);
-		formDataAddress.append('SupplierID', '0');
+		formDataAddress.append('SupplierID', globalState.supplier.SupplierID);
 		// vytvorenie adresy customera
 		const resCustomerAddress = await fetch('https://fecko.org/productdelivery/Address/create', {
 			method: 'POST',
@@ -107,7 +107,7 @@ export function CustomerForm(props) {
 		// vytvoerenie novej objednavky
 		let formData = new FormData();
 		formData.append('CustomerID', jsonCustomer.record.CustomerID);
-		formData.append('SupplierID', '0');
+		formData.append('SupplierID', globalState.supplier.SupplierID);
 		const options = {
 			method: 'POST',
 			body: formData,
@@ -214,6 +214,9 @@ export function CustomerForm(props) {
 		const resEmail = await fetch('https://fecko.org/productdelivery/custom/create-mail', formDataSendEmailOption);
 		const jsonEmail = await resEmail.json();
 		console.log('jsonEmail', jsonEmail)
+		if (jsonEmail.error) {
+			alert('Email reštaurácie je nesprávny')
+		}
 
 		// CustomerEmailTemplate
 		const dataCustomer = {
@@ -238,6 +241,9 @@ export function CustomerForm(props) {
 		const resCustomerEmail = await fetch('https://fecko.org/productdelivery/custom/create-mail', formDataSendEmailCustomerOption);
 		const jsonCutomerEmail = await resCustomerEmail.json();
 		console.log('jsonCutomerEmail', jsonCutomerEmail)
+		if (jsonCutomerEmail.error) {
+			alert('Email zákazníka je nesprávny')
+		}
 	}
 
 	return (
@@ -262,7 +268,7 @@ export function CustomerForm(props) {
 				<p className="catname">Doručenie objednávky</p>
 				<div className="choosedeliverybtn-group">
 					<button className={state.deliveryType === "NA_PREDAJNI" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
-							updateSelectedCity(null);
+							updateSelectedCity(undefined);
 							const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
 							if (foundDelivery){
 								removeItemfromBasket(foundDelivery.ProductID)
@@ -316,7 +322,7 @@ export function CustomerForm(props) {
 								id="cities"
 								value={state.selectedCity}
 								required
-								// {...city}
+								defaultValue={'DEFAULT'}
 								onChange={event => {
 									updateSelectedCity(event.target.options[event.target.selectedIndex].text)
 									const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
@@ -326,7 +332,7 @@ export function CustomerForm(props) {
 									}
 									addItemToBasket({
 										Name: "Doručenie na adresu",
-										SupplierID: 1,
+										SupplierID: globalState.supplier.SupplierID,
 										OrderID: null,
 										DeliveryCity:  event.target.options[event.target.selectedIndex].getAttribute('data-city'),
 										Price: event.target.value.toString()
@@ -334,9 +340,15 @@ export function CustomerForm(props) {
 									recalculateTotalPrice()
 								}}>
 							>
-								<option value={state.selectedCity} selected disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
-								{cities.map(city => (
-									<option value={city.cena} data-city={city.nazov}>{city.nazov} (+{city.cena}€)</option>
+								<option value={'DEFAULT'} disabled>{state.selectedCity || "Vyberte miesto doručenia *"}</option>
+								{cities.map((city, key) => (
+									<option 
+										value={city.cena}
+										data-city={city.nazov}
+										key={key}
+									>
+										{city.nazov} (+{city.cena}€)
+									</option>
 								))}
 							</select>
 						</div>
@@ -361,7 +373,19 @@ export function CustomerForm(props) {
 							&lt;
 							</span>
 						</Link>
-						{validForm() ? <Link to={`/${supplierIdName}/goodbye`} className="button button-full" onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}><span>Objednať</span></Link> : <Link to="/goodbye" className="button button-full disabled" onClick={(e) => e.preventDefault()}><span>Objednať</span></Link>}
+						{validForm() 
+							?   <Link
+									to={`/${supplierIdName}/goodbye`}
+									className="button button-full"
+									onClick={() => formRef.current.dispatchEvent(new Event("submit", { cancelable: true }))}>
+									<span>Objednať</span>
+								</Link> 
+							:   <Link 
+									to="/goodbye"
+									className="button button-full disabled"
+									onClick={(e) => e.preventDefault()}>
+										<span>Objednať</span>
+								</Link>}
 					</div>
 				</div>
 				</form>		

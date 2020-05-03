@@ -11,7 +11,7 @@ const initialState = {
   totalPrice: 0,
   personalData: {},
   deliveryType: 'NA_PREDAJNI',
-  selectedCity: null
+  selectedCity: undefined
 };
 
 const reducer = (state, action) => {

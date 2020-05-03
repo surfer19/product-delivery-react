@@ -7,8 +7,8 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 
 		<p>Objednali ste si:</p>
 		<ul>
-			{basket.map(item => (
-				<li>
+			{basket.map((item, key) => (
+				<li key={key}>
 					{item.ProductCategoryName ? `${item.ProductCategoryName}` : ''}
 					{item.ProductCategoryDate ? ` (${moment(item.ProductCategoryDate).format("DD.MM.YYYY")})` : ''}		
 					{/* {` - ${item.count}`}x   */}
