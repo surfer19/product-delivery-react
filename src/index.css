@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+.time-picker {
+	width: 100%;
+	display: block;
+	border-radius: 5px;
+}
+

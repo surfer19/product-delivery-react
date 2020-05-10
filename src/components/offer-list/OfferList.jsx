@@ -84,7 +84,7 @@ export function OfferList() {
 						</ul>
 						<ul className="noul">
 							{state.categoryProductList.map((categoryProducts, key) => {
-								const isDisabled = isDisabledDate(categoryProducts)
+								const isDisabled = isDisabledDate(categoryProducts, state.supplier.OrderLimitDaySubtract, state.supplier.OrderLimitHour)
 								return (
 									<li className="categorylist" key={categoryProducts.ProductCategoryID} style={ isDisabled ? {display: "none"} : {}}>
 										<p className="catname">
@@ -143,24 +143,30 @@ export function OfferList() {
 	
 }
 
-const isDisabledDate = (categoryProducts) => {
+const isDisabledDate = (categoryProducts, supplierNumberLimitDays, supplierLimitTime) => {
+	console.log('supplierNumberLimitDays', supplierNumberLimitDays)
+	console.log('supplierLimitTime', supplierLimitTime)
 	if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
+	if (supplierNumberLimitDays === "NONE") {
+		return false
+	}
 	// change now for debug purpose .add(6, 'hours')
 	const now = moment();
-	const dateCategoryMoment = moment(categoryProducts.Date, 'YYYY-MM-DD');
+	const dateCategoryMoment = moment(categoryProducts.Date + ` ${supplierLimitTime}`, 'YYYY-MM-DD HH:mm');
 	// date is from - INF to today night
 	const endOfToday = now.endOf('today')
 	const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
 
-	const categoryPreviousDayLimit = dateCategoryMoment.subtract(1, 'day').add(18, 'hours')
+	const categoryDateTimeLimit = dateCategoryMoment.subtract(supplierNumberLimitDays, 'day')//.add(supplierLimitTime, 'hours')
+	// console.log('categoryDateTimeLimit', categoryDateTimeLimit)
 	// add .add(6, 'hours') after moment() for debug purpose
 	// check if now is between current category time minus X hours and end of category day
-	const nowIsBetweenLimitYesterdayAndCategoryEndDay = moment().isBetween(
-		categoryPreviousDayLimit, 
+	const nowIsBetweenDateTimeLimitAndCategoryEndDay = moment().isBetween(
+		categoryDateTimeLimit,
 		moment(categoryProducts.Date).endOf('day')
 	)
 
-	return categoryIsHistory || nowIsBetweenLimitYesterdayAndCategoryEndDay
+	return categoryIsHistory || nowIsBetweenDateTimeLimitAndCategoryEndDay
 }
 
 const isProductStoreCountNotPositive = (product) => {

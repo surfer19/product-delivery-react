@@ -31,6 +31,11 @@ export const getSupplierIdBySupplierList = (supplierList, adminId) => {
 	return foundSupplier.SupplierID;
 }
 
+export const getSupplierBySupplierList = (supplierList, adminId) => {
+	const foundSupplier = supplierList.find(supplier => supplier.admin === adminId)
+	return foundSupplier;
+}
+
 export const productExceedStoreCount = (listBasket) => {
 	const listExceedProducts = listBasket.filter(product => (product.StoreCount - product.count) < 0)
 	if (!isEmpty(listExceedProducts)){

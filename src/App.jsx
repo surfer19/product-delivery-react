@@ -9,6 +9,7 @@ import {
 import { Admin } from "./components/admin/Admin";
 import { ContactContextProvider } from './context';
 import { LoadingWrapper } from "./components/loading-wrapper/LoadingWrapper";
+// import 'antd/dist/antd.css';
 
 export default function App() {
 	return (
