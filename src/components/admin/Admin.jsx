@@ -41,7 +41,6 @@ export function Admin(props) {
 		Promise.resolve(loadSuppliers()).then(suppliers => {
 			const supplierId = getSupplierIdBySupplierList(suppliers, adminId);
 			const supplier = getSupplierBySupplierList(suppliers, adminId)
-			console.log('SUPPLIER')
 			setSupplier(supplier);
 			setLimitDay(supplier.OrderLimitDaySubtract || "DEFAULT");
 			setLimitTime(supplier.OrderLimitHour)
@@ -85,8 +84,6 @@ export function Admin(props) {
 
 	function handleGeneralSettingsSubmit(event) {
 		let formData = new FormData();
-		console.log('wtfffff type', typeof limitTime)
-		console.log('wtfffff type', limitTime)
 		formData.append('OrderLimitHour', limitTime);
 		formData.append('OrderLimitDaySubtract', limitDay);
 		
@@ -134,8 +131,6 @@ export function Admin(props) {
 		}
 		return true
 	}
-	console.log('limitTime', limitTime)
-	// console.log('isDate(limitTime)', moment(limitTime, "HH:mm", true).isValid())
 	return (
 		<div style={{
 			maxWidth: "700px", 

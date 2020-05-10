@@ -61,7 +61,6 @@ export function OfferList() {
 			type: "UPDATE_DISABLED_ADD_TO_BASKET",
 		})
 	}
-	console.log('supplierIdName', supplierIdName)
 
 	return (
 		<GlobalContext.Consumer>
@@ -144,8 +143,6 @@ export function OfferList() {
 }
 
 const isDisabledDate = (categoryProducts, supplierNumberLimitDays, supplierLimitTime) => {
-	console.log('supplierNumberLimitDays', supplierNumberLimitDays)
-	console.log('supplierLimitTime', supplierLimitTime)
 	if (!categoryProducts.Date && !moment.isDate(categoryProducts.Date)) return false;
 	if (supplierNumberLimitDays === "NONE") {
 		return false
@@ -158,7 +155,6 @@ const isDisabledDate = (categoryProducts, supplierNumberLimitDays, supplierLimit
 	const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
 
 	const categoryDateTimeLimit = dateCategoryMoment.subtract(supplierNumberLimitDays, 'day')//.add(supplierLimitTime, 'hours')
-	// console.log('categoryDateTimeLimit', categoryDateTimeLimit)
 	// add .add(6, 'hours') after moment() for debug purpose
 	// check if now is between current category time minus X hours and end of category day
 	const nowIsBetweenDateTimeLimitAndCategoryEndDay = moment().isBetween(

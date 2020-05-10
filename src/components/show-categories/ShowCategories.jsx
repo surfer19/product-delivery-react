@@ -57,7 +57,6 @@ export function ShowCategories(props) {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-				console.log('data', data)
                 props.callback(supplierId);
                 handleCloseModal();
             });

@@ -23,7 +23,6 @@ export function CustomerForm(props) {
 	const postCode = useFormInput("");
 	const city = useFormInput("");
 	const address = useFormInput("");
-	console.log('statebaslet', state)
 	async function onSubmitDeliveryTypeChange (deliveryType) {
 		dispatch({
 			type: "UPDATE_DELIVERY",
@@ -74,7 +73,6 @@ export function CustomerForm(props) {
 	}
 
 	async function onSubmit(globalState) {
-		console.log('stateeeee', globalState)
 		let formDataCustomer = new FormData();
 		formDataCustomer.append('Name', name.value);
 		formDataCustomer.append('LastName', lastName.value);
