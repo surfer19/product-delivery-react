@@ -5,10 +5,11 @@ import {
 	Divider
 } from 'antd';
 
-export const showNotification = (placement, title = '', description = '') => {
+export const showNotification = (placement, title = '', description = '', duration = 4.5) => {
 	notification.success({
 		message: title,
 		description: description,
-		placement: placement
+		placement: placement,
+		duration: duration
 	});
 }

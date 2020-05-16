@@ -15,7 +15,7 @@
     "moment-timezone": "^0.5.28",
     "ramda": "^0.27.0",
     "react": "16.8.1",
-    "react-bootstrap": "^1.0.0",
+    "react-bootstrap": "^1.0.1",
     "react-bootstrap-time-picker": "^2.0.1",
     "react-dom": "16.8.1",
     "react-moment": "^0.9.7",

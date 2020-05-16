@@ -236,7 +236,7 @@ export function Admin(props) {
 	)
 }
 
-function useFormInput(initialValue) {
+export function useFormInput(initialValue) {
 	const [value, setValue] = useState(initialValue);
 
 	const handleChange = e => {

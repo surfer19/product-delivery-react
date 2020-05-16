@@ -9,7 +9,7 @@ import {
 import { Admin } from "./components/admin/Admin";
 import { ContactContextProvider } from './context';
 import { LoadingWrapper } from "./components/loading-wrapper/LoadingWrapper";
-// import 'antd/dist/antd.css';
+import { Registration } from "./components/registration/registration";
 
 export default function App() {
 	return (
@@ -17,6 +17,7 @@ export default function App() {
 			<Router>
 				<Switch>
 					<Route path="/administracia/:adminId" children={<Admin/>} />
+					<Route path="/register" children={<Registration/>} />
 					<Route path="/:supplierIdName">
 						<ContactContextProvider>
 							<LoadingWrapper />
