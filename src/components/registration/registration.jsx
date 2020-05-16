@@ -99,7 +99,6 @@ export function Registration() {
 
 const onRegistrationSubmit = async (event, registrationParams, ref) => {
 	event.preventDefault();
-	console.log('registrationParams', registrationParams);
 	const dataRegistration = {
 		to: 'marianmrva123@gmail.com',
 		header: `Vytvorenie novej prevádzky ${registrationParams.supplierName}`,
