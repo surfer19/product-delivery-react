@@ -224,8 +224,8 @@ export function CustomerForm(props) {
 				</li>
 			</ul>
 
-			<p className="catname">Doručenie objednávky</p>
-			<div className="choosedeliverybtn-group">
+			<p className="catname" style={{display: 'none'}}>Doručenie objednávky</p>
+			<div className="choosedeliverybtn-group" style={{display: 'none'}}>
 				<button className={state.deliveryType === "NA_PREDAJNI" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						updateSelectedCity(null);
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")
