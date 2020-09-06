@@ -174,7 +174,7 @@ export function CustomerForm(props) {
 		}
 		const supplierInfo = {
 			PhoneNumber: '+421 915 910 592',
-			OpeningHoursFrom: '10:00',
+			OpeningHoursFrom: '10:30',
 			OpeningHoursTo: '22:00',
 			Name: "Burina Restaurant"
 		}
