@@ -84,9 +84,9 @@ export function OfferList() {
 									<li className="categorylist" key={categoryProducts.ProductCategoryID} style={ isDisabled ? {display: "none"} : {}}>
 										<p className="catname">
 											<span>{categoryProducts.Name} </span>
-											<span>
+											{/* <span>
 												{!isNaN(Date.parse(categoryProducts.Date)) ? moment(categoryProducts.Date).format('DD.MM.YYYY') : ""}
-											</span>
+											</span> */}
 										</p>
 										<ul className={`noul productlist ${isDisabled ? "disabled" : ""}`}>
 											{renderCategoryProducts(categoryProducts, isDisabled)}
@@ -128,17 +128,26 @@ const isDisabledDate = (categoryProducts) => {
 	const dateCategoryMoment = moment(categoryProducts.Date, 'YYYY-MM-DD');
 	// date is from - INF to today night
 	const endOfToday = now.endOf('today')
-	const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
+	// const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), endOfToday)
+	
 
-	const categoryPreviousDayLimit = dateCategoryMoment.subtract(1, 'day').add(18, 'hours')
+	const categoryPreviousDayLimit = dateCategoryMoment.subtract(0, 'day').add(18, 'hours')
 	// add .add(6, 'hours') after moment() for debug purpose
+	// console.log('dfsdkj')
+	// console.log(categoryPreviousDayLimit)
 	// check if now is between current category time minus X hours and end of category day
+	// const nowIsBetweenLimitYesterdayAndCategoryEndDay = moment().isBetween(
+	// 	categoryPreviousDayLimit, 
+	// 	moment(categoryProducts.Date).endOf('day')
+	// )
+	const categoryIsHistory = dateCategoryMoment.isBetween(moment().unix(), categoryPreviousDayLimit)
 	const nowIsBetweenLimitYesterdayAndCategoryEndDay = moment().isBetween(
 		categoryPreviousDayLimit, 
 		moment(categoryProducts.Date).endOf('day')
 	)
-
+	console.log(categoryIsHistory)
 	return categoryIsHistory || nowIsBetweenLimitYesterdayAndCategoryEndDay
+	// return nowIsBetweenLimitYesterdayAndCategoryEndDay
 }
 
 const isProductStoreCountNotPositive = (product) => {

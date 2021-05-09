@@ -58,7 +58,7 @@ export default function App() {
 		</div>
 	  );
 	}
-	const supplierProductCategories = filterProductCategoriesBySupplierId(productCategories.records, 0)// SupplierId
+	const supplierProductCategories = filterProductCategoriesBySupplierId(productCategories.records, 4)// SupplierId
 	const supplierProductsGroupedByCategory = groupSupplierProductsByCategory(supplierProductCategories, supplierProducts)
 
 	const state = {
