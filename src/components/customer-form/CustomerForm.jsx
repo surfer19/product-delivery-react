@@ -265,7 +265,7 @@ export function CustomerForm(props) {
 						setActiveDeliveryAddress(false);
 					}}>
 					<p className="choosedeliverybtn-title">Vyzdvihnem <br></br>u nás</p>
-					<span className="choosedeliverybtn-subtitle">od 11:00 do 15:00</span>
+					<span className="choosedeliverybtn-subtitle">od 11:00 do 14:00</span>
 				</button>
 				<button className={state.deliveryType === "NA_ADRESU" ? "choosedeliverybtn active" : "choosedeliverybtn"} onClick={() => {
 						const foundDelivery = state.basket.filter(basketItem => basketItem.Name === "Doručenie na adresu")

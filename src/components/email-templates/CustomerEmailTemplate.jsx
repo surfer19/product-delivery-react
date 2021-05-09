@@ -39,7 +39,7 @@ export const CustomerEmailTemplate = ({basket, personalInfo, supplierInfo, deliv
 					{/* <strong> {supplierInfo.OpeningHoursFrom}</strong> do 
 					<strong> {supplierInfo.OpeningHoursTo}</strong>. */}
 					<strong> 11:00</strong> do 
-					<strong> 15:00</strong>.
+					<strong> 14:00</strong>.
 				</p>
 				<p>
 					V prípade, že chcete niečo zmeniť vo Vašej objednávke kontaktujte nás 
