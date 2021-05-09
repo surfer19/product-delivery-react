@@ -190,7 +190,8 @@ export function CustomerForm(props) {
 		// vytvorit email
 		const data = {
 			// to: "marianmrva123@gmail.com",
-			to: "gorazd.ratulovsky@gmail.com",
+			// to: "gorazd.ratulovsky@gmail.com",
+			to: "info@vmomente.sk",
 			header: "Nová objednávka",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
