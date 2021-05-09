@@ -48,9 +48,9 @@ export default function App() {
 	// const categoryPost = useFetch("https://fecko.org/productdelivery/ProductCategory/create", options).response;
 	// console.log('categoryPost', categoryPost)
 	
-	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/0", {}).response;
+	const responseSupplier = useFetch("https://fecko.org/productdelivery/Supplier/detail/4", {}).response;
 	const productCategories = useFetch("https://fecko.org/productdelivery/ProductCategory", {}).response;
-	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/0", {}).response;
+	const supplierProducts = useFetch("https://fecko.org/productdelivery/custom/supplier-products/4", {}).response;
 	if (!responseSupplier || !productCategories || !supplierProducts) {
 	  return (
 		<div style={{position: 'absolute', top: '50%', left: '50%', marginTop: '-17px', marginLeft: '-17px'}}>
