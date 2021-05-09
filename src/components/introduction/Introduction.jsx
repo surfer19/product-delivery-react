@@ -1,6 +1,6 @@
 import React  from 'react'
-import logo from "../../img/lobelka.png";
-import cover from "../../img/cover.png";
+import logo from "../../img/logo-orange.png";
+// import cover from "../../img/cover.png";
 import { GlobalContext } from "../../App";
 import { Link } from "react-router-dom";
 
