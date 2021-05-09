@@ -192,7 +192,7 @@ export function CustomerForm(props) {
 			// to: "marianmrva123@gmail.com",
 			// to: "gorazd.ratulovsky@gmail.com",
 			to: "info@vmomente.sk",
-			header: "Nová objednávka",
+			header: "Nová objednávka ranajky.vmomente.sk",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<SupplierEmailTemplate
 					basket={state.basket}
@@ -217,7 +217,7 @@ export function CustomerForm(props) {
 		// CustomerEmailTemplate
 		const dataCustomer = {
 			to: email.value,
-			header: "Potvrdenie o objednávke",
+			header: "Potvrdenie o objednávke z ranajky.vmomente.sk",
 			body: ReactDOMServer.renderToStaticMarkup(
 				<CustomerEmailTemplate
 					basket={state.basket}
