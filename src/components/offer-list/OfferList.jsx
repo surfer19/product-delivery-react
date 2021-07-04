@@ -28,6 +28,7 @@ export function OfferList() {
 				updateDisabledAddToBasket={updateDisabledAddToBasket}
 				recalculateTotalPrice={recalculateTotalPrice}
 				isDisabled={isDisabled || isProductStoreCountNotPositive(product)}
+				categoryProducts={categoryProducts}
 			/>)
 		})
 	}

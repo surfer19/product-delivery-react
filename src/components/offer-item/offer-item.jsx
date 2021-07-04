@@ -1,5 +1,7 @@
 import React, {useContext, useState} from 'react'
 import { ContactContext } from "../../context";
+import { isEmpty } from "ramda";
+import moment from "moment";
 
 export function OfferItem({
 	product,
@@ -7,19 +9,26 @@ export function OfferItem({
 	removeItemfromBasket,
 	updateDisabledAddToBasket,
 	recalculateTotalPrice,
-	isDisabled
+	isDisabled,
+	categoryProducts,
 }) {
 	const [state, dispatch] = useContext(ContactContext);
 	let productBasketItem = state.basket.find(item => item.ProductID === product.ProductID)
 	let count = productBasketItem ? productBasketItem.count : 0;
-	let disabled = isDisabled ? "disabled" : "";
+	// disable decision
+	let isItemInCategorySelected = !isEmpty(state.selectedCategoryProducts.filter(prod => prod.ProductID === product.ProductID))
+	const isDateValid = moment(new Date(product.ProductCategoryDate), true).isValid();
+	let isDisabledCategoryItem = (!isItemInCategorySelected && state.basket.length > 0 && isDateValid)
+	let finalDisabledDecision = isDisabled || isDisabledCategoryItem;
+	let disabled = finalDisabledDecision ? "disabled" : "";
+
 	let active = count > 0 ? "active" : "";
 	return (
 		<li key={product.ProductID} 
 			className={`${active} ${disabled}`}
 		>
 			<span className="product-inner" onClick={() => {
-				if (isDisabled) return;
+				if (finalDisabledDecision) return;
 				// already exists -> remove
 				if (productBasketItem) {
 					removeItemfromBasket(product.ProductID);
@@ -29,6 +38,7 @@ export function OfferItem({
 					addItemToBasket(product);
 					recalculateTotalPrice();
 					updateDisabledAddToBasket()
+					updateDisabledCategoryItems(dispatch, product, categoryProducts)
 				}} 
 			>
 				<span className="product-name">{product.Name}</span>
@@ -58,6 +68,7 @@ export function OfferItem({
 							addItemToBasket(product)
 							recalculateTotalPrice()
 							updateDisabledAddToBasket()
+							updateDisabledCategoryItems(dispatch, product, categoryProducts)
 						}}
 					>+</button>
 				</div>
@@ -65,4 +76,14 @@ export function OfferItem({
 			</div>
 		</li>
 	)
+}
+
+const updateDisabledCategoryItems = (dispatch, selectedItem, categoryProducts) => {
+	dispatch({
+		type: "UPDATE_SELECTED_CATEGORY_PRODUCTS",
+		payload: {
+			selectedItem,
+			categoryProducts: categoryProducts.listProducts,
+		}
+	})
 }
