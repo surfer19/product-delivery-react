@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
     "immer": "^6.0.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.28",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
