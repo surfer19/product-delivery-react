@@ -9,7 +9,7 @@
     "bootstrap": "^4.4.1",
     "immer": "^6.0.3",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
